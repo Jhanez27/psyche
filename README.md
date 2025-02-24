@@ -35,38 +35,9 @@
                 <tr>
                 <td>2025-02-01</td>
                 <td>v1.0.0</td>
-                <td>First document Version</td>
-                    <td>KW.010.001</td>
-                    <td><small>Dela Cruz, Juan <br> <i>Design Lead</i></small></td>
-              </tr>
-                <tr>
-                <td>2025-01-18</td>
-                <td>v1.0.1</td>
-                <td>Fix popup title string</td>
-                <td>ITR #0001</td>
-                <td><small>Dela Cruz, Juan <br> <i>Design Lead</i></small></td>
-              </tr>
-                 <tr>
-                <td>2025-02-22</td>
-                <td>v1.0.2</td>
-                <td>Add Network information</td>
-                <td>CON-0021</td>
-                <td><small>Dela Cruz, Juan <br> <i>Design Lead</i></small></td>
-              </tr>
-                   <tr>
-                <td>2025-01-18</td>
-                <td>v1.0.1</td>
-                <td>Fix popup title string</td>
-                <td>ITR #0001</td>
-              <td><small>Dela Cruz, Juan <br> <i>Design Lead</i></small></td>
-              </tr>
-                 <tr>
-                <td>2025-02-22</td>
-                <td>v1.0.2</td>
-                <td>Add Network information</td>
-                <td>CON-0021</td>
-               <td><small>Dela Cruz, Juan <br> <i>Design Lead</i></small></td>
-              </tr>
+                <td></td>
+                    <td></td>
+                    <td></td>
             </table>
         </td>
     </tr>
