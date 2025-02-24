@@ -24,7 +24,7 @@
             <br>
         </td>
         <td valign ="top">   
-           <img src="https://github.com/Jhanez27/psyche/blob/main/images/requirement1.png">
+          <img src="https://github.com/user-attachments/assets/0566efa0-19f6-4577-ab75-27a2deb6005a">
           <h3>Account Authentication</h3>
         <span>Users can create an account linked to their Google account. The given account will be authenticated with an Authentication API and an account for the game will be made once verified.</span>
         </td>
