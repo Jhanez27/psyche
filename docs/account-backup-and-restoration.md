@@ -25,7 +25,7 @@
         </td>
         <td valign= "top">   
         <a href="https://github.com/Jhanez27/psyche">Home</a> &gt; <a href="https://github.com/Jhanez27/psyche/blob/main/docs/account-backup-and-restoration.md">Account Backup and Restoration</a>
-        <br>
+        <br> <br>
             <img src="">
           <h3>Account Backup and Restoration</h3>
             <span>Save files contain account details and progress including game progression and transactions, and players can back up their progress into these save files. Players can also restore their account progress by retrieving the latest save file. Players will be prompted to ensure the overwriting of their existing save files and accounts for backing up and restoring, respectively.</span>
