@@ -25,7 +25,7 @@
         </td>
         <td valign="top">   
           <a href="https://github.com/Jhanez27/psyche">Home</a> &gt; <a href="https://github.com/Jhanez27/psyche/blob/main/docs/choice-based-narrative.md">Choice Based Narrative</a>
-        <br>  
+        <br>   <br>
           <img src="https://github.com/user-attachments/assets/85dec3b1-808f-49a6-a915-637a7d85fca2">
           <h3>Choice Based Narrative</h3>
             <span>A dialogue-based gameplay will be available to the players to interact with the people around them. Additionally, the game will keep track of their choices which may impact the outcome of the story and the entire game.

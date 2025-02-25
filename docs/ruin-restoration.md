@@ -25,7 +25,7 @@
         </td>
         <td valign="top">   
          <a href="https://github.com/Jhanez27/psyche">Home</a> &gt; <a href="https://github.com/Jhanez27/psyche/blob/main/docs/ruin-restoration.md">Ruin Restoration</a>
-         <br>
+         <br> <br>
           <img src="https://github.com/user-attachments/assets/c5db0940-d643-43ea-9bcb-ff155127382e">
           <h3>Ruin Restoration</h3>
             <span>Certain stories are linked to a ruin and its appearance will change after the completion of a story. Additionally, features and events may be unlocked after the restoration.
