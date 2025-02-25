@@ -26,7 +26,7 @@
         <td valign ="top">   
            <a href="https://github.com/Jhanez27/psyche">Home</a> &gt; <a href="https://github.com/Jhanez27/psyche/blob/main/docs/account-authentication.md">Account Authentication</a>
            <br> <br>
-          <img src="https://github.com/user-attachments/assets/0566efa0-19f6-4577-ab75-27a2deb6005a">
+          <img src="images/account-authentication.png">
           <h3>Account Authentication</h3>
         <span>Users can create an account linked to their Google account. The given account will be authenticated with an Authentication API and an account for the game will be made once verified.</span>
         </td>

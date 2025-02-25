@@ -26,8 +26,8 @@
         <td valign ="top"> 
          <a href="https://github.com/Jhanez27/psyche">Home</a> &gt; <a href="https://github.com/Jhanez27/psyche/blob/main/docs/progress-control.md">Progress Control</a>
         <br>   <br>
-          <img src="https://github.com/user-attachments/assets/fe8d0f0f-f0f6-4c26-a477-e154753d8063">
-          <img src="https://github.com/user-attachments/assets/eff9e14d-cec1-44be-8ad6-38d31b43ee97">
+          <img src="images/progress-control(A).png">
+          <img src="images/progress-control(B).png">
           <h3>Progress Control</h3>
             <span>A designated database will be created to store progress on various game elements such as areas, stories, tasks, and the like. The completion and progression of stories and areas will be reflected and written in the database.
             </span>
