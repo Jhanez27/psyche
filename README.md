@@ -4,21 +4,21 @@
 
 <table>
     <tr>
-        <td valign="top">
-            <h4><a href="#revisions">Revisions</a></h4>
+        <td valign = "top">
+            <h4><a href=".README.md">Revisions</a></h4>
             <h4>Site Map</h4>
-            <ul style="list-style-type: none; padding-left: 0;">
-                <li><a href="docs/account-authentication.md">Account Authentication</a></li>
-                <li><a href="#sign-up">Account Backup and Restoration</a></li>
-                <li><a href="#area-exploration">Area Exploration</a></li>
-                <li><a href="#choice-narrative">Choice-based Narrative</a></li>
-                <ul style="list-style-type: none; padding-left: 20px;">
-                    <li><a href="#ruin-restoration">Ruin Restoration</a></li>
+            <ul>
+                <li><a href="./docs/account-authentication.md">Account Authentication</a></li>
+                <li><a href="./docs/account-backup-and-restoration.md">Account Backup and Restoration</a></li>
+                <li><a href="./docs/area-exploration.md">Area Exploration</a></li>
+                <li><a href="./docs/choice-based-narrative.md">Choice-based Narrative</a></li>
+                <ul>
+                    <li><a href="./docs/ruin-restoration.md">Ruin Restoration</a></li>
                 </ul>
-                <li><a href="#progress-control">Progress Control</a></li>
-                <ul style="list-style-type: none; padding-left: 20px;">
-                    <li><a href="#progress-saving">Progress Saving</a></li>
-                    <li><a href="#progress-loading">Progress Loading</a></li>
+                <li><a href="./docs/progress-control.md">Progress Control</a></li>
+                <ul>
+                    <li><a href="./docs/progress-saving.md">Progress Saving</a></li>
+                    <li><a href="./docs/progress-loading.md">Progress Loading</a></li>
                 </ul>
             </ul>
             <br>
@@ -40,9 +40,5 @@
                     <td></td>
             </table>
         </td>
-    </tr>
-    <tr>
-        <td colspan="2"><p align="center">© 2025 Spheron</p>
-</td>
     </tr>
 </table>
