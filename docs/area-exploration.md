@@ -4,7 +4,7 @@
 
 <table>
     <tr>
-        <td>
+        <td valign="top">
             <h4><a href="../README.md">Revisions</a></h4>
             <h4>Site Map</h4>
             <ul>
@@ -23,7 +23,8 @@
             </ul>
             <br>
         </td>
-        <td>   
+        <td valign="top">   
+          <a href="https://github.com/Jhanez27/psyche">Home</a> &gt; <a href="https://github.com/Jhanez27/psyche/blob/main/docs/area-exploration.md">Area Exploration</a>
             <img src="https://github.com/user-attachments/assets/2151c663-9e4e-4ed9-b41e-07e064df73ca">
           <h3>Area Exploration</h3>
             <span>Selected areas of Visayas State University and included contents will be visualised and designed using pixel art, creating a cohesive map. Players can traverse and explore the map full of stories, buildings, and items.
