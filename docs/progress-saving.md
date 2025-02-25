@@ -26,7 +26,7 @@
         <td valign="top">   
          <a href="https://github.com/Jhanez27/psyche">Home</a> &gt; <a href="https://github.com/Jhanez27/psyche/blob/main/docs/progress-saving.md">Progress Saving</a>
          <br> <br>
-          <img src="https://github.com/user-attachments/assets/6f80adc9-0e7b-4bac-aa68-09b18c4d5b1f">
+          <img src="images/progess-B.png">
           <h3>Progress Saving</h3>
             <span>Stories will have checkpoints where players can save the progress of the story. All relevant data will then be stored in the progress database.
             </span>
