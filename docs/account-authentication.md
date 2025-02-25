@@ -4,7 +4,7 @@
 
 <table>
     <tr>
-        <td>
+        <td valign = "top">
             <h4><a href="../README.md">Revisions</a></h4>
             <h4>Site Map</h4>
             <ul>
@@ -24,6 +24,8 @@
             <br>
         </td>
         <td valign ="top">   
+           <a href="https://github.com/Jhanez27/psyche">Home</a> &gt; <a href="https://github.com/Jhanez27/psyche/blob/main/docs/account-authentication.md">Account Authentication</a>
+           <br>
           <img src="https://github.com/user-attachments/assets/0566efa0-19f6-4577-ab75-27a2deb6005a">
           <h3>Account Authentication</h3>
         <span>Users can create an account linked to their Google account. The given account will be authenticated with an Authentication API and an account for the game will be made once verified.</span>

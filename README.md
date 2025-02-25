@@ -4,7 +4,7 @@
 
 <table>
     <tr>
-        <td style="width: 30%; border: 2px solid black; padding: 10px; vertical-align: top; position: relative;">
+        <td valign="top">
             <h4><a href="#revisions">Revisions</a></h4>
             <h4>Site Map</h4>
             <ul style="list-style-type: none; padding-left: 0;">

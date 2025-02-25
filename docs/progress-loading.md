@@ -4,7 +4,7 @@
 
 <table>
     <tr>
-        <td>
+        <td valign="top">
             <h4><a href="../README.md">Revisions</a></h4>
             <h4>Site Map</h4>
             <ul>
@@ -23,7 +23,9 @@
             </ul>
             <br>
         </td>
-        <td>   
+        <td valign="top">   
+        <a href="https://github.com/Jhanez27/psyche">Home</a> &gt; <a href="https://github.com/Jhanez27/psyche/blob/main/docs/progress-loading.md">Progress Loading</a>
+        <br>
           <img src="https://github.com/user-attachments/assets/083d2a08-d0db-441e-8805-5b9fafc57463">
           <h3>Progress Loading</h3>
             <span>Players can retrieve their latest saved progress from the database and load it into their game. They can play where they have last saved and continue progressing the story from there.
