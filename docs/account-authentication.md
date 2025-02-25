@@ -28,7 +28,8 @@
            <br> <br>
           <img src="images/account-authentication.png">
           <h3>Account Authentication</h3>
-        <span>Users can create an account linked to their Google account. The given account will be authenticated with an Authentication API and an account for the game will be made once verified.</span>
+        <span>Users can create an account linked to their Steam account. The given account will be authenticated with an authentication API and Steam Cloud integration, and an account for the game will be created once verified.
+       </span>
         </td>
     </tr>
     <tr>
