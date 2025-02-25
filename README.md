@@ -41,4 +41,8 @@
             </table>
         </td>
     </tr>
+     <tr>
+        <td colspan="2"><p align="center">© 2025 Spheron</p>
+</td>
+    </tr>
 </table>
