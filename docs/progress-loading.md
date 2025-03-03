@@ -26,7 +26,7 @@
         <td valign="top">   
         <a href="https://github.com/Jhanez27/psyche">Home</a> &gt; <a href="https://github.com/Jhanez27/psyche/blob/main/docs/progress-loading.md">Progress Loading</a>
         <br> <br>
-          <img src="images/progress-B.png">
+          <img src="images/progess-B.png">
           <h3>Progress Loading</h3>
             <span>Players can retrieve their latest saved progress from the database and load it into their game. They can play where they have last saved and continue progressing the story from there.
             </span>
