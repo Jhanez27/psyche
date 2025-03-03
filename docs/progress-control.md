@@ -31,6 +31,37 @@
           <h3>Progress Control</h3>
             <span>A designated database will be created to store progress on various game elements such as areas, stories, tasks, and the like. The completion and progression of stories and areas will be reflected and written in the database.
             </span>
+            <h3>Use Case Scenario</h3>
+              <table border="1">
+        <tr>
+            <th>Use Case</th>
+            <th>Progress Control</th>
+        </tr>
+        <tr>
+            <th>Actor(s)</th>
+            <td>Player</td>
+        </tr>
+        <tr>
+            <th>Goal</th>
+            <td>Track and restore the player's progress in the game.</td>
+        </tr>
+        <tr>
+            <th>Preconditions</th>
+            <td>The game is tracking the player's progress in different areas and tasks.</td>
+        </tr>
+        <tr>
+            <th>Main Scenario</th>
+            <td>
+                1. The player progresses through area, stories and task in the game.<br>
+                2. The system records the completion in the game's database.<br>
+                3. The player can access their progress.<br>
+            </td>
+        </tr>
+        <tr>
+            <th>Outcome</th>
+            <td><span>The player's progress is continuously updated and is reflecting in the game's database.</span></td>
+        </tr>
+    </table>
             <br>
         </td>
     </tr>

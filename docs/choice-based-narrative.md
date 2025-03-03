@@ -30,6 +30,39 @@
           <h3>Choice Based Narrative</h3>
             <span>A dialogue-based gameplay will be available to the players to interact with the people around them. Additionally, the game will keep track of their choices which may impact the outcome of the story and the entire game.
             </span>
+            <h3>Use Case Scenario</h3>
+              <table border="1">
+        <tr>
+            <th>Use Case</th>
+            <th>Choice-Based Narrative</th>
+        </tr>
+        <tr>
+            <th>Actor(s)</th>
+            <td>Player</td>
+        </tr>
+        <tr>
+            <th>Goal</th>
+            <td>Make choice dialogues to influence the story.</td>
+        </tr>
+        <tr>
+            <th>Preconditions</th>
+            <td>The player is interacting with an NPCs.</td>
+        </tr>
+        <tr>
+            <th>Main Scenario</th>
+            <td>
+                1. The player meets and interacted with an NPC triggering dialogue.<br>
+                2. A series of choice is presented to the player.<br>
+                3. The player selects one out of the given choices.<br>
+                4. The system records the choice and update the narrative accordingly.<br>
+                5. The game progresses based on the player;s choice.
+            </td>
+        </tr>
+        <tr>
+            <th>Outcome</th>
+            <td><span>The player's choice impacts the narrative and gameplay. </span></td>
+        </tr>
+    </table>
             <br>
         </td>
     </tr>

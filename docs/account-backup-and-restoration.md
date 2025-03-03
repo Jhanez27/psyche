@@ -29,6 +29,44 @@
             <img src="images/account backup (1).png">
           <h3>Account Backup and Restoration</h3>
             <span>Save files contain account details and progress including game progression and transactions, and players can back up their progress into these save files. Players can also restore their account progress by retrieving the latest save file. Players will be prompted to ensure the overwriting of their existing save files and accounts for backing up and restoring, respectively.</span>
+            <h3>Use Case Scenario</h3>
+             <table border="1">
+        <tr>
+            <th>Use Case</th>
+            <th>Account Backup and Restoration</th>
+        </tr>
+        <tr>
+            <th>Actor(s)</th>
+            <td>Player</td>
+        </tr>
+        <tr>
+            <th>Goal</th>
+            <td>Successfully back up and restore player's current progress.</td>
+        </tr>
+        <tr>
+            <th>Preconditions</th>
+            <td>The player has an existing save files containing his progress data.</td>
+        </tr>
+        <tr>
+            <th>Main Scenario</th>
+            <td>
+                  Backup <br>
+                1. The player navigates to the setting menu.<br>
+                2. The player selects to back up current game progress.<br>
+                3. The system will prompt the player to confirm overwriting the existing back up file.<br>
+                4. The player confirms it, and the system will then proceed with overwriting the file.<br>
+                  Restoration<br>
+                1. The player navigates to the setting menu.<br>
+                2. The player selects to back up current game progress.<br>
+                3. The system will prompt the player to confirm restoring this saved progress, potentially overwriting the current game progress.<br>
+                4. The player confirms it, and the system restores the latest backup.<br>
+            </td>
+        </tr>
+        <tr>
+            <th>Outcome</th>
+            <td><span>The player successfully backs up and restore his progress. </span></td>
+        </tr>
+    </table>
         </td>
     </tr>
     <tr>

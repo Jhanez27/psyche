@@ -35,9 +35,9 @@
                 <tr>
                 <td>2025-02-01</td>
                 <td>v1.0.0</td>
-                <td></td>
-                    <td></td>
-                    <td></td>
+                <td>Initial Document Release</td>
+                    <td>N/A</td>
+                    <td>Suringa, Rigen<br><em>Project Manager</em></td>
             </table>
         </td>
     </tr>

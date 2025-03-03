@@ -26,10 +26,42 @@
         <td valign="top">   
          <a href="https://github.com/Jhanez27/psyche">Home</a> &gt; <a href="https://github.com/Jhanez27/psyche/blob/main/docs/progress-saving.md">Progress Saving</a>
          <br> <br>
-          <img src="images/progess-B.png">
+          <img src="images/progess-A.png">
           <h3>Progress Saving</h3>
             <span>Stories will have checkpoints where players can save the progress of the story. All relevant data will then be stored in the progress database.
             </span>
+             <h3>Use Case Scenario</h3>
+              <table border="1">
+        <tr>
+            <th>Use Case</th>
+            <th>Progress Saving</th>
+        </tr>
+        <tr>
+            <th>Actor(s)</th>
+            <td>Player</td>
+        </tr>
+        <tr>
+            <th>Goal</th>
+            <td>Save the player's progress at designated checkpoints.</td>
+        </tr>
+        <tr>
+            <th>Preconditions</th>
+            <td>The player reaches a checkpoint in the game.</td>
+        </tr>
+        <tr>
+            <th>Main Scenario</th>
+            <td>
+                1. The player reaches a checkpoint in the game.<br>
+                2. The system prompts the player to save their progress.<br>
+                3. The players confirms to save current progress.<br>
+                4. The system stores the current progress in the game's database.<br>
+            </td>
+        </tr>
+        <tr>
+            <th>Outcome</th>
+            <td><span>The player successfully saves the current game progress at the checkpoint. </span>.</td>
+        </tr>
+    </table>
             <br>
         </td>
     </tr>
