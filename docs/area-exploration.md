@@ -29,7 +29,39 @@
             <img src="images/area-exploration.png">
           <h3>Area Exploration</h3>
             <span>Selected areas of Visayas State University and included contents will be visualised and designed using pixel art, creating a cohesive map. Players can traverse and explore the map full of stories, buildings, and items.
-</span>
+         </span>
+          <h3>Use Case Scenario</h3>
+            <table border="1">
+        <tr>
+            <th>Use Case</th>
+            <th>Area Exploration</th>
+        </tr>
+        <tr>
+            <th>Actor(s)</th>
+            <td>Player</td>
+        </tr>
+        <tr>
+            <th>Goal</th>
+            <td>Explore different area and location in the game.</td>
+        </tr>
+        <tr>
+            <th>Preconditions</th>
+            <td>The game world is available for exploration and is not lock.</td>
+        </tr>
+        <tr>
+            <th>Main Scenario</th>
+            <td>
+                1. The player launches the game and enters the world map.<br>
+                2. The player selects and area to explore.<br>
+                3. The system loads the player's selected area and displays it.<br>
+                4. The player moves around the area and interact with the NPCs.
+            </td>
+        </tr>
+        <tr>
+            <th>Outcome</th>
+            <td><span>The player successfully explore new area and interact with NPCs, and event as they progress. </span></td>
+        </tr>
+    </table>
         </td>
     </tr>
     <tr>

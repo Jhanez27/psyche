@@ -29,6 +29,38 @@
           <img src="images/account-authentication.png">
           <h3>Account Authentication</h3>
         <span>Users can create an account linked to their Steam account. The given account will be authenticated with an authentication API and Steam Cloud integration, and an account for the game will be created once verified.
+        <h3>Use Case Scenario</h3>
+        <table border="1">
+        <tr>
+            <th>Use Case</th>
+            <th>Account Authentication</th>
+        </tr>
+        <tr>
+            <th>Actor(s)</th>
+            <td>Player</td>
+        </tr>
+        <tr>
+            <th>Goal</th>
+            <td>Successfully link the player to their steam account</td>
+        </tr>
+        <tr>
+            <th>Preconditions</th>
+            <td>The player must have a valid steam account.</td>
+        </tr>
+        <tr>
+            <th>Main Scenario</th>
+            <td>
+                1. The player launches the game and a login form was prompted with the option to login with their steam account.<br>
+                2. The player enters their steam account credentials.<br>
+                3. The system send the steam credentials for authentication to the authentication API.<br>
+                4. The system validate the steam login credentials.<br>
+            </td>
+        </tr>
+        <tr>
+            <th>Outcome</th>
+            <td><span>The player successfully creates an account using or linking their Steam. </span></td>
+        </tr>
+    </table>
        </span>
         </td>
     </tr>
