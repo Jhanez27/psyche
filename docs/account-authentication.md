@@ -50,8 +50,9 @@
         <tr>
             <th>Main Scenario</th>
             <td>
-                1. The player launches the game, and the game will fetch their Steam account information via SteamCloud.<br>
-                2. The system authenticates the steam 
+                 1. The player launches the game, and the system will fetch their Steam account information via SteamCloud.<br>
+                 2. The system send the steam credentials for authentication to the authentication API.<br>
+                 3. The system validate the steam login credentials.<br>
             </td>
         </tr>
         <tr>
