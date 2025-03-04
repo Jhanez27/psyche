@@ -55,7 +55,7 @@
                 2. A series of choice is presented to the player.<br>
                 3. The player selects one out of the given choices.<br>
                 4. The system records the choice and update the narrative accordingly.<br>
-                5. The game progresses based on the player;s choice.
+                5. The game progresses based on the player's choice.
             </td>
         </tr>
         <tr>

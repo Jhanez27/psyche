@@ -58,7 +58,7 @@
         </tr>
         <tr>
             <th>Outcome</th>
-            <td><span>The player successfully restored the ruin. and unlocks a new ruin.</span></td>
+            <td><span>The player successfully restored the ruin.</span></td>
         </tr>
     </table>
             <br>
