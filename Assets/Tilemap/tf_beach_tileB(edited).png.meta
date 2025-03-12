@@ -1,0 +1,780 @@
+fileFormatVersion: 2
+guid: 7bb903bfd539a944cab6685130cf879e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3185056350272838524
+    second: tf_beach_tileB(edited)_0
+  - first:
+      213: 8268480877560590290
+    second: tf_beach_tileB(edited)_1
+  - first:
+      213: -996676578283564615
+    second: tf_beach_tileB(edited)_2
+  - first:
+      213: -7448188933327862313
+    second: tf_beach_tileB(edited)_3
+  - first:
+      213: -6331870977490445313
+    second: tf_beach_tileB(edited)_4
+  - first:
+      213: -230876891618240355
+    second: tf_beach_tileB(edited)_5
+  - first:
+      213: 7709548777092506960
+    second: tf_beach_tileB(edited)_6
+  - first:
+      213: -1022243312097688735
+    second: tf_beach_tileB(edited)_7
+  - first:
+      213: 6122982342176420242
+    second: tf_beach_tileB(edited)_8
+  - first:
+      213: -8514947582494213626
+    second: tf_beach_tileB(edited)_9
+  - first:
+      213: -6131943132173631390
+    second: tf_beach_tileB(edited)_10
+  - first:
+      213: -6188139590750548156
+    second: tf_beach_tileB(edited)_11
+  - first:
+      213: -633886930307508558
+    second: tf_beach_tileB(edited)_12
+  - first:
+      213: -5898067499416285846
+    second: tf_beach_tileB(edited)_13
+  - first:
+      213: -6099333573942237196
+    second: tf_beach_tileB(edited)_14
+  - first:
+      213: 4534130486039283485
+    second: tf_beach_tileB(edited)_15
+  - first:
+      213: -1807191582443354650
+    second: tf_beach_tileB(edited)_16
+  - first:
+      213: 3520631051575010366
+    second: tf_beach_tileB(edited)_17
+  - first:
+      213: 5039990901161878079
+    second: tf_beach_tileB(edited)_18
+  - first:
+      213: -2639408276218433664
+    second: tf_beach_tileB(edited)_19
+  - first:
+      213: 8693200134066274787
+    second: tf_beach_tileB(edited)_20
+  - first:
+      213: -2927057244964166519
+    second: tf_beach_tileB(edited)_21
+  - first:
+      213: -6455072611459917710
+    second: tf_beach_tileB(edited)_22
+  - first:
+      213: -998460079007029893
+    second: tf_beach_tileB(edited)_23
+  - first:
+      213: -8582546878030065676
+    second: tf_beach_tileB(edited)_24
+  - first:
+      213: 571089053981624998
+    second: tf_beach_tileB(edited)_25
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 623
+        width: 385
+        height: 145
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7b5d9b10e7933c20800000000000000
+      internalID: 3185056350272838524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_1
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 590
+        width: 89
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2dfeb13cc8b8fb270800000000000000
+      internalID: 8268480877560590290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_2
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 584
+        width: 41
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b1d473cee71b22f0800000000000000
+      internalID: -996676578283564615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_3
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 536
+        width: 104
+        height: 232
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d54ff890a7b2a890800000000000000
+      internalID: -7448188933327862313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_4
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 638
+        width: 221
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffb9317c4eca028a0800000000000000
+      internalID: -6331870977490445313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_5
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 590
+        width: 32
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d989f38b0b2cbccf0800000000000000
+      internalID: -230876891618240355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_6
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 584
+        width: 29
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 055652d04c1ddfa60800000000000000
+      internalID: 7709548777092506960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_7
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 587
+        width: 41
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 163066caf1340d1f0800000000000000
+      internalID: -1022243312097688735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_8
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 584
+        width: 59
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2913a6fcff339f450800000000000000
+      internalID: 6122982342176420242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_9
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 434
+        width: 233
+        height: 176
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60a7c50b944d4d980800000000000000
+      internalID: -8514947582494213626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_10
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 389
+        width: 140
+        height: 176
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26005efa536f6eaa0800000000000000
+      internalID: -6131943132173631390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_11
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 431
+        width: 386
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44f48c014df4f1aa0800000000000000
+      internalID: -6188139590750548156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_12
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 389
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b61243023bf337f0800000000000000
+      internalID: -633886930307508558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_13
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 389
+        width: 44
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6d040ccbdad52ea0800000000000000
+      internalID: -5898067499416285846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_14
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 389
+        width: 41
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f72f8e1e60da5ba0800000000000000
+      internalID: -6099333573942237196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_15
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 386
+        width: 74
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1704a977a77cee30800000000000000
+      internalID: 4534130486039283485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_16
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 143
+        width: 385
+        height: 281
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e54367a4d09be6e0800000000000000
+      internalID: -1807191582443354650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_17
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 287
+        width: 137
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e34a65ec94bcbd030800000000000000
+      internalID: 3520631051575010366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_18
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 119
+        width: 215
+        height: 245
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3264f68505a1f540800000000000000
+      internalID: 5039990901161878079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_19
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 356
+        width: 26
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08f26ce2820fe5bd0800000000000000
+      internalID: -2639408276218433664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_20
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 104
+        width: 134
+        height: 164
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e10660a67374a870800000000000000
+      internalID: 8693200134066274787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_21
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 116
+        width: 50
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9846da4a1f00167d0800000000000000
+      internalID: -2927057244964166519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_22
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 47
+        width: 89
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 278149a09a9fa66a0800000000000000
+      internalID: -6455072611459917710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_23
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 32
+        width: 26
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b75a06429d1c422f0800000000000000
+      internalID: -998460079007029893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_24
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 0
+        width: 98
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ff41e2361ba4e880800000000000000
+      internalID: -8582546878030065676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tf_beach_tileB(edited)_25
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 41
+        width: 50
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6aa40b5087aece700800000000000000
+      internalID: 571089053981624998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable: {}
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
