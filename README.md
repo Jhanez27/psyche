@@ -1,48 +1,42 @@
 # Psyche
 
-### Target: AB.0XY.00Z
+Development of a Graphic Novel VSU Exploration Game
 
 <table>
     <tr>
         <td valign = "top">
-            <h4><a href=".README.md">Revisions</a></h4>
-            <h4>Site Map</h4>
-            <ul>
-                <li><a href="./docs/account-authentication.md">Account Authentication</a></li>
-                <li><a href="./docs/account-backup-and-restoration.md">Account Backup and Restoration</a></li>
-                <li><a href="./docs/area-exploration.md">Area Exploration</a></li>
-                <li><a href="./docs/choice-based-narrative.md">Choice-based Narrative</a></li>
-                <ul>
-                    <li><a href="./docs/ruin-restoration.md">Ruin Restoration</a></li>
-                </ul>
-                <li><a href="./docs/progress-control.md">Progress Control</a></li>
-                <ul>
-                    <li><a href="./docs/progress-saving.md">Progress Saving</a></li>
-                    <li><a href="./docs/progress-loading.md">Progress Loading</a></li>
-                </ul>
-            </ul>
-            <br>
-        </td>
-        <td valign="top">   
             <table>
                 <tr>
-                <th>Revision Date</th>
-                <th>Document Version</th>
-                <th>Desription</th>
-                <th>Tracking Notes</th>
-                <th>Approved By</th>
-              </tr>
+                  <th>Internal Release Code</th>
+               <th>Date Released</th>
+                </tr>
                 <tr>
-                <td>2025-02-01</td>
-                <td>v1.0.0</td>
-                <td>Initial Document Release</td>
-                    <td>N/A</td>
-                    <td>Suringa, Rigen<br><em>Project Manager</em></td>
+                    <td>PC.010.001</td>
+                    <td>2025-03-12</td>
+                </tr>
             </table>
+            <br>
+            <span>PC.010.001 Release Notes</span><br>
+            <ul>
+                <li>Added cutscene for game intro</li>
+                <li>Updated Ruins map</li>
+                <li>Fixed Pub-Sub system </li>
+                 <li>Fixed tilemap grid layers</li>
+                 <li>Fixed sprite flipping on directions</li>
+            </ul>
+            <br>
+            <span>PC.010.000 Release Notes</span>
+            <ul>
+                <li>Add breadcrumbs to the markdown files</li>
+                 <li>Add additional Markdown File</li>
+                <li>Update the README.md</li>
+              <li>Create a folder for other markdowns</li>
+              <li>Add a readme.md</li>  
+            </ul>
+            <span>Important Links:</span>
+            <ul>
+                <li>Design Specs: <a href= "https://github.com/Jhanez27/psyche-dev">https://github.com/Jhanez27/psyche-dev</a></li>
+            </ul>
         </td>
-    </tr>
-     <tr>
-        <td colspan="2"><p align="center">© 2025 Spheron</p>
-</td>
     </tr>
 </table>
