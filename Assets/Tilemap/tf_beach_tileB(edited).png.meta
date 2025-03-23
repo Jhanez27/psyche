@@ -772,7 +772,33 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      tf_beach_tileB(edited)_0: 3185056350272838524
+      tf_beach_tileB(edited)_1: 8268480877560590290
+      tf_beach_tileB(edited)_10: -6131943132173631390
+      tf_beach_tileB(edited)_11: -6188139590750548156
+      tf_beach_tileB(edited)_12: -633886930307508558
+      tf_beach_tileB(edited)_13: -5898067499416285846
+      tf_beach_tileB(edited)_14: -6099333573942237196
+      tf_beach_tileB(edited)_15: 4534130486039283485
+      tf_beach_tileB(edited)_16: -1807191582443354650
+      tf_beach_tileB(edited)_17: 3520631051575010366
+      tf_beach_tileB(edited)_18: 5039990901161878079
+      tf_beach_tileB(edited)_19: -2639408276218433664
+      tf_beach_tileB(edited)_2: -996676578283564615
+      tf_beach_tileB(edited)_20: 8693200134066274787
+      tf_beach_tileB(edited)_21: -2927057244964166519
+      tf_beach_tileB(edited)_22: -6455072611459917710
+      tf_beach_tileB(edited)_23: -998460079007029893
+      tf_beach_tileB(edited)_24: -8582546878030065676
+      tf_beach_tileB(edited)_25: 571089053981624998
+      tf_beach_tileB(edited)_3: -7448188933327862313
+      tf_beach_tileB(edited)_4: -6331870977490445313
+      tf_beach_tileB(edited)_5: -230876891618240355
+      tf_beach_tileB(edited)_6: 7709548777092506960
+      tf_beach_tileB(edited)_7: -1022243312097688735
+      tf_beach_tileB(edited)_8: 6122982342176420242
+      tf_beach_tileB(edited)_9: -8514947582494213626
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

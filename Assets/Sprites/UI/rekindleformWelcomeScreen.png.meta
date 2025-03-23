@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      rekindleformWelcomeScreen_0: -4431457806907175795
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
