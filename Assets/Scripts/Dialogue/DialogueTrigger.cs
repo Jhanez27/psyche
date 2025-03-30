@@ -22,14 +22,16 @@ public class DialogueTrigger : MonoBehaviour
         //Set the attributes to default values
         this.playerInRange = false;
         this.visualCue.SetActive(false);
+        this.inputSystem = new InputSystem_Actions();
+        this.inputSystem.Enable();
     }
 
     private void Update()
     {
-        if(this.playerInRange){
+        if(this.playerInRange && !DialogueManager.GetInstance().dialogueIsActive){
             //Shows the visual cue when the player is in range
             this.visualCue.SetActive(true);
-            if (inputSystem.Player.Interact.triggered){
+            if (Input.GetKeyDown(KeyCode.X) || this.inputSystem.Player.Interact.triggered){
                 DialogueManager.GetInstance().EnterDialogueMode(this.inkJSON);
             }
         }
@@ -42,6 +44,7 @@ public class DialogueTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Player in range of dialogue trigger");
         //Checks if the player is in range
         if(collision.gameObject.CompareTag("Player"))
         {
@@ -49,12 +52,20 @@ public class DialogueTrigger : MonoBehaviour
         }
     }
 
-    private void OnTExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         //Checks if the player is not in range
         if(collision.gameObject.CompareTag("Player"))
         {
             this.playerInRange = false;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if(this.inputSystem != null)
+        {
+            this.inputSystem.Disable();
         }
     }
 }

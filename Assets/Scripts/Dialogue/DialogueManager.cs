@@ -7,14 +7,14 @@ using UnityEngine;
 
 public class DialogueManager : MonoBehaviour
 {
-    [Header("Visual Cue")]
+    [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
 
     private Story currentStory;
     public bool dialogueIsActive { get; private set; }
     private static DialogueManager instance;
-    private static InputSystem_Actions inputSystem;
+    private InputSystem_Actions inputSystem;
 
     public static DialogueManager GetInstance(){
         return instance;
@@ -23,10 +23,18 @@ public class DialogueManager : MonoBehaviour
     private void Awake()
     {
         //Singleton pattern
-        if(instance == null) {instance = this;}
-        else {
+        if(instance == null) 
+        {
+            instance = this;
+        }
+        else 
+        {
             Debug.LogWarning("Another instance of DialogueManager already exists. Destroying this instance.");
         }
+
+        //Enable the input system
+        this.inputSystem = new InputSystem_Actions();
+        this.inputSystem.Enable();
     }
 
     private void Start()
@@ -39,7 +47,7 @@ public class DialogueManager : MonoBehaviour
     private void Update()
     {
         //Check if the player is in dialogue mode and if the player has pressed the interact button
-        if(dialogueIsActive && inputSystem.Player.Interact.triggered){
+        if(dialogueIsActive && (inputSystem.Player.Interact.triggered || Input.GetKeyDown(KeyCode.X))){
             this.ContinueStory();
         }
     }
@@ -71,6 +79,15 @@ public class DialogueManager : MonoBehaviour
         else
         {
             this.ExitDialogueMode();
+        }
+    }
+
+    private void Oestroy()
+    {
+        //Disable the input system
+        if(this.inputSystem != null)
+        {
+            this.inputSystem.Disable();
         }
     }
 }
