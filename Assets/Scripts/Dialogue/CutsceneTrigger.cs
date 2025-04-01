@@ -4,8 +4,9 @@ using UnityEngine.AI;
 
 public class CutsceneTrigger : MonoBehaviour
 {
-    [Header("Cutscene Trigger")]
+    [Header("Cutscene Trigger Ink JSON")]
     [SerializeField] private TextAsset cutsceneJSON;
+    
     void Awake()
     {
         StartCoroutine(DelayedStart()        );
@@ -16,16 +17,11 @@ public class CutsceneTrigger : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         if(DialogueManager.Instance != null)
         {
-            DialogueManager.Instance.EnterDialogueMode(cutsceneJSON);
+            DialogueManager.Instance.StartDialogue(cutsceneJSON);
         }
         else
         {
-            Debug.LogError("DialogueManager instance is null. Make sure it is initialized before calling EnterDialogueMode.");
+            Debug.LogError("DialogueManager instance is null. Make sure it is initialized before calling StartDialogue.");
         }
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

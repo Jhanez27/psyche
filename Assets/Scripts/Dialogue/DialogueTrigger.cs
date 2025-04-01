@@ -31,8 +31,8 @@ public class DialogueTrigger : MonoBehaviour
         if(this.playerInRange && !DialogueManager.Instance.DialogueIsActive){
             //Shows the visual cue when the player is in range
             this.visualCue.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.X) || this.inputSystem.Player.Interact.triggered){
-                DialogueManager.Instance.EnterDialogueMode(this.inkJSON);
+            if (this.inputSystem.Player.Interact.triggered){
+                DialogueManager.Instance.StartDialogue(this.inkJSON);
             }
         }
         else
