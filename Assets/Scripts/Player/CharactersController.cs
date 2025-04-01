@@ -58,7 +58,7 @@ public class CharacterController : Singleton<CharacterController>
     private void FixedUpdate()
     {
         //Unable to move when Dialogue is Active
-        if(DialogueManager.GetInstance().dialogueIsActive) 
+        if(DialogueManager.Instance.DialogueIsActive) 
         {
             return;
         }
@@ -70,30 +70,28 @@ public class CharacterController : Singleton<CharacterController>
 
     private void PlayerInput()
     {
-        //Get the Movement Input from Player
+        if(DialogueManager.Instance.DialogueIsActive) { return;}
+        
         movement.x = Input.GetAxis("Horizontal");
         movement.y = Input.GetAxis("Vertical");
 
         //Store for Idle Direction
         if(movement.sqrMagnitude > 0.01f)
         {
-            lastMovement = movement;
+            lastMovement = movement.normalized;
         }
-
-        //Normalize for Consistent Diagonal Movement Speed
-        movement.Normalize();
 
         //Set the Animator Parameters
         myAnimator.SetFloat("MoveX", movement.x);
         myAnimator.SetFloat("MoveY", movement.y);
         myAnimator.SetFloat("LastMoveX", lastMovement.x);
         myAnimator.SetFloat("LastMoveY", lastMovement.y);
-        myAnimator.SetFloat("MoveMagnitude", movement.magnitude);
+        myAnimator.SetFloat("MoveMagnitude", movement.sqrMagnitude);
     }
 
     private void Move()
     {
-        rb.MovePosition(rb.position + movement * (moveSpeed * Time.fixedDeltaTime));
+        rb.MovePosition(rb.position + movement.normalized * (moveSpeed * Time.fixedDeltaTime));
     }
 
     private void Dash()

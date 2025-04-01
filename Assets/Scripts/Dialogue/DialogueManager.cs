@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Ink.Runtime;
@@ -7,29 +8,27 @@ using UnityEngine;
 
 public class DialogueManager : MonoBehaviour
 {
-    [Header("Dialogue UI")]
-    [SerializeField] private GameObject dialoguePanel;
-    [SerializeField] private TextMeshProUGUI dialogueText;
+    //Singleton Pattern 
+    public static DialogueManager Instance {get; private set; } 
 
-    private Story currentStory;
-    public bool dialogueIsActive { get; private set; }
-    private static DialogueManager instance;
+    [Header("Dialogue UI")]
+    [SerializeField] private GameObject dialoguePanel; 
+    [SerializeField] private TextMeshProUGUI dialogueText; 
+
+    public bool DialogueIsActive { get; private set; }
+    private Story currentStory; 
     private InputSystem_Actions inputSystem;
 
-    public static DialogueManager GetInstance(){
-        return instance;
-    }
 
     private void Awake()
     {
         //Singleton pattern
-        if(instance == null) 
-        {
-            instance = this;
-        }
-        else 
-        {
-            Debug.LogWarning("Another instance of DialogueManager already exists. Destroying this instance.");
+        if(Instance == null) { Instance = this;}
+        else { 
+            //If there is already an instance of DialogueManager, destroy this one which is a duplicate
+            Debug.LogWarning("DialogueManager instance already exists, destroying duplicate."); 
+            Destroy(this.gameObject);
+            return;
         }
 
         //Enable the input system
@@ -41,13 +40,13 @@ public class DialogueManager : MonoBehaviour
     {
         //Set default values
         dialoguePanel.SetActive(false);
-        dialogueIsActive = false;
+        DialogueIsActive = false;
     }
 
     private void Update()
     {
         //Check if the player is in dialogue mode and if the player has pressed the interact button
-        if(dialogueIsActive && (inputSystem.Player.Interact.triggered || Input.GetKeyDown(KeyCode.X))){
+        if(DialogueIsActive && (inputSystem.Player.Interact.triggered || Input.GetKeyDown(KeyCode.X))){
             this.ContinueStory();
         }
     }
@@ -56,7 +55,7 @@ public class DialogueManager : MonoBehaviour
     {
         //Create a new story object with the inkJSON text
         this.currentStory = new Story(inkJSON.text);
-        this.dialogueIsActive = true;
+        this.DialogueIsActive = true;
         this.dialoguePanel.SetActive(true);
 
         this.ContinueStory();
@@ -65,7 +64,7 @@ public class DialogueManager : MonoBehaviour
     private void ExitDialogueMode()
     {
         //Set the dialogue mode to false and hide the dialogue panel
-        this.dialogueIsActive = false;
+        this.DialogueIsActive = false;
         this.dialoguePanel.SetActive(false);
         this.dialogueText.text = "";
     }
@@ -74,7 +73,7 @@ public class DialogueManager : MonoBehaviour
     {
         //Check if the story can continue and continue the story
         if (this.currentStory.canContinue){
-            dialogueText.text = this.currentStory.Continue();
+            this.dialogueText.text = this.currentStory.Continue();
         }
         else
         {
@@ -82,7 +81,14 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void Oestroy()
+    public void StartCutsceneDialogue(TextAsset inkJSON)
+    {
+        if(!this.DialogueIsActive)
+        {
+            this.EnterDialogueMode(inkJSON);
+        }
+    }
+    private void OnDestroy()
     {
         //Disable the input system
         if(this.inputSystem != null)

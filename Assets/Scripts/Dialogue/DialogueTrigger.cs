@@ -28,11 +28,11 @@ public class DialogueTrigger : MonoBehaviour
 
     private void Update()
     {
-        if(this.playerInRange && !DialogueManager.GetInstance().dialogueIsActive){
+        if(this.playerInRange && !DialogueManager.Instance.DialogueIsActive){
             //Shows the visual cue when the player is in range
             this.visualCue.SetActive(true);
             if (Input.GetKeyDown(KeyCode.X) || this.inputSystem.Player.Interact.triggered){
-                DialogueManager.GetInstance().EnterDialogueMode(this.inkJSON);
+                DialogueManager.Instance.EnterDialogueMode(this.inkJSON);
             }
         }
         else
