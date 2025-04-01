@@ -15,9 +15,20 @@ public class DialogueManager : MonoBehaviour
     public event Action OnDialogueStart;
     public event Action<string> OnDialogueUpdate;
     public event Action OnDialogueEnd;
+    
+    //Event Driven Architecture for Dialogue UI
+    public event Action<string> OnDialogueSpeakerUpdate;
+    public event Action<string> OnDialogueEmotionUpdate;
+    public event Action<string> OnDialoguePortraitUpdate;
+    public event Action<string> OnDialogueLayoutUpdate;
 
     public bool DialogueIsActive { get; private set; } //Property to check if the dialogue is active
     private Story currentStory; //Current story object
+
+    //Ink JSON Tags
+    private const string SPEAKER_TAG = "Speaker";
+    private const string EMOTION_TAG = "Emotion";
+    private const string PORTRAIT_TAG = "Portrait";
 
     private void Awake()
     {
@@ -35,6 +46,8 @@ public class DialogueManager : MonoBehaviour
     {
         if(DialogueIsActive) return; //If dialogue is already active, do nothing
 
+        Debug.Log("Starting dialogue with JSON: " + inkJSON.name); //Log the name of the JSON file
+        
         currentStory = new Story(inkJSON.text);
         DialogueIsActive = true;
         OnDialogueStart?.Invoke(); 
@@ -45,8 +58,8 @@ public class DialogueManager : MonoBehaviour
     {
         if(!DialogueIsActive) return; //If dialogue is not active, do nothing
 
-        DialogueIsActive = false; //Set dialogue to inactive
-        OnDialogueEnd?.Invoke(); //Invoke the dialogue end event
+        StartCoroutine(DelayDialogueEnd()); //Start the coroutine to delay the end of the dialogue
+        
     }
 
     public void ContinueStory()
@@ -55,10 +68,53 @@ public class DialogueManager : MonoBehaviour
         {
             string nextLine = currentStory.Continue(); //Continue the story and get the text
             OnDialogueUpdate?.Invoke(nextLine); //Invoke the dialogue update event with the text
+
+            HandleTags(currentStory.currentTags); //Handle the tags in the current story
         }
         else
         {
+            Debug.Log("End of dialogue reached."); //Log that the end of the dialogue is reached
             EndDialogue(); //End the dialogue if there is no more text
         }
     }
+
+    public IEnumerator DelayDialogueEnd()
+    {
+        yield return new WaitForSeconds(0.2f); //Wait for 1 second before ending the dialogue
+        
+        DialogueIsActive = false; //Set the dialogue state to inactive
+        OnDialogueEnd?.Invoke(); //Invoke the dialogue end event
+    }
+
+    private void HandleTags(List<string> storyTags)
+    {
+        foreach (string tag in storyTags)
+        {
+            string[] tagParts = tag.Split(':'); //Split the tag into parts
+            if(tagParts.Length == 2)
+            {
+                string tagName = tagParts[0].Trim(); //Get the tag name
+                string tagValue = tagParts[1].Trim(); //Get the tag value
+
+                switch (tagName)
+                {
+                    case SPEAKER_TAG:
+                        OnDialogueSpeakerUpdate?.Invoke(tagValue); //Invoke the speaker update event with the tag value
+                        OnDialoguePortraitUpdate?.Invoke(tagValue); //Invoke the emotion update event with the tag value
+                        break;
+                    case EMOTION_TAG:
+                        //Invoke the emotion update event with the tag value
+                        break;
+                    case PORTRAIT_TAG:
+                        OnDialogueLayoutUpdate?.Invoke(tagValue); //Invoke the portrait update event with the tag value
+                        break;
+                    default:
+                        Debug.LogWarning("Unknown tag: " + tagName); //Log a warning for unknown tags
+                        break;
+                }
+                Debug.Log("Tag: " + tagName + ", Value: " + tagValue); //Log the tag and value
+            }
+        }
+    }
+
 }

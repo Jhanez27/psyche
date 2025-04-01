@@ -32,6 +32,8 @@ public class CharacterController : Singleton<CharacterController>
         rb = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
         mySpriteRender = GetComponent<SpriteRenderer>();
+
+        movement = lastMovement = Vector2.zero;
     }
 
     private void Start()
@@ -70,10 +72,14 @@ public class CharacterController : Singleton<CharacterController>
 
     private void PlayerInput()
     {
-        if(DialogueManager.Instance.DialogueIsActive) { return;}
-        
-        movement.x = Input.GetAxis("Horizontal");
-        movement.y = Input.GetAxis("Vertical");
+        if(DialogueManager.Instance.DialogueIsActive) 
+        {
+            myAnimator.SetFloat("MoveMagnitude", 0f);
+
+            return;
+        }
+
+        movement = playerControls.Player.Move.ReadValue<Vector2>();
 
         //Store for Idle Direction
         if(movement.sqrMagnitude > 0.01f)

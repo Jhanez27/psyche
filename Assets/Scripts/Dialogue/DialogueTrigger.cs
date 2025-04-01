@@ -20,25 +20,25 @@ public class DialogueTrigger : MonoBehaviour
     private void Awake()
     {
         //Set the attributes to default values
-        this.playerInRange = false;
-        this.visualCue.SetActive(false);
-        this.inputSystem = new InputSystem_Actions();
-        this.inputSystem.Enable();
+        playerInRange = false;
+        visualCue.SetActive(false);
+        inputSystem = new InputSystem_Actions();
+        inputSystem.Enable();
     }
 
     private void Update()
     {
-        if(this.playerInRange && !DialogueManager.Instance.DialogueIsActive){
+        if(playerInRange && !DialogueManager.Instance.DialogueIsActive){
             //Shows the visual cue when the player is in range
-            this.visualCue.SetActive(true);
-            if (this.inputSystem.Player.Interact.triggered){
+            visualCue.SetActive(true);
+            if (inputSystem.Player.Interact.triggered){
                 DialogueManager.Instance.StartDialogue(this.inkJSON);
             }
         }
         else
         {
             //Hides the visual cue when the player is not in range
-            this.visualCue.SetActive(false);
+            visualCue.SetActive(false);
         }
     }
 
@@ -48,7 +48,7 @@ public class DialogueTrigger : MonoBehaviour
         //Checks if the player is in range
         if(collision.gameObject.CompareTag("Player"))
         {
-            this.playerInRange = true;
+            playerInRange = true;
         }
     }
 
@@ -57,15 +57,15 @@ public class DialogueTrigger : MonoBehaviour
         //Checks if the player is not in range
         if(collision.gameObject.CompareTag("Player"))
         {
-            this.playerInRange = false;
+            playerInRange = false;
         }
     }
 
     private void OnDestroy()
     {
-        if(this.inputSystem != null)
+        if(inputSystem != null)
         {
-            this.inputSystem.Disable();
+            inputSystem.Disable();
         }
     }
 }

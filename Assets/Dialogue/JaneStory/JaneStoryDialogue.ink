@@ -5,18 +5,10 @@ VAR doChores = false
 ->Start
 
 === Start ===
-#Speaker: Christopher
-#Emotion: Shock
-Jane? Jane! 
-#Speaker: Jane
-#Emotion: Shock
-What?! Chris? What?! What’s happen-
-#Speaker: Christopher
-#Emotion: Neutral
-Sir’s already here! Come quick before he checks our attendance.
-#Speaker: Jane
-#Emotion: Shock
-Wait!
+Jane? Jane! #Speaker: Christopher #Emotion: Shock #Portrait: Right
+What?! Chris? What?! What’s happen- #Speaker: Jane #Emotion: Shock #Portrait: Left
+Sir’s already here! Come quick before he checks our attendance. #Speaker: Christopher #Emotion: Neutral #Portrait: Right
+Wait! #Speaker: Jane #Emotion: Shock #Portrait: Left
 * [Follow]
     -> Room103FirstClass
 
