@@ -19,10 +19,10 @@ public class CharacterController : Singleton<CharacterController>
     private Vector2 lastMovement;
     private Rigidbody2D rb;
     private Animator myAnimator;
-    private SpriteRenderer mySpriteRender;
     private float startingMoveSpeed;
 
-    private bool isDashing = false;
+    private bool isDashing;
+    private bool canMove;
 
     protected override void Awake()
     {
@@ -31,24 +31,23 @@ public class CharacterController : Singleton<CharacterController>
         playerControls = new InputSystem_Actions();
         rb = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
-        mySpriteRender = GetComponent<SpriteRenderer>();
 
         movement = lastMovement = Vector2.zero;
-    }
-
-    private void Start()
-    {
-        playerControls.Player.Dash.performed += _ => Dash();
         startingMoveSpeed = moveSpeed;
+
+        isDashing = false;
+        canMove = true;
     }
 
     private void OnEnable()
     {
+        playerControls.Player.Dash.performed += _ => Dash();
         playerControls.Enable();
     }
 
-    private void Onsable()
+    private void OnDisable()
     {
+        playerControls.Player.Dash.performed -= _ => Dash();
         playerControls.Disable();
     }
 
@@ -60,25 +59,30 @@ public class CharacterController : Singleton<CharacterController>
     private void FixedUpdate()
     {
         //Unable to move when Dialogue is Active
-        if(DialogueManager.Instance.DialogueIsActive) 
-        {
+        if(DialogueManager.Instance.DialogueIsActive || !canMove) {
             return;
         }
-        else
-        {
+        else {
             Move();
         }
     }
 
     private void PlayerInput()
     {
-        if(DialogueManager.Instance.DialogueIsActive) 
+        if(DialogueManager.Instance.DialogueIsActive || !canMove) 
         {
-            myAnimator.SetFloat("MoveMagnitude", 0f);
+            //Disable Player Movement when Dialogue is Active
+            //Set the Animator Parameters to Idle
+            movement = Vector2.zero;
 
+            myAnimator.SetFloat("MoveX", 0f);
+            myAnimator.SetFloat("MoveY", 0f);
+            myAnimator.SetFloat("MoveMagnitude", 0f);
+            
             return;
         }
 
+        //Get the Player Movement Input
         movement = playerControls.Player.Move.ReadValue<Vector2>();
 
         //Store for Idle Direction
@@ -97,7 +101,18 @@ public class CharacterController : Singleton<CharacterController>
 
     private void Move()
     {
+        //Move the Character using Rigidbody2D
         rb.MovePosition(rb.position + movement.normalized * (moveSpeed * Time.fixedDeltaTime));
+    }
+
+    public void EnableMovement()
+    {
+        canMove = true;
+    }
+
+    public void DisableMovement()
+    {
+        canMove = false;
     }
 
     private void Dash()

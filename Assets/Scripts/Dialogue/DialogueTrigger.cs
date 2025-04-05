@@ -15,6 +15,7 @@ public class DialogueTrigger : MonoBehaviour
     [SerializeField] private TextAsset inkJSON;
 
     private bool playerInRange;
+    private bool visualCueAllowed;
     private InputSystem_Actions inputSystem;
 
     private void Awake()
@@ -24,13 +25,14 @@ public class DialogueTrigger : MonoBehaviour
         visualCue.SetActive(false);
         inputSystem = new InputSystem_Actions();
         inputSystem.Enable();
+        visualCueAllowed = true;
     }
 
     private void Update()
     {
         if(playerInRange && !DialogueManager.Instance.DialogueIsActive){
             //Shows the visual cue when the player is in range
-            visualCue.SetActive(true);
+            if(visualCueAllowed) { visualCue.SetActive(true);}
             if (inputSystem.Player.Interact.triggered){
                 DialogueManager.Instance.StartDialogue(this.inkJSON);
             }
@@ -67,5 +69,11 @@ public class DialogueTrigger : MonoBehaviour
         {
             inputSystem.Disable();
         }
+    }
+
+    public void SetVisualCueAllowed(bool allowed)
+    {
+        visualCueAllowed = allowed;
+        if(!allowed) { visualCue.SetActive(false);}
     }
 }

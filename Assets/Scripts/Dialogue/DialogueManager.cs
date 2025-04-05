@@ -14,6 +14,7 @@ public class DialogueManager : MonoBehaviour
     //Event Driven Architecture for Dialogue System
     public event Action OnDialogueStart;
     public event Action<string> OnDialogueUpdate;
+    public event Action<Story> OnDialogueChoicesUpdate;
     public event Action OnDialogueEnd;
     
     //Event Driven Architecture for Dialogue UI
@@ -23,7 +24,8 @@ public class DialogueManager : MonoBehaviour
     public event Action<string> OnDialogueLayoutUpdate;
 
     public bool DialogueIsActive { get; private set; } //Property to check if the dialogue is active
-    private Story currentStory; //Current story object
+    public bool ShowVisualCue { get; private set; } //Property to check if the visual cue is active
+    private Story currentStory; //Current story object 
 
     //Ink JSON Tags
     private const string SPEAKER_TAG = "Speaker";
@@ -59,22 +61,26 @@ public class DialogueManager : MonoBehaviour
         if(!DialogueIsActive) return; //If dialogue is not active, do nothing
 
         StartCoroutine(DelayDialogueEnd()); //Start the coroutine to delay the end of the dialogue
-        
     }
 
     public void ContinueStory()
     {
         if(currentStory != null && currentStory.canContinue)
         {
-            string nextLine = currentStory.Continue(); //Continue the story and get the text
-            OnDialogueUpdate?.Invoke(nextLine); //Invoke the dialogue update event with the text
-
-            HandleTags(currentStory.currentTags); //Handle the tags in the current story
+            string nextLine = currentStory.Continue();
+            Debug.Log($"Continuing story: {nextLine}");
+            OnDialogueUpdate?.Invoke(nextLine);
+            OnDialogueChoicesUpdate?.Invoke(currentStory);
+            HandleTags(currentStory.currentTags);
+        }
+        else if(currentStory.currentChoices.Count > 0)
+        {
+            Debug.Log("Waiting for player choice...");
         }
         else
         {
-            Debug.Log("End of dialogue reached."); //Log that the end of the dialogue is reached
-            EndDialogue(); //End the dialogue if there is no more text
+            Debug.Log("End of dialogue reached.");
+            EndDialogue();
         }
     }
 
@@ -112,9 +118,23 @@ public class DialogueManager : MonoBehaviour
                         Debug.LogWarning("Unknown tag: " + tagName); //Log a warning for unknown tags
                         break;
                 }
-                Debug.Log("Tag: " + tagName + ", Value: " + tagValue); //Log the tag and value
+                //Debug.Log("Tag: " + tagName + ", Value: " + tagValue); //Log the tag and value
             }
         }
     }
 
+    public void ChooseChoiceIndex(int index)
+    {
+        if (currentStory != null && currentStory.currentChoices != null && 
+            index >= 0 && index < currentStory.currentChoices.Count)
+        {
+            Debug.Log($"Making choice: {index} - {currentStory.currentChoices[index].text}");
+            currentStory.ChooseChoiceIndex(index);
+            ContinueStory(); // This should progress the story
+        }
+        else
+        {
+            Debug.LogWarning($"Invalid choice index: {index}. Valid choices: {currentStory?.currentChoices?.Count ?? 0}");
+        }
+    }
 }

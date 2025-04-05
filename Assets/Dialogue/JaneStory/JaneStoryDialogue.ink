@@ -10,7 +10,11 @@ What?! Chris? What?! What’s happen- #Speaker: Jane #Emotion: Shock #Portrait: 
 Sir’s already here! Come quick before he checks our attendance. #Speaker: Christopher #Emotion: Neutral #Portrait: Right
 Wait! #Speaker: Jane #Emotion: Shock #Portrait: Left
 * [Follow]
+    PAGDALI! #Speaker: Christopher #Emotion: Neutral #Portrait: Right
     -> Room103FirstClass
+* [Continue Sleeping]
+    Bahala ka araa, uy! #Speaker: Christopher #Emotion: Neutral #Portrait: Right
+    ->Room103FirstClass
 
 === Room103FirstClass ===
 #Speaker: Christopher

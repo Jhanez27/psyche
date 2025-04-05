@@ -1,20 +1,15 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
+using UnityEngine.Playables;
 
 public class CutsceneTrigger : MonoBehaviour
 {
     [Header("Cutscene Trigger Ink JSON")]
     [SerializeField] private TextAsset cutsceneJSON;
     
-    void Awake()
+    public void StartCutscene()
     {
-        StartCoroutine(DelayedStart()        );
-    }
-
-    private IEnumerator DelayedStart()
-    {
-        yield return new WaitForSeconds(0.5f);
         if(DialogueManager.Instance != null)
         {
             DialogueManager.Instance.StartDialogue(cutsceneJSON);
