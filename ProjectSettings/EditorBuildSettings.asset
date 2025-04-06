@@ -11,18 +11,24 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Cutscenes/IntroCutscene.unity
     guid: c81989e34c29ea344a4e834a2ba5ac78
-  - enabled: 0
-    path: Assets/Scenes/Cutscenes/IntroCutscene1.unity
-    guid: 3cf2e22dbfabbbc4fa09ad864d3bc665
   - enabled: 1
-    path: Assets/Scenes/Dystopia Land/MainGateFirstScene.unity
+    path: Assets/Scenes/Dystopia Land/oldVersionsOfScenes/MainGateFirstScene.unity
     guid: bc48719d76e829343973acdc02558e38
-  - enabled: 0
-    path: Assets/Scenes/Dystopia Land/Entrance.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/Scenes/Dystopia Land/EntranceScene2.unity
-    guid: fe28ffa4a842cf74ca553babc08f3b27
+    path: Assets/Scenes/Cutscenes/DCSTenvironment.unity
+    guid: e64a24f9b93296040a707d59cf4dc184
+  - enabled: 1
+    path: Assets/Scenes/Cutscenes/2_RuinsDCSTCutscene.unity
+    guid: 02160cf3c887859459019eb634a28668
+  - enabled: 1
+    path: Assets/Scenes/Dystopia Land/RuinsLobbyDCSTScene.unity
+    guid: 29f7d932ae4e8514b9af9163e89dc2f2
+  - enabled: 1
+    path: Assets/Scenes/Dystopia Land/DCSTenvironmentNew.unity
+    guid: 052edb096de086a46b34bcefb6696ab6
+  - enabled: 1
+    path: Assets/Scenes/Dystopia Land/MainGateFirstSceneNew.unity
+    guid: 902899a3d476cc94185fad968ce87718
   - enabled: 1
     path: Assets/Scenes/Jane's Story/Jane's House Scene.unity
     guid: e83908f980c30914dbe3303f99f722d3
