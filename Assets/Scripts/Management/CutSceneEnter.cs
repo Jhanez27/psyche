@@ -6,11 +6,13 @@ public class CutSceneEnter : MonoBehaviour
 {
     public GameObject stopCurrentCanm;
     public GameObject removeEnv;
+    public GameObject turnOnGridTileMap;
     //public GameObject thePlayer;
     public GameObject cutsceneCam;
     //public GameObject areaExitOpen;
+    public GameObject changeTransitionCam;
 
-    
+
     [SerializeField] private string sceneToLoad;
     [SerializeField] private string sceneTransitionName;
 
@@ -19,6 +21,7 @@ public class CutSceneEnter : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        turnOnGridTileMap.SetActive(true);
         this.gameObject.GetComponent<BoxCollider2D>().enabled = (false);
         cutsceneCam.SetActive(true);
         stopCurrentCanm.SetActive(false);
@@ -32,14 +35,15 @@ public class CutSceneEnter : MonoBehaviour
     IEnumerator FinishCut()
     {
         yield return new WaitForSeconds(15);
-        
+
+        //turnOnGridTileMap.SetActive(false);
         cutsceneCam.SetActive(false);
         //thePlayer.SetActive(true);
-        stopCurrentCanm.SetActive(true);
-        removeEnv.SetActive(true);
+        changeTransitionCam.SetActive(true);
+        //removeEnv.SetActive(true);
         //areaExitOpen.SetActive(true);
 
-        
+
         SceneManagement.Instance.SetTransitionName(sceneTransitionName);
         UIFade.Instance.FadeToBlack();
         StartCoroutine(LoadSceneRoutine());
