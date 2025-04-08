@@ -15,6 +15,7 @@ public class DialogueManager : MonoBehaviour
     public event Action OnDialogueStart;
     public event Action<string> OnDialogueUpdate;
     public event Action<Story> OnDialogueChoicesUpdate;
+    public event Action OnDialogueLineSkip;
     public event Action OnDialogueEnd;
     
     //Event Driven Architecture for Dialogue UI
@@ -25,6 +26,7 @@ public class DialogueManager : MonoBehaviour
 
     public bool DialogueIsActive { get; private set; } //Property to check if the dialogue is active
     public bool ShowVisualCue { get; private set; } //Property to check if the visual cue is active
+    public bool IsTyping { get; set; } //Property to check if the dialogue is being typed out
     private Story currentStory; //Current story object 
 
     //Ink JSON Tags
@@ -81,6 +83,16 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.Log("End of dialogue reached.");
             EndDialogue();
+        }
+    }
+
+    public void SkipTyping()
+    {
+        if (IsTyping)
+        {
+            Debug.Log("Skipping typing...");
+            OnDialogueLineSkip?.Invoke(); //Invoke the line skip event
+            IsTyping = false; //Set typing state to false
         }
     }
 

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using Ink.Runtime;
 using System.Reflection;
+using UnityEngine.Playables;
 
 public class DialogueUIHandler : MonoBehaviour
 {
@@ -30,14 +31,15 @@ public class DialogueUIHandler : MonoBehaviour
     [SerializeField] private GameObject choiceButtonPrefab; //Panel for displaying choices
     [SerializeField] private Transform choiceButtonContainer; //Container for the choice buttons
 
+    [Header("Timeline Elements")]
+    [SerializeField] private PlayableDirector timeline; //Panel for displaying the timeline
+
     private Coroutine typingCoroutine; //Coroutine for typing effect
-    public bool IsTyping {get; private set;} //Flag to check if typing is in progress
     private string currentText; //Current text being displayed
 
     private void Awake()
     {
         dialoguePanel.SetActive(false); //Defaultly hides the dialogue panel
-        IsTyping = false; //Sets typing state to false
         typingCoroutine = null; //Initializes the typing coroutine to null
         audioSource = GetComponent<AudioSource>(); //Gets the audio source component
     }
@@ -48,7 +50,9 @@ public class DialogueUIHandler : MonoBehaviour
         DialogueManager.Instance.OnDialogueStart += ShowDialogue; 
         DialogueManager.Instance.OnDialogueUpdate += UpdateDialogue;
         DialogueManager.Instance.OnDialogueChoicesUpdate += ShowChoices; //Subscribes to the choices update event
+        DialogueManager.Instance.OnDialogueLineSkip += SkipTyping; //Subscribes to the line skip event
         DialogueManager.Instance.OnDialogueEnd += HideDialogue;
+        DialogueManager.Instance.OnDialogueEnd += ResumeTimeline;
         DialogueManager.Instance.OnDialogueSpeakerUpdate += UpdateSpeaker; //Subscribes to the speaker update event
         DialogueManager.Instance.OnDialoguePortraitUpdate += UpdatePortrait; //Subscribes to the portrait update event
         DialogueManager.Instance.OnDialogueLayoutUpdate += UpdateLayout; //Subscribes to the layout update event
@@ -60,7 +64,9 @@ public class DialogueUIHandler : MonoBehaviour
         DialogueManager.Instance.OnDialogueStart -= ShowDialogue;
         DialogueManager.Instance.OnDialogueUpdate -= UpdateDialogue;
         DialogueManager.Instance.OnDialogueChoicesUpdate -= ShowChoices; //Unsubscribes from the choices update event
+        DialogueManager.Instance.OnDialogueLineSkip -= SkipTyping; //Unsubscribes from the line skip event
         DialogueManager.Instance.OnDialogueEnd -= HideDialogue;
+        DialogueManager.Instance.OnDialogueEnd -= ResumeTimeline;
         DialogueManager.Instance.OnDialogueSpeakerUpdate -= UpdateSpeaker; //Unsubscribes from the speaker update event
         DialogueManager.Instance.OnDialoguePortraitUpdate -= UpdatePortrait; //Unsubscribes from the portrait update event
         DialogueManager.Instance.OnDialogueLayoutUpdate -= UpdateLayout; //Unsubscribes from the layout update event
@@ -137,7 +143,7 @@ public class DialogueUIHandler : MonoBehaviour
 
     private IEnumerator TypeText(string text)
     {
-        IsTyping = true; //Sets the typing state to true
+        DialogueManager.Instance.IsTyping = true; //Sets the typing state to true
         dialogueText.text = ""; //Clears the dialogue text before typing 
 
         yield return new WaitForSeconds(typingDelay); //Waits for the specified delay before starting to type
@@ -154,25 +160,25 @@ public class DialogueUIHandler : MonoBehaviour
             dialogueText.text += letter; //Adds each letter to the dialogue text
             ctr++; //Increments the counter for the number of letters typed
 
-            if(typingSound != null && audioSource != null && ctr % 4 == 0) //Checks if the typing sound and audio source are set
+            if(typingSound != null && audioSource != null) //Checks if the typing sound and audio source are set
             {
                 audioSource.PlayOneShot(typingSound); //Plays the typing sound effect
             }
 
-            yield return new WaitForSeconds(typingSpeed); //Waits for the specified typing speed before adding the next letter
+            yield return new WaitForSeconds(1/typingSpeed); //Waits for the specified typing speed before adding the next letter
         }
 
-        IsTyping = false; //Sets the typing state to false after typing is complete
+        DialogueManager.Instance.IsTyping = false; //Sets the typing state to false after typing is complete
         typingCoroutine = null; //Resets the typing coroutine to null
     }
 
     public void SkipTyping()
     {
-        if (IsTyping) //If typing is in progress
+        if (DialogueManager.Instance.IsTyping) //If typing is in progress
         {
             StopCoroutine(typingCoroutine); //Stops the typing coroutine
             dialogueText.text = currentText; //Clears the dialogue text
-            IsTyping = false; //Sets the typing state to false
+            DialogueManager.Instance.IsTyping = false; //Sets the typing state to false
             typingCoroutine = null; //Resets the typing coroutine to null
         }
     }
@@ -199,4 +205,37 @@ public class DialogueUIHandler : MonoBehaviour
             layoutAnimator.Play(animClipName); //Sets the trigger for the animator to show the correct layout
         }
     }
+
+    public void PlayTimeline()
+    {
+        if (timeline != null && !timeline.state.Equals(PlayState.Playing)) //Checks if the timeline is not already playing
+        {
+            timeline.Play(); //Plays the timeline
+        }
+    }
+
+    public void StopTimeline()
+    {
+        if (timeline != null && timeline.state.Equals(PlayState.Playing)) //Checks if the timeline is playing
+        {
+            timeline.Stop(); //Stops the timeline
+        }
+    }
+
+    public void PauseTimeline()
+    {
+        if (timeline != null && timeline.state.Equals(PlayState.Playing)) //Checks if the timeline is playing
+        {
+            timeline.Pause(); //Pauses the timeline
+        }
+    }
+
+    public void ResumeTimeline()
+    {
+        if (timeline != null && timeline.state.Equals(PlayState.Paused)) //Checks if the timeline is paused
+        {
+            timeline.Resume(); //Resumes the timeline
+        }
+    }
+
 }

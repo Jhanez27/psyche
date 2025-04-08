@@ -47,7 +47,6 @@ public class CharacterController : Singleton<CharacterController>
 
     private void OnDisable()
     {
-        playerControls.Player.Dash.performed -= _ => Dash();
         playerControls.Disable();
     }
 
