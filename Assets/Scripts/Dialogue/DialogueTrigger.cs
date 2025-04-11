@@ -15,46 +15,65 @@ public class DialogueTrigger : MonoBehaviour
     [SerializeField] private TextAsset inkJSON;
 
     private bool playerInRange;
+    private bool visualCueAllowed;
     private InputSystem_Actions inputSystem;
 
     private void Awake()
     {
         //Set the attributes to default values
-        this.playerInRange = false;
-        this.visualCue.SetActive(false);
+        playerInRange = false;
+        visualCue.SetActive(false);
+        inputSystem = new InputSystem_Actions();
+        inputSystem.Enable();
+        visualCueAllowed = true;
     }
 
     private void Update()
     {
-        if(this.playerInRange){
+        if(playerInRange && !DialogueManager.Instance.DialogueIsActive){
             //Shows the visual cue when the player is in range
-            this.visualCue.SetActive(true);
+            if(visualCueAllowed) { visualCue.SetActive(true);}
             if (inputSystem.Player.Interact.triggered){
-                DialogueManager.GetInstance().EnterDialogueMode(this.inkJSON);
+                DialogueManager.Instance.StartDialogue(this.inkJSON);
             }
         }
         else
         {
             //Hides the visual cue when the player is not in range
-            this.visualCue.SetActive(false);
+            visualCue.SetActive(false);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Player in range of dialogue trigger");
         //Checks if the player is in range
         if(collision.gameObject.CompareTag("Player"))
         {
-            this.playerInRange = true;
+            playerInRange = true;
         }
     }
 
-    private void OnTExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         //Checks if the player is not in range
         if(collision.gameObject.CompareTag("Player"))
         {
-            this.playerInRange = false;
+            playerInRange = false;
         }
+    }
+
+    private void OnDestroy()
+    {
+        if(inputSystem != null)
+        {
+            inputSystem.Disable();
+        }
+    }
+
+    public void SetVisualCueAllowed(bool allowed)
+    {
+        visualCueAllowed = allowed;
+        if(!allowed) { visualCue.SetActive(false);}
     }
 }

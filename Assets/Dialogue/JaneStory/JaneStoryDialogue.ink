@@ -1,22 +1,16 @@
+INCLUDE Globals.ink
+
 ->Start
 
 === Start ===
-Christopher [Shock]: Jane? Jane!
-Jane [Shock]: What?! Chris? What?! What’s happen-
+Jane? Jane! #Speaker: Christopher #Emotion: Shock #Portrait: Right
+What?! Chris? What?! What’s happen- #Speaker: Jane #Emotion: Shock #Portrait: Left
+Sir’s already here! Come quick before he checks our attendance. #Speaker: Christopher #Emotion: Neutral #Portrait: Right
+Wait! #Speaker: Jane #Emotion: Shock #Portrait: Left
+* [Follow]
+    PAGDALI! #Speaker: Christopher #Emotion: Neutral #Portrait: Right
+* [Continue Sleeping]
+    Bahala ka araa, uy! #Speaker: Christopher #Emotion: Neutral #Portrait: Right
 
-Christopher [Neutral]: Sir’s already here! Come quick before he checks our attendance.
-Jane [Shock]: Wait!
--> Room103FirstClass
-
-=== Room103FirstClass ===
-Christopher [Neutral]: Pssttt, Jane. Over here!
--> JaneWalkingRoom103FirstClass
-
-=== JaneWalkingRoom103FirstClass ===
-Jane [Neutral]: Did something happen? It seems that something’s wrong in the air.
-Pipes [Sad]: Apparently, sir isn’t really in the mood. He wasn’t too happy with the performance of our latest laboratory. 
-Christopher [Sad]: Yeah, and he’s really pissed. 
-
-
-
--> END
+- Ok #Speaker: Jane #Emotion: Shock #Portrait: Left
+-> DONE
