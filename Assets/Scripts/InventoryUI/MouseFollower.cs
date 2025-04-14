@@ -1,3 +1,4 @@
+using Inventory.UI;
 using UnityEngine;
 
 public class MouseFollower : MonoBehaviour
@@ -6,12 +7,12 @@ public class MouseFollower : MonoBehaviour
     private Canvas canvas; // Reference to the canvas
     
     [SerializeField]
-    private InventoryItem item; // Reference to the inventory item
+    private InventoryUIItem item; // Reference to the inventory item
 
     public void Awake()
     {
         canvas = transform.root.GetComponent<Canvas>(); // Get the canvas component from the root transform
-        item = GetComponentInChildren<InventoryItem>(); // Get the InventoryItem component from the children
+        item = GetComponentInChildren<InventoryUIItem>(); // Get the InventoryItem component from the children
     }
 
     public void Update()
