@@ -14,6 +14,7 @@ public class DialogueTrigger : MonoBehaviour
     //Ink JSON refers to the JSON file that contains the dialogue
     [SerializeField] private TextAsset inkJSON;
 
+    private bool canInteract;
     private bool playerInRange;
     private bool visualCueAllowed;
     private InputSystem_Actions inputSystem;
@@ -26,11 +27,12 @@ public class DialogueTrigger : MonoBehaviour
         inputSystem = new InputSystem_Actions();
         inputSystem.Enable();
         visualCueAllowed = true;
+        canInteract = true;
     }
 
     private void Update()
     {
-        if(playerInRange && !DialogueManager.Instance.DialogueIsActive){
+        if(playerInRange && !DialogueManager.Instance.DialogueIsActive && canInteract){
             //Shows the visual cue when the player is in range
             if(visualCueAllowed) { visualCue.SetActive(true);}
             if (inputSystem.Player.Interact.triggered){
@@ -75,5 +77,11 @@ public class DialogueTrigger : MonoBehaviour
     {
         visualCueAllowed = allowed;
         if(!allowed) { visualCue.SetActive(false);}
+    }
+
+    public void SetCanInteract(bool canInteract)
+    {
+        this.canInteract = canInteract;
+        if(!canInteract) { visualCue.SetActive(false);}
     }
 }
