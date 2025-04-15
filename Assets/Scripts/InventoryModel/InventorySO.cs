@@ -26,14 +26,17 @@ namespace Inventory.Model
 
         public int AddItem(ItemSO item, int quantity)
         {
-            for (int i = 0; i < inventoryItems.Count; i++)
+            if(!item.IsStackable)
             {
-                while(quantity > 0 && !isInventoryFull())
+                for (int i = 0; i < inventoryItems.Count; i++)
                 {
-                    quantity -= AddNonStackableItem(item, 1);
+                    while (quantity > 0 && !IsInventoryFull())
+                    {
+                        quantity -= AddNonStackableItem(item, 1);
+                    }
+                    UpdateInventory();
+                    return quantity;
                 }
-                UpdateInventory();
-                return quantity;
             }
             quantity = AddStackableItem(item, quantity); // Try to add to an existing stackable item
             UpdateInventory();
@@ -61,7 +64,7 @@ namespace Inventory.Model
         }
 
 
-        private bool isInventoryFull() => inventoryItems.Where(item => item.IsEmpty).Any() == false; // Check if the inventory is full
+        private bool IsInventoryFull() => inventoryItems.Where(item => item.IsEmpty).Any() == false; // Check if the inventory is full
 
         private int AddStackableItem(ItemSO item, int quantity)
         {
@@ -87,7 +90,7 @@ namespace Inventory.Model
                 }
             }
 
-            while(quantity > 0 && !isInventoryFull())
+            while(quantity > 0 && !IsInventoryFull())
             {
                 int newQuantity = Mathf.Clamp(quantity, 0, item.MaxStackSize); // Clamp the quantity to the maximum stack size
                 quantity -= newQuantity; // Decrease the quantity by the amount added

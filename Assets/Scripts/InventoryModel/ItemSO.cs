@@ -3,8 +3,7 @@ using UnityEngine;
 
 namespace Inventory.Model
 {
-    [CreateAssetMenu(fileName = "ItemSO", menuName = "Scriptable Objects/ItemSO")]
-    public class ItemSO : ScriptableObject
+    public abstract class ItemSO : ScriptableObject
     {
         public int ID => GetInstanceID(); // Unique ID for the item
 

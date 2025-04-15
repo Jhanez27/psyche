@@ -16,15 +16,26 @@ namespace Inventory
         private InventorySO inventoryData; // Reference to the inventory data
 
         public List<InventoryItem> initialItems = new List<InventoryItem>();
+        public bool InventoryIsActive => inventoryPage.isActiveAndEnabled; // Property to check if the inventory is active
+
         private InputSystem_Actions inputSystem; // Reference to the input system
 
         private void Awake()
         {
             inputSystem = new InputSystem_Actions(); // Initialize the input system
-            inputSystem.Enable(); // Enable the input system
 
             PrepareUI();
             PrepareInventoryData();
+        }
+
+        internal void OnEnable()
+        {
+            inputSystem.Enable(); // Enable the input system
+        }
+
+        internal void OnDisable()
+        {
+            inputSystem.Disable(); // Disable the input system
         }
 
         private void PrepareInventoryData()
@@ -52,6 +63,8 @@ namespace Inventory
         private void PrepareUI()
         {
             inventoryPage.InitializeInventoryUI(inventoryData.Size); // Initialize the inventory UI with the specified size 
+            
+            // Subscribe to the item events
             inventoryPage.OnDescriptionRequested += HandleDescriptionRequested; // Subscribe to the description request event
             inventoryPage.OnItemActionRequested += HandleItemActionRequested; // Subscribe to the item action request event
             inventoryPage.OnStartDragging += HandleItemDragStart; // Subscribe to the item drag start event

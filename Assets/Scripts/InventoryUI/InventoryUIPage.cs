@@ -155,12 +155,10 @@ namespace Inventory.UI
 
         public void MoveSelectionLeft()
         {
-            Debug.Log("MoveSelectionLeft");
         }
 
         public void MoveSelectionRight()
         {
-
         }
 
         public void MoveSelectionUp()

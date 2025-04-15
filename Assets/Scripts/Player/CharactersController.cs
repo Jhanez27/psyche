@@ -1,140 +1,86 @@
-using System.Collections;
-using System.Collections.Generic;
+using Characters.Handlers;
+using Inventory;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
-public class CharacterController : Singleton<CharacterController>
+namespace Characters
 {
-
-    [Header ("Character Physics")]
-    [SerializeField] private float moveSpeed = 1f;
-    [SerializeField] private float dashSpeed = 4f;
-
-    [Header ("Character Components")]
-    [SerializeField] private TrailRenderer myTrailRenderer;
-
-    public InputSystem_Actions playerControls;
-    private Vector2 movement;
-    private Vector2 lastMovement;
-    private Rigidbody2D rb;
-    private Animator myAnimator;
-    private float startingMoveSpeed;
-
-    private bool isDashing;
-    private bool canMove;
-
-    protected override void Awake()
+    public class CharactersController : Singleton<CharactersController>
     {
-        base.Awake();
+        private InventoryController inventoryController;
+        private CharactersMovementHandler movementHandler;
+        private CharactersInputHandler inputHandler;
+        private CharactersAnimationHandler animationHandler;
 
-        playerControls = new InputSystem_Actions();
-        rb = GetComponent<Rigidbody2D>();
-        myAnimator = GetComponent<Animator>();
+        private bool canMove;
 
-        movement = lastMovement = Vector2.zero;
-        startingMoveSpeed = moveSpeed;
-
-        isDashing = false;
-        canMove = true;
-    }
-
-    private void OnEnable()
-    {
-        playerControls.Player.Dash.performed += _ => Dash();
-        playerControls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerControls.Disable();
-    }
-
-    private void Update()
-    {
-        PlayerInput();
-    }
-
-    private void FixedUpdate()
-    {
-        //Unable to move when Dialogue is Active
-        if(DialogueManager.Instance.DialogueIsActive || !canMove) {
-            return;
-        }
-        else {
-            Move();
-        }
-    }
-
-    private void PlayerInput()
-    {
-        if(DialogueManager.Instance.DialogueIsActive || !canMove) 
+        protected override void Awake()
         {
-            //Disable Player Movement when Dialogue is Active
-            //Set the Animator Parameters to Idle
-            movement = Vector2.zero;
+            base.Awake();
 
-            myAnimator.SetFloat("MoveX", 0f);
-            myAnimator.SetFloat("MoveY", 0f);
-            myAnimator.SetFloat("MoveMagnitude", 0f);
-            
-            return;
+            inventoryController = GetComponent<InventoryController>();
+            movementHandler = GetComponent<CharactersMovementHandler>();
+            inputHandler = GetComponent<CharactersInputHandler>();
+            animationHandler = GetComponent<CharactersAnimationHandler>();
+
+            canMove = true;
         }
 
-        //Get the Player Movement Input
-        movement = playerControls.Player.Move.ReadValue<Vector2>();
-
-        //Store for Idle Direction
-        if(movement.sqrMagnitude > 0.01f)
+        private void OnEnable()
         {
-            lastMovement = movement.normalized;
+            inputHandler.OnDashRequested += movementHandler.Dash;
+            inputHandler.PlayerControls.Enable();
         }
 
-        //Set the Animator Parameters
-        myAnimator.SetFloat("MoveX", movement.x);
-        myAnimator.SetFloat("MoveY", movement.y);
-        myAnimator.SetFloat("LastMoveX", lastMovement.x);
-        myAnimator.SetFloat("LastMoveY", lastMovement.y);
-        myAnimator.SetFloat("MoveMagnitude", movement.sqrMagnitude);
-    }
-
-    private void Move()
-    {
-        //Move the Character using Rigidbody2D
-        rb.MovePosition(rb.position + movement.normalized * (moveSpeed * Time.fixedDeltaTime));
-    }
-
-    public void EnableMovement()
-    {
-        canMove = true;
-    }
-
-    public void DisableMovement()
-    {
-        canMove = false;
-    }
-
-    private void Dash()
-    {
-        if (!isDashing)
+        private void OnDisable()
         {
-            isDashing = true;
-            moveSpeed *= dashSpeed;
-            myTrailRenderer.emitting = true;
-            StartCoroutine(EndDashRoutine());
+            inputHandler.OnDashRequested -= movementHandler.Dash;
+            inputHandler.PlayerControls.Disable();
+        }
+
+        private void Update()
+        {
+            PlayerInput();
+        }
+
+        private void FixedUpdate()
+        {
+            //Unable to move when Dialogue is Active
+            if (DialogueManager.Instance.DialogueIsActive || !canMove || inventoryController.InventoryIsActive)
+            {
+                return;
+            }
+            else
+            {
+                movementHandler.Move();
+            }
+        }
+
+        private void PlayerInput()
+        {
+            if (DialogueManager.Instance.DialogueIsActive || !canMove || inventoryController.InventoryIsActive)
+            {
+
+                movementHandler.SetMovement(Vector2.zero); //Disable Player Movement when Dialogue is Active
+                animationHandler.SetIdle(); //Set the Animator to Idle
+
+                return;
+            }
+
+            //Get the Player Movement Input
+            movementHandler.SetMovement(inputHandler.GetMovementInput());
+
+            //Set the Animator Parameters
+            animationHandler.SetMovement(movementHandler.Movement, movementHandler.LastMovement);
+        }
+
+        public void EnableMovement()
+        {
+            canMove = true;
+        }
+
+        public void DisableMovement()
+        {
+            canMove = false;
         }
     }
-
-    private IEnumerator EndDashRoutine()
-    {
-        float dashTime = .2f;
-        float dashCD = .25f;
-        yield return new WaitForSeconds(dashTime);
-        moveSpeed = startingMoveSpeed;
-        myTrailRenderer.emitting = false;
-        yield return new WaitForSeconds(dashCD);
-        isDashing = false;
-    }
-
-
 }
