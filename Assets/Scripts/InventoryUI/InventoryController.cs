@@ -1,10 +1,8 @@
-using Ink.Parsed;
+using Characters.Handlers;
 using Inventory.Model;
 using Inventory.UI;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Inventory
 {
@@ -18,24 +16,29 @@ namespace Inventory
         public List<InventoryItem> initialItems = new List<InventoryItem>();
         public bool InventoryIsActive => inventoryPage.isActiveAndEnabled; // Property to check if the inventory is active
 
-        private InputSystem_Actions inputSystem; // Reference to the input system
+        private CharactersInputHandler inputHandler;
+
+        [SerializeField]
+        private AudioClip dropClip;
+        [SerializeField]
+        private AudioSource audioSource;
 
         private void Awake()
         {
-            inputSystem = new InputSystem_Actions(); // Initialize the input system
+            inputHandler = GetComponent<CharactersInputHandler>(); // Get the input handler component
 
             PrepareUI();
             PrepareInventoryData();
         }
 
-        internal void OnEnable()
+        private void OnEnable()
         {
-            inputSystem.Enable(); // Enable the input system
+            inputHandler.PlayerControls.Enable(); // Enable the input system
         }
 
-        internal void OnDisable()
+        private void OnDisable()
         {
-            inputSystem.Disable(); // Disable the input system
+            inputHandler.PlayerControls.Disable(); // Disable the input system
         }
 
         private void PrepareInventoryData()
@@ -86,9 +89,56 @@ namespace Inventory
             }
         }
 
+        public void PerformAction(int itemIndex)
+        {
+            InventoryItem inventoryItem = inventoryData.GetItemAt(itemIndex); // Get the item at the specified index
+            if (inventoryItem.IsEmpty) { return; }
+
+            IDestroyableItem destroyableItem = inventoryItem.item as IDestroyableItem; // Cast the item to IDestroyableItem
+            if(destroyableItem != null)
+            {
+                inventoryData.RemoveItem(itemIndex, 1);
+            }
+
+            IItemAction itemAction = inventoryItem.item as IItemAction; // Cast the item to IItemAction
+            if (itemAction != null)
+            {
+                itemAction.PerformAction(gameObject); // Perform the item action
+                audioSource.PlayOneShot(itemAction.ActionSFX); // Play the item action sound effect
+
+                if (inventoryData.GetItemAt(itemIndex).IsEmpty)
+                {
+                    inventoryPage.ResetSelection(); // Reset the item selection if the item is empty
+                }
+            }
+        }
+
         private void HandleItemActionRequested(int itemIndex)
         {
+            InventoryItem inventoryItem = inventoryData.GetItemAt(itemIndex); // Get the item at the specified index
+            if (inventoryItem.IsEmpty) { return; }
 
+            IItemAction itemAction = inventoryItem.item as IItemAction; // Cast the item to IItemAction
+            if (itemAction != null)
+            {
+                inventoryPage.ShowItemAction(itemIndex); // Show the item action UI
+                inventoryPage.AddAction(itemAction.ActionName, () => PerformAction(itemIndex)); // Add the item action to the UI
+            }
+
+            IDestroyableItem destroyableItem = inventoryItem.item as IDestroyableItem; // Cast the item to IDestroyableItem
+            if (destroyableItem != null)
+            {
+                inventoryPage.AddAction("Drop", () => DropItem(itemIndex, inventoryItem.quantity));
+                if (inventoryData.GetItemAt(itemIndex).IsEmpty)
+                    inventoryPage.ResetSelection();
+            }
+        }
+
+        private void DropItem(int itemIndex, int quantity)
+        {
+            inventoryData.RemoveItem(itemIndex, quantity); // Remove the item from the inventory
+            inventoryPage.ResetSelection(); // Reset the item selection
+            audioSource.PlayOneShot(dropClip); // Play the drop sound effect
         }
 
         private void HandleItemDragStart(int itemIndex)
@@ -107,7 +157,7 @@ namespace Inventory
 
         public void Update() //Checks if OpenInventory key is triggered
         {
-            if (inputSystem.Player.OpenInventory.triggered)
+            if (inputHandler.PlayerControls.Player.OpenInventory.triggered)
             {
                 if (!inventoryPage.isActiveAndEnabled && !DialogueManager.Instance.DialogueIsActive)
                 {

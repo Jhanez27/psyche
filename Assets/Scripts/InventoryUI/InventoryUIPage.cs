@@ -19,13 +19,15 @@ namespace Inventory.UI
         List<InventoryUIItem> inventoryItems = new List<InventoryUIItem>(); // List to hold the inventory items
 
         private int currentDraggedItemIndex = -1; // Index of the currently dragged item
-        private int currentSelectedItemIndex = -1; // Index of the currently selected item
 
         /// Events for item interactions
         public event Action<int> OnDescriptionRequested; // Event for item description request
         public event Action<int> OnItemActionRequested; // Event for item action request
         public event Action<int> OnStartDragging; // Event for item drag start
         public event Action<int, int> OnItemSwapped; // Event for item swap
+
+        [SerializeField]
+        private ItemActionPanel itemActionPanel; // Reference to the item action panel UI
 
         private void Awake()
         {
@@ -108,7 +110,12 @@ namespace Inventory.UI
 
         private void HandleShowItemActions(InventoryUIItem item)
         {
+            Debug.Log("Right Clicked");
+            int index = inventoryItems.IndexOf(item); // Get the index of the right-clicked item
+            if (index == -1)
+                return;
 
+            OnItemActionRequested?.Invoke(index); // Invoke the item action request event
         }
 
         public void Show()
@@ -119,6 +126,7 @@ namespace Inventory.UI
 
         public void Hide()
         {
+            itemActionPanel.Toggle(false); // Hide the item action panel
             gameObject.SetActive(false); // Hide the inventory UI
             ResetDraggedItem(); // Reset the dragged item
         }
@@ -129,12 +137,24 @@ namespace Inventory.UI
             DeselectAllItems(); // Deselect all items
         }
 
+        public void AddAction(string actionName, Action performAction)
+        {
+            itemActionPanel.AddButton(actionName, performAction); // Add an action button to the item action panel
+        }
+
+        public void ShowItemAction(int itemIndex)
+        {
+            itemActionPanel.Toggle(true); // Show the item action panel
+            itemActionPanel.transform.position = inventoryItems[itemIndex].transform.position; // Set the position of the item action panel
+        }
+
         private void DeselectAllItems()
         {
             foreach (InventoryUIItem item in inventoryItems)
             {
                 item.Deselect(); // Deselect each item
             }
+            itemActionPanel.Toggle(false); // Hide the item action panel
         }
 
         public void UpdateDescription(int itemIndex, Sprite sprite, string name, string description)
@@ -151,24 +171,6 @@ namespace Inventory.UI
                 item.ResetData();
                 item.Deselect();
             }
-        }
-
-        public void MoveSelectionLeft()
-        {
-        }
-
-        public void MoveSelectionRight()
-        {
-        }
-
-        public void MoveSelectionUp()
-        {
-
-        }
-
-        public void MoveSelectionDown()
-        {
-
         }
     }
 }

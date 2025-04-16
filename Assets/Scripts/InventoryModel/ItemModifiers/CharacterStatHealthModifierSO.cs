@@ -5,7 +5,7 @@ public class CharacterStatHealthModifierSO : CharacterStatModifierSO
 {
     public override void AffectCharacter(GameObject gameObject, float value)
     {
-        throw new System.NotImplementedException();
+        
     }
 
 }

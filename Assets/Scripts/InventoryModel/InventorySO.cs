@@ -28,15 +28,12 @@ namespace Inventory.Model
         {
             if(!item.IsStackable)
             {
-                for (int i = 0; i < inventoryItems.Count; i++)
+                while (quantity > 0 && !IsInventoryFull())
                 {
-                    while (quantity > 0 && !IsInventoryFull())
-                    {
-                        quantity -= AddNonStackableItem(item, 1);
-                    }
-                    UpdateInventory();
-                    return quantity;
+                    quantity -= AddNonStackableItem(item, 1);
                 }
+                UpdateInventory();
+                return quantity;
             }
             quantity = AddStackableItem(item, quantity); // Try to add to an existing stackable item
             UpdateInventory();
@@ -157,6 +154,28 @@ namespace Inventory.Model
             //Changes the inventory look whenever there is a change in invetory states
             OnInventoryUpdated?.Invoke(GetCurrentInventoryState());
         }
+
+        internal void RemoveItem(int itemIndex, int amount)
+        {
+            if (inventoryItems.Count > itemIndex)
+            {
+                InventoryItem item = inventoryItems[itemIndex];
+                if (item.IsEmpty)
+                    return;
+
+                int quantityRemaining = item.quantity - amount;
+                if (quantityRemaining <= 0)
+                {
+                    inventoryItems[itemIndex] = InventoryItem.GetEmptyItem(); // Remove the item if quantity is 0 or less
+                }
+                else
+                {
+                    inventoryItems[itemIndex] = inventoryItems[itemIndex].ChangeQuantity(quantityRemaining); // Update the quantity of the item
+                }
+
+                UpdateInventory();
+            }
+        }
     }
 
     [Serializable]
@@ -181,6 +200,7 @@ namespace Inventory.Model
             quantity = 0, // Create an empty item with null item and quantity 0
         };
     }
+    
 }
 
 
