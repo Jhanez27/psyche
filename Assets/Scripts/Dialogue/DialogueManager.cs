@@ -27,6 +27,7 @@ public class DialogueManager : MonoBehaviour
     public bool DialogueIsActive { get; private set; } //Property to check if the dialogue is active
     public bool ShowVisualCue { get; private set; } //Property to check if the visual cue is active
     public bool IsTyping { get; set; } //Property to check if the dialogue is being typed out
+    public bool TimelineIsActive { get; set; } //Property to check if the timeline is active
     private Story currentStory; //Current story object 
 
     //Ink JSON Tags

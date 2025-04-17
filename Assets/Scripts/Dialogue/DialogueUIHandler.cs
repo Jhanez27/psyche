@@ -211,6 +211,7 @@ public class DialogueUIHandler : MonoBehaviour
         if (timeline != null && !timeline.state.Equals(PlayState.Playing)) //Checks if the timeline is not already playing
         {
             timeline.Play(); //Plays the timeline
+            DialogueManager.Instance.TimelineIsActive = true; //Sets the timeline state to playing
         }
     }
 
@@ -219,6 +220,7 @@ public class DialogueUIHandler : MonoBehaviour
         if (timeline != null && timeline.state.Equals(PlayState.Playing)) //Checks if the timeline is playing
         {
             timeline.Stop(); //Stops the timeline
+            DialogueManager.Instance.TimelineIsActive = false; //Sets the timeline state to not playing
         }
     }
 
@@ -227,6 +229,7 @@ public class DialogueUIHandler : MonoBehaviour
         if (timeline != null && timeline.state.Equals(PlayState.Playing)) //Checks if the timeline is playing
         {
             timeline.Pause(); //Pauses the timeline
+            DialogueManager.Instance.TimelineIsActive = false; //Sets the timeline state to not playing
         }
     }
 
@@ -235,6 +238,7 @@ public class DialogueUIHandler : MonoBehaviour
         if (timeline != null && timeline.state.Equals(PlayState.Paused)) //Checks if the timeline is paused
         {
             timeline.Resume(); //Resumes the timeline
+            DialogueManager.Instance.TimelineIsActive = true; //Sets the timeline state to playing
         }
     }
 

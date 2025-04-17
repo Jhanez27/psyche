@@ -94,11 +94,20 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "OpenInventory",
+                    "type": "Button",
+                    "id": "a1386b8f-8e1a-48b7-939b-f5bccd83a5fa",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
-                    "name": "ArrowKeys",
+                    "name": "WASD",
                     "id": "389dae5e-19b8-48d8-a143-398efa326005",
                     "path": "2DVector",
                     "interactions": "",
@@ -111,7 +120,7 @@
                 {
                     "name": "up",
                     "id": "157928f0-5c57-46d2-a656-9556cbd7f966",
-                    "path": "<Keyboard>/upArrow",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -122,7 +131,7 @@
                 {
                     "name": "down",
                     "id": "f86fdba6-e3e5-42eb-8685-a89fa7a2947c",
-                    "path": "<Keyboard>/downArrow",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -133,7 +142,7 @@
                 {
                     "name": "left",
                     "id": "9bfd0b10-aabf-4441-8125-3a3a7fa90967",
-                    "path": "<Keyboard>/leftArrow",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -144,7 +153,7 @@
                 {
                     "name": "right",
                     "id": "c2980166-46db-44be-a95c-142ceaed3c38",
-                    "path": "<Keyboard>/rightArrow",
+                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -269,17 +278,6 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Next",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e15ca19d-e649-4852-97d5-7fe8ccc44e94",
-                    "path": "<Gamepad>/dpad/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
                     "action": "Next",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -415,6 +413,17 @@
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a08f8716-fa0b-45f8-b8c8-abb88de37d58",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "OpenInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -429,7 +438,7 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Submit",

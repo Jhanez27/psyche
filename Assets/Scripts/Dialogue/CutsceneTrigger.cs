@@ -1,7 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using UnityEngine.AI;
-using UnityEngine.Playables;
 
 public class CutsceneTrigger : MonoBehaviour
 {
