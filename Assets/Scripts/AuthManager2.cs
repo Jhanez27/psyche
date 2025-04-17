@@ -4,32 +4,42 @@ using TMPro;
 using System.Collections;
 using System.Text;
 
-[System.Serializable]
-public class SupabaseError
+[System.Serializable] 
+public class SupabaseError2
 {
     public string msg;
 }
 
-public class AuthManager : MonoBehaviour
+public class AuthManager2 : MonoBehaviour
 {
     [Header("UI Elements")]
     public TMP_InputField emailInput;
     public TMP_InputField passwordInput;
-    public TMP_Text responseText;
+    public TMP_InputField passwordInput2;
+    //public TMP_Text responseText;
 
     private string supabaseUrl = "https://vrebhfnaijcupcyrcjiw.supabase.co";
     private string supabaseApiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyZWJoZm5haWpjdXBjeXJjaml3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI4NjE3ODAsImV4cCI6MjA1ODQzNzc4MH0.Fe2GEGppHlBfdqNaQJtShw6P7LjU5dfQp-hM6q8UM_U";
-
-    public void SignIn()
+    public void SignUp()
     {
         string email = emailInput.text.Trim();
         string password = passwordInput.text.Trim();
-        StartCoroutine(LoginWithSupabase(email, password));
+        string confirmPassword = passwordInput2.text.Trim();
+
+        if (password != confirmPassword)
+        {
+            // responseText.text = "⚠️ Passwords do not match.";
+            Debug.Log(emailInput.text + passwordInput.text);
+
+            return;
+        }
+
+        StartCoroutine(SignUpWithSupabase(email, password));
     }
 
-    private IEnumerator LoginWithSupabase(string email, string password)
+    private IEnumerator SignUpWithSupabase(string email, string password)
     {
-        string url = supabaseUrl + "/auth/v1/token?grant_type=password";
+        string url = supabaseUrl + "/auth/v1/signup";
 
         string jsonBody = "{\"email\":\"" + email + "\",\"password\":\"" + password + "\"}";
 
@@ -45,15 +55,15 @@ public class AuthManager : MonoBehaviour
 
         if (request.result == UnityWebRequest.Result.Success)
         {
-            string response = request.downloadHandler.text;
-            responseText.text = "✅ Login successful!";
-            Debug.Log("Login success: " + response);
+          //  responseText.text = "✅ Signup successful! Check your email to confirm.";
+            Debug.Log("Signup success: " + request.downloadHandler.text);
         }
         else
         {
             string raw = request.downloadHandler.text;
             SupabaseError error = JsonUtility.FromJson<SupabaseError>(raw);
-            responseText.text = (error?.msg ?? "Login failed. Please try again.");
+       // responseText.text = "❌ " + (error?.msg ?? "Signup failed.");
+            Debug.Log("Signup error: " + raw);
         }
     }
 }
