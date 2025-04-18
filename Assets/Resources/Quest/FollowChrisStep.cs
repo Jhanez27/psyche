@@ -10,32 +10,16 @@ public class FollowChrisStep : QuestStep
     [SerializeField]
     private int requiredAmount = 1;
 
-    [Header("Tracked Inventory")]
-    [SerializeField]
-    private PickupSystem pickupSystem;
-
     private int currentAmount = 0;
 
     private void OnEnable()
     {
-        if (pickupSystem != null)
-        {
-            pickupSystem.OnItemAdded += GetItemAdded;
-        }
-        else
-        {
-            Debug.Log("Whatafakkk");
-        }
+        GamesEventManager.Instance.inventoryModelEvents.OnItemAdded += GetItemAdded;
     }
 
     private void OnDisable()
     {
-        pickupSystem.OnItemAdded -= GetItemAdded;
-    }
-
-    public void Init(PickupSystem pickupSystem)
-    {
-        this.pickupSystem = pickupSystem;
+        GamesEventManager.Instance.inventoryModelEvents.OnItemAdded += GetItemAdded;
     }
 
     private void GetItemAdded(ItemSO item, int quantity)

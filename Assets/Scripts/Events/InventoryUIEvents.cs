@@ -5,7 +5,6 @@ using UnityEngine;
 public class InventoryUIEvents
 {
     // Initialization of InventoryUI Events
-
     // InventoryPage Items Events
     public event Action<int> OnDescriptionRequested; // Event for Item Description UI Updates
     public event Action<int> OnItemActionRequested; // Event for Handling Actions Done by Items

@@ -8,7 +8,6 @@ namespace Characters
     {
         private InventoryController inventoryController;
         private CharactersMovementHandler movementHandler;
-        private CharactersInputHandler inputHandler;
         private CharactersAnimationHandler animationHandler;
 
         private bool MovementEnabled = true;
@@ -17,7 +16,6 @@ namespace Characters
         {
             inventoryController = GetComponent<InventoryController>();
             movementHandler = GetComponent<CharactersMovementHandler>();
-            inputHandler = GetComponent<CharactersInputHandler>();
             animationHandler = GetComponent<CharactersAnimationHandler>();
         }
 

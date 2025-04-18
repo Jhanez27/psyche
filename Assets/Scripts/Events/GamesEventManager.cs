@@ -9,6 +9,7 @@ public class GamesEventManager : MonoBehaviour
     public InputEvents inputEvents;
     public PlayerEvents playerEvents;
     public InventoryUIEvents inventoryUIEvents;
+    public InventoryModelEvents inventoryModelEvents;
 
     private void Awake()
     {
@@ -25,5 +26,6 @@ public class GamesEventManager : MonoBehaviour
         this.inputEvents = new InputEvents();
         this.playerEvents = new PlayerEvents();
         this.inventoryUIEvents = new InventoryUIEvents();
+        this.inventoryModelEvents = new InventoryModelEvents();
     }
 }

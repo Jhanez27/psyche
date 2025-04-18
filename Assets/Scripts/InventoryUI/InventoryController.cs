@@ -45,7 +45,7 @@ namespace Inventory
             {
                 if (!item.IsEmpty)
                 {
-                    inventoryData.AddItem(item);
+                    inventoryData.AddItem(item.item, item.quantity);
                 }
             }
         }
