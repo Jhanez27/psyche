@@ -64,10 +64,10 @@ namespace Inventory
             inventoryPage.InitializeInventoryUI(inventoryData.Size); // Initialize the inventory UI with the specified size 
             
             // Subscribe to the item events
-            inventoryPage.OnDescriptionRequested += HandleDescriptionRequested; // Subscribe to the description request event
-            inventoryPage.OnItemActionRequested += HandleItemActionRequested; // Subscribe to the item action request event
-            inventoryPage.OnStartDragging += HandleItemDragStart; // Subscribe to the item drag start event
-            inventoryPage.OnItemSwapped += HandleItemSwap; // Subscribe to the item swap event
+            GamesEventManager.Instance.inventoryUIEvents.OnDescriptionRequested += HandleDescriptionRequested; // Subscribe to the description request event
+            GamesEventManager.Instance.inventoryUIEvents.OnItemActionRequested += HandleItemActionRequested; // Subscribe to the item action request event
+            GamesEventManager.Instance.inventoryUIEvents.OnStartDragging += HandleItemDragStart; // Subscribe to the item drag start event
+            GamesEventManager.Instance.inventoryUIEvents.OnItemSwapped += HandleItemSwap; // Subscribe to the item swap event
         }
 
         private void HandleDescriptionRequested(int itemIndex)

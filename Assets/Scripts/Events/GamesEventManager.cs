@@ -8,6 +8,7 @@ public class GamesEventManager : MonoBehaviour
     // All Game Events 
     public InputEvents inputEvents;
     public PlayerEvents playerEvents;
+    public InventoryUIEvents inventoryUIEvents;
 
     private void Awake()
     {
@@ -23,5 +24,6 @@ public class GamesEventManager : MonoBehaviour
         // Initialization of All Listed Game Events
         this.inputEvents = new InputEvents();
         this.playerEvents = new PlayerEvents();
+        this.inventoryUIEvents = new InventoryUIEvents();
     }
 }
