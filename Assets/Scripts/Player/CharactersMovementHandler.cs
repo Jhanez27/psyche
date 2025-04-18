@@ -41,7 +41,7 @@ namespace Characters.Handlers
             rb.MovePosition(rb.position + Movement * (moveSpeed * Time.fixedDeltaTime));
         }
 
-        public void Dash()
+        public void DashPressed()
         {
             if (isDashing) return;
             Debug.Log("Yes");

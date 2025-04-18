@@ -11,10 +11,14 @@ public class GamesEventManager : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance == null)
+        if(Instance != null)
         {
-            Instance = this;
+            Debug.Log("Instance Already Exists");
+            return;
         }
+
+        Debug.Log("Instantiating GamesEventManager");
+        Instance = this;
 
         // Initialization of All Listed Game Events
         this.inputEvents = new InputEvents();

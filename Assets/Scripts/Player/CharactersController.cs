@@ -11,7 +11,7 @@ namespace Characters
         private CharactersInputHandler inputHandler;
         private CharactersAnimationHandler animationHandler;
 
-        private bool canMove;
+        private bool MovementEnabled = true;
 
         private void Awake()
         {
@@ -19,57 +19,52 @@ namespace Characters
             movementHandler = GetComponent<CharactersMovementHandler>();
             inputHandler = GetComponent<CharactersInputHandler>();
             animationHandler = GetComponent<CharactersAnimationHandler>();
-
-            canMove = true;
         }
 
         private void OnEnable()
         {
-            inputHandler.OnDashRequested += movementHandler.Dash;
-            inputHandler.PlayerControls.Enable();
+            GamesEventManager.Instance.playerEvents.OnMovementEnabled += EnableMovement;
+            GamesEventManager.Instance.playerEvents.OnMovementDisabled += DisableMovement;
+            GamesEventManager.Instance.inputEvents.OnDashPressed += movementHandler.DashPressed;
+            GamesEventManager.Instance.inputEvents.OnMovePressed += movementHandler.SetMovement;
         }
 
         private void OnDisable()
         {
-            inputHandler.OnDashRequested -= movementHandler.Dash;
-            inputHandler.PlayerControls.Disable();
+            GamesEventManager.Instance.playerEvents.OnMovementEnabled += EnableMovement;
+            GamesEventManager.Instance.playerEvents.OnMovementDisabled += DisableMovement;
+            GamesEventManager.Instance.inputEvents.OnDashPressed -= movementHandler.DashPressed;
+            GamesEventManager.Instance.inputEvents.OnMovePressed -= movementHandler.SetMovement;
         }
 
         private void Update()
         {
-            PlayerInput();
+            UpdateAnimations();
         }
 
         private void FixedUpdate()
         {
-            PlayerMovement();
+            UpdateMovement();
         }
 
-        private void PlayerMovement()
+        private void UpdateMovement() // Responsible for Player Movement
         {
             //Unable to move when Dialogue is Active
-            if (DialogueManager.Instance.DialogueIsActive || !canMove || inventoryController.InventoryIsActive)
+            if (DialogueManager.Instance.DialogueIsActive || !MovementEnabled || inventoryController.InventoryIsActive)
             {
-                return;
+                movementHandler.SetMovement(Vector2.zero);
             }
-            else
-            {
-                movementHandler.Move();
-            }
+            
+            movementHandler.Move();
         }
-        private void PlayerInput()
+        private void UpdateAnimations() // Responsible for Player Animations
         {
-            if (DialogueManager.Instance.DialogueIsActive || !canMove || inventoryController.InventoryIsActive)
+            if (DialogueManager.Instance.DialogueIsActive || !MovementEnabled || inventoryController.InventoryIsActive)
             {
-
-                movementHandler.SetMovement(Vector2.zero); //Disable Player Movement when Dialogue is Active
                 animationHandler.SetIdle(); //Set the Animator to Idle
 
                 return;
             }
-
-            //Get the Player Movement Input
-            movementHandler.SetMovement(inputHandler.GetMovementInput());
 
             //Set the Animator Parameters
             animationHandler.SetMovement(movementHandler.Movement, movementHandler.LastMovement);
@@ -77,12 +72,13 @@ namespace Characters
 
         public void EnableMovement()
         {
-            canMove = true;
+            MovementEnabled = true;
         }
 
         public void DisableMovement()
         {
-            canMove = false;
+            MovementEnabled = false;
+            movementHandler.SetMovement(Vector2.zero);
         }
     }
 }

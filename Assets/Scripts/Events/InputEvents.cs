@@ -8,7 +8,8 @@ public class InputEvents
 
     // Initialization of Input Events
     public event Action<Vector2> OnMovePressed; // Event for when the Move Buttons are Pressed
-    public event Action<InputEventContext> OnInteractPressed; // Event for when the Interact Button(s) are Pressed
+    public event Action OnDashPressed; // Event for when the Dash Button is Pressed
+    public event Action<InputEventContext> OnInteractPressed; // Event for when the Interact Button is Pressed
     public event Action OnNextPressed; // Event for when the Next Button(s) are Pressed
     public event Action OnInventoryTogglePressed; // Event for when the InventoryToggle Button is Pressed
     public event Action OnQuestLogTogglePressed; // Event for when the QuestLogToggle Button is Pressed
@@ -17,6 +18,11 @@ public class InputEvents
     public void MovePressed(Vector2 movement)
     {
         OnMovePressed?.Invoke(movement);
+    }
+
+    public void DashPressed()
+    {
+        OnDashPressed?.Invoke();
     }
 
     public void InteractPressed()
