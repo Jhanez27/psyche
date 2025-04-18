@@ -9,6 +9,7 @@ namespace Characters.Handlers
 
         public event Action OnDashRequested;
         public event Action OnChangeSelectedIndex;
+        public event Action OnInteractRequested;
 
         private void Awake()
         {
@@ -21,6 +22,7 @@ namespace Characters.Handlers
 
             PlayerControls.Player.Dash.performed += _ => OnDashRequested?.Invoke();
             PlayerControls.UI.Navigate.performed += _ => OnChangeSelectedIndex?.Invoke();
+            PlayerControls.Player.Interact.performed += _ => OnInteractRequested?.Invoke();
         }
 
         private void OnDisable()

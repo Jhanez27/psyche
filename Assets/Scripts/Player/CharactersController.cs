@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Characters
 {
-    public class CharactersController : Singleton<CharactersController>
+    public class CharactersController : MonoBehaviour
     {
         private InventoryController inventoryController;
         private CharactersMovementHandler movementHandler;
@@ -13,10 +13,8 @@ namespace Characters
 
         private bool canMove;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
-
             inventoryController = GetComponent<InventoryController>();
             movementHandler = GetComponent<CharactersMovementHandler>();
             inputHandler = GetComponent<CharactersInputHandler>();
@@ -44,6 +42,11 @@ namespace Characters
 
         private void FixedUpdate()
         {
+            PlayerMovement();
+        }
+
+        private void PlayerMovement()
+        {
             //Unable to move when Dialogue is Active
             if (DialogueManager.Instance.DialogueIsActive || !canMove || inventoryController.InventoryIsActive)
             {
@@ -54,7 +57,6 @@ namespace Characters
                 movementHandler.Move();
             }
         }
-
         private void PlayerInput()
         {
             if (DialogueManager.Instance.DialogueIsActive || !canMove || inventoryController.InventoryIsActive)

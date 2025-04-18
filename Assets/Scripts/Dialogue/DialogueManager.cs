@@ -71,9 +71,11 @@ public class DialogueManager : MonoBehaviour
         if(currentStory != null && currentStory.canContinue)
         {
             string nextLine = currentStory.Continue();
-            Debug.Log($"Continuing story: {nextLine}");
+            //Debug.Log($"Continuing story: {nextLine}");
+
             OnDialogueUpdate?.Invoke(nextLine);
             OnDialogueChoicesUpdate?.Invoke(currentStory);
+
             HandleTags(currentStory.currentTags);
         }
         else if(currentStory.currentChoices.Count > 0)
@@ -131,7 +133,6 @@ public class DialogueManager : MonoBehaviour
                         Debug.LogWarning("Unknown tag: " + tagName); //Log a warning for unknown tags
                         break;
                 }
-                //Debug.Log("Tag: " + tagName + ", Value: " + tagValue); //Log the tag and value
             }
         }
     }

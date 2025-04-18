@@ -1,12 +1,25 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class DialogueInputHandler : MonoBehaviour
 {
-    private InputSystem_Actions inputSystem;
+    public InputSystem_Actions inputSystem;
+
     private void Awake()
     {
         inputSystem = new InputSystem_Actions();
+    }
+
+    private void OnEnable()
+    {
+        //Enable the input system when the object is enabled
         inputSystem.Enable();
+    }
+
+    private void OnDisable()
+    {
+        //Disable the input system when the object is disabled
+        inputSystem.Disable();
     }
 
     void Update()
@@ -19,17 +32,11 @@ public class DialogueInputHandler : MonoBehaviour
                 //If the player is in dialogue mode and has pressed the interact button, continue the story
                 DialogueManager.Instance.ContinueStory();
             }
-            else if (inputSystem.Player.Interact.triggered && DialogueManager.Instance.IsTyping)
+            else if (inputSystem.Player.Next.triggered && DialogueManager.Instance.IsTyping)
             {
                 //If the player is in dialogue mode and has pressed the interact button while typing, skip the typing
                 DialogueManager.Instance.SkipTyping();
             }
         }
-    }
-
-    private void OnDestroy()
-    {
-        //Disable the input system when the object is destroyed
-        inputSystem?.Disable();        
     }
 }

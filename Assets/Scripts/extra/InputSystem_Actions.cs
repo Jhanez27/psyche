@@ -125,6 +125,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenQuestLog"",
+                    ""type"": ""Button"",
+                    ""id"": ""3e8b2b30-5cf4-49ae-b07b-2327f5156dc2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -446,6 +455,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""OpenInventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a29ba26-7846-4ad5-8a22-807755e5cd75"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenQuestLog"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -466,7 +486,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Submit"",
                     ""type"": ""Button"",
                     ""id"": ""7607c7b6-cd76-4816-beef-bd0341cfe950"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -475,7 +495,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Cancel"",
                     ""type"": ""Button"",
                     ""id"": ""15cef263-9014-4fd5-94d9-4e4a6234a6ef"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -1042,6 +1062,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_OpenInventory = m_Player.FindAction("OpenInventory", throwIfNotFound: true);
+        m_Player_OpenQuestLog = m_Player.FindAction("OpenQuestLog", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1132,6 +1153,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_OpenInventory;
+    private readonly InputAction m_Player_OpenQuestLog;
     public struct PlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1147,6 +1169,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @OpenInventory => m_Wrapper.m_Player_OpenInventory;
+        public InputAction @OpenQuestLog => m_Wrapper.m_Player_OpenQuestLog;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1189,6 +1212,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @OpenInventory.started += instance.OnOpenInventory;
             @OpenInventory.performed += instance.OnOpenInventory;
             @OpenInventory.canceled += instance.OnOpenInventory;
+            @OpenQuestLog.started += instance.OnOpenQuestLog;
+            @OpenQuestLog.performed += instance.OnOpenQuestLog;
+            @OpenQuestLog.canceled += instance.OnOpenQuestLog;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1226,6 +1252,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @OpenInventory.started -= instance.OnOpenInventory;
             @OpenInventory.performed -= instance.OnOpenInventory;
             @OpenInventory.canceled -= instance.OnOpenInventory;
+            @OpenQuestLog.started -= instance.OnOpenQuestLog;
+            @OpenQuestLog.performed -= instance.OnOpenQuestLog;
+            @OpenQuestLog.canceled -= instance.OnOpenQuestLog;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1419,6 +1448,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnOpenInventory(InputAction.CallbackContext context);
+        void OnOpenQuestLog(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -159,6 +159,7 @@ namespace Inventory
         {
             if (inputHandler.PlayerControls.Player.OpenInventory.triggered)
             {
+                Debug.Log(!DialogueManager.Instance.DialogueIsActive + " " + !inventoryPage.isActiveAndEnabled);
                 if (!inventoryPage.isActiveAndEnabled && !DialogueManager.Instance.DialogueIsActive)
                 {
                     // If the inventory page is not active and dialogue is not active, show the inventory page

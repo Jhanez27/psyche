@@ -1699,6 +1699,7 @@ GameObject:
   - component: {fileID: 536765874}
   - component: {fileID: 536765875}
   - component: {fileID: 536765876}
+  - component: {fileID: 536765877}
   m_Layer: 5
   m_Name: SceneDialogue
   m_TagString: Untagged
@@ -1814,7 +1815,7 @@ MonoBehaviour:
   typingDelay: 0.005
   choiceButtonPrefab: {fileID: 5863964523675299724, guid: 5db18fe14ffae14479d78dbf832f1cfe, type: 3}
   choiceButtonContainer: {fileID: 2116019493}
-  timeline: {fileID: 569515095}
+  timelineHandler: {fileID: 0}
 --- !u!82 &536765875
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1930,8 +1931,8 @@ MonoBehaviour:
     m_Events:
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 536765874}
-          m_TargetAssemblyTypeName: DialogueUIHandler, Assembly-CSharp
+        - m_Target: {fileID: 536765877}
+          m_TargetAssemblyTypeName: TimelineHandler, Assembly-CSharp
           m_MethodName: PauseTimeline
           m_Mode: 1
           m_Arguments:
@@ -1942,6 +1943,19 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &536765877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536765869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 700a91c2ff9bb6d45afb764cf0f80aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeline: {fileID: 569515095}
 --- !u!1 &547082268
 GameObject:
   m_ObjectHideFlags: 0
@@ -13326,6 +13340,67 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1001 &1090751255
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2099149217049260052, guid: f1f84fb769c49c6439c91242c7abb271, type: 3}
+      propertyPath: pickupSystem
+      value: 
+      objectReference: {fileID: 2136281340}
+    - target: {fileID: 5631547846131636580, guid: f1f84fb769c49c6439c91242c7abb271, type: 3}
+      propertyPath: m_Name
+      value: Try
+      objectReference: {fileID: 0}
+    - target: {fileID: 6284413223506580624, guid: f1f84fb769c49c6439c91242c7abb271, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6284413223506580624, guid: f1f84fb769c49c6439c91242c7abb271, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6284413223506580624, guid: f1f84fb769c49c6439c91242c7abb271, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6284413223506580624, guid: f1f84fb769c49c6439c91242c7abb271, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6284413223506580624, guid: f1f84fb769c49c6439c91242c7abb271, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6284413223506580624, guid: f1f84fb769c49c6439c91242c7abb271, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6284413223506580624, guid: f1f84fb769c49c6439c91242c7abb271, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6284413223506580624, guid: f1f84fb769c49c6439c91242c7abb271, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6284413223506580624, guid: f1f84fb769c49c6439c91242c7abb271, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6284413223506580624, guid: f1f84fb769c49c6439c91242c7abb271, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f1f84fb769c49c6439c91242c7abb271, type: 3}
 --- !u!1 &1223863102
 GameObject:
   m_ObjectHideFlags: 0
@@ -13337,7 +13412,6 @@ GameObject:
   - component: {fileID: 1223863103}
   - component: {fileID: 1223863104}
   - component: {fileID: 1223863105}
-  - component: {fileID: 1223863106}
   - component: {fileID: 1223863107}
   m_Layer: 0
   m_Name: Trigger
@@ -13421,19 +13495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualCue: {fileID: 825501078}
   inkJSON: {fileID: 4900000, guid: 086cb06a47b89d54e826925e64097934, type: 3}
---- !u!114 &1223863106
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1223863102}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fbb3399f80256e4795c6c045407321a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cutsceneJSON: {fileID: 4900000, guid: 086cb06a47b89d54e826925e64097934, type: 3}
+  isCutsceneTrigger: 1
 --- !u!114 &1223863107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13448,25 +13510,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Events:
     m_Signals:
-    - {fileID: 11400000, guid: 2d1f3be92cae709459acfca96b5f8eff, type: 2}
     - {fileID: 11400000, guid: 5236bd6df775e2b4d9a2a4cf97e9dfb1, type: 2}
     - {fileID: 11400000, guid: 4265795e84c41de4f84399c786a721ad, type: 2}
     - {fileID: 11400000, guid: 5a2101a5c3db301429c277359fc8529f, type: 2}
+    - {fileID: 11400000, guid: f28a19ec4cde62c4a987c1d7842714ef, type: 2}
     m_Events:
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1223863106}
-          m_TargetAssemblyTypeName: CutsceneTrigger, Assembly-CSharp
-          m_MethodName: StartCutscene
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1223863105}
@@ -13508,6 +13556,20 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 1
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1223863105}
+          m_TargetAssemblyTypeName: DialogueTrigger, Assembly-CSharp
+          m_MethodName: StartDialogueScene
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
           m_CallState: 2
 --- !u!224 &1296841243 stripped
 RectTransform:
@@ -18395,6 +18457,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PickupItem
       objectReference: {fileID: 0}
+    - target: {fileID: 6724474105589208745, guid: a7f9ff8f08d1a904db9a281cc0ad158b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -18415,3 +18481,4 @@ SceneRoots:
   - {fileID: 837812395}
   - {fileID: 569515096}
   - {fileID: 7196070106787956728}
+  - {fileID: 1090751255}

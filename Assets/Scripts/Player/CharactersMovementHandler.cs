@@ -6,7 +6,7 @@ namespace Characters.Handlers
     public class CharactersMovementHandler : MonoBehaviour
     {
         [Header("Character Physics")]
-        [SerializeField] private float moveSpeed = 1f;
+        [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private float dashSpeed = 4f;
 
         [Header("Character Components")]
