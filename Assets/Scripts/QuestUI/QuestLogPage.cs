@@ -25,7 +25,7 @@ public class QuestLogPage : MonoBehaviour
         descriptionPrefab.ResetDescription();
     }
 
-    public void InitializeQuestLogPage(int )
+    public void InitializeQuestLogPage()
     {
 
     }
