@@ -29,6 +29,7 @@ public class FollowChrisStep : QuestStep
             if (currentAmount < requiredAmount)
             {
                 currentAmount += quantity;
+                UpdateState();
             }
             
             if (currentAmount >= requiredAmount)
@@ -36,5 +37,17 @@ public class FollowChrisStep : QuestStep
                 FinishQuestStep();
             }
         }
+    }
+
+    private void UpdateState()
+    {
+        string state = currentAmount.ToString();
+        ChangeState(state);
+    }
+
+    protected override void SetQuestStepState(string state)
+    {
+        this.currentAmount = System.Int32.Parse(state);
+        UpdateState();
     }
 }

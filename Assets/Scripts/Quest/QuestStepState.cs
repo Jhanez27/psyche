@@ -1,16 +1,18 @@
 using UnityEngine;
 
-public class QuestStepState : MonoBehaviour
+[System.Serializable]
+public class QuestStepState
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public string state;
+
+    public QuestStepState(string state)
     {
-        
+        this.state = state; 
     }
 
-    // Update is called once per frame
-    void Update()
+    public QuestStepState()
     {
-        
+        this.state = string.Empty;
     }
+
 }
