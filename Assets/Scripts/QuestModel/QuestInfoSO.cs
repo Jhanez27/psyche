@@ -1,3 +1,4 @@
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "QuestInfoSO", menuName = "Scriptable Objects/QuestInfoSO")]
@@ -8,6 +9,8 @@ public class QuestInfoSO : ScriptableObject
 
     [Header("General")]
     public string displayName;
+    [TextArea]
+    public string description;
 
     [Header("Requirements")]
     public QuestInfoSO[] questPrerequisite;

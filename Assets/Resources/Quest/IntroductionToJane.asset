@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: IntroductionToJane
   m_EditorClassIdentifier: 
   <ID>k__BackingField: IntroductionToJane
-  displayName: Know More About The CHaracter
+  displayName: Know More About The Character
   questPrerequisite: []
   questSteps:
   - {fileID: 5631547846131636580, guid: f1f84fb769c49c6439c91242c7abb271, type: 3}

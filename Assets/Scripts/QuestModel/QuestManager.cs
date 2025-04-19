@@ -95,7 +95,7 @@ public class QuestManager : MonoBehaviour
 
     private void Update()
     {
-        foreach (Quest quest in questMap.Values)
+        foreach (Quest quest in questMap.Values) 
         {
             if(quest.state == QuestState.REQUIREMENTS_NOT_MET && CheckRequirementsMet(quest))
             {
@@ -103,12 +103,13 @@ public class QuestManager : MonoBehaviour
             }
         }
     }
+
     private void ClaimRewards(Quest quest)
     {
         Debug.Log("Rewards Claimed!");
     }
 
-    private bool CheckRequirementsMet(Quest quest)
+    private bool CheckRequirementsMet(Quest quest) // Checks whether each prerequisite quest is satisfied
     {
         foreach (QuestInfoSO prerequisiteQuestInfo in quest.questInfo.questPrerequisite)
         {
@@ -138,7 +139,8 @@ public class QuestManager : MonoBehaviour
         return returnQuestMap;
     }   
     
-    private Quest GetQuestByID(string id)
+    
+    private Quest GetQuestByID(string id) // Get corresponding Quest through ID
     {
 
         Quest quest = questMap[id];
@@ -149,7 +151,7 @@ public class QuestManager : MonoBehaviour
         return quest;
     }
 
-    private void OnApplicationQuit()
+    private void OnApplicationQuit() // Saves quests whenever the game is exited
     {
         foreach (Quest quest in questMap.Values)
         {
@@ -157,6 +159,7 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    // Data Persistence through Saving 
     private void SaveQuest(Quest quest)
     {
         try
@@ -173,6 +176,7 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    // Data Persistence through Loading
     private Quest LoadQuest(QuestInfoSO questInfo)
     {
         Quest quest = null;
@@ -196,6 +200,10 @@ public class QuestManager : MonoBehaviour
         }
 
         return quest;
+    }
+
+    private void HandleLogDescriptionRequest(string id)
+    {
 
     }
 }
