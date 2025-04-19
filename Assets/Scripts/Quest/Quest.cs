@@ -6,8 +6,6 @@ public class Quest
     public QuestState state;
     private int currentQuestStepIndex;
 
-    public bool CurrentQuestStepExists => currentQuestStepIndex < questInfo.questSteps.Length;
-
     public Quest(QuestInfoSO questInfo)
     {
         this.questInfo = questInfo;
@@ -31,7 +29,8 @@ public class Quest
         if (questStepPrefab != null)
         {
             QuestStep questStep = Object.Instantiate<GameObject>(questStepPrefab, parent).GetComponent<QuestStep>(); //Open for object pooling
-            questStep.InitializeQuestStep(questInfo.ID);        }
+            questStep.InitializeQuestStep(questInfo.ID);        
+        }
     }
 
     private GameObject GetCurrentQuestStepPrefab()

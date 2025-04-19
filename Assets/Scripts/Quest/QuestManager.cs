@@ -2,70 +2,78 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestManager : Singleton<QuestManager>
+public class QuestManager : MonoBehaviour
 {
     //List of all Quests
     private Dictionary<string, Quest> questMap;
 
-    //Quest Events
-    public event Action<string> OnStartQuest; //Event for Starting Quests
-    public void StartQuest(string id)
+    private void Start()
     {
-        Quest quest = GetQuestByID(id);
-        quest.InstantiateCurrentQuestStep(this.transform);
-        ChangeQuestState(id, QuestState.IN_PROGRESS);
-
-        OnStartQuest?.Invoke(id);
+        foreach (Quest quest in questMap.Values)
+        {
+            GamesEventManager.Instance.questEvents.ChangeQuestState(quest);
+        }
+    }
+    private void Awake()
+    {
+        questMap = CreateQuestMap();
     }
 
-    public event Action<string> OnAdvanceQuest; //Event for Advancing Quests
+    private void OnEnable()
+    {
+        GamesEventManager.Instance.questEvents.OnStartQuest += StartQuest;
+        GamesEventManager.Instance.questEvents.OnAdvanceQuest += AdvanceQuest;
+        GamesEventManager.Instance.questEvents.OnFinishQuest += FinishQuest;
+    }
+
+    private void OnDisable()
+    {
+        GamesEventManager.Instance.questEvents.OnStartQuest -= StartQuest;
+        GamesEventManager.Instance.questEvents.OnAdvanceQuest -= AdvanceQuest;
+        GamesEventManager.Instance.questEvents.OnFinishQuest -= FinishQuest;
+    }
+
+    public void StartQuest(string id)
+    {
+        Debug.Log("Quest Started " + id);
+
+        Quest quest = GetQuestByID(id);
+        quest.InstantiateCurrentQuestStep(this.transform);
+        ChangeQuestState(quest.questInfo.ID, QuestState.IN_PROGRESS);
+    }
+
     public void AdvanceQuest(string id)
     {
         Quest quest = GetQuestByID(id);
 
         quest.MoveToNextStep();
 
-        if (quest.CurrentQuestStepExists)
+        if (quest.CurrentStepExists())
         {
             quest.InstantiateCurrentQuestStep(this.transform);
         }
         else
         {
-            ChangeQuestState(id, QuestState.CAN_FINISH);
+            ChangeQuestState(quest.questInfo.ID, QuestState.CAN_FINISH);
         }
-
-        OnAdvanceQuest?.Invoke(id);
+        
     }
 
-    public event Action<string> OnFinishQuest; //Event for Finishing Quests
     public void FinishQuest(string id)
     {
+        Debug.Log("Quest Finished");
+
         Quest quest = GetQuestByID(id);
         ClaimRewards(quest);
-        ChangeQuestState(id, QuestState.FINISHED);
-        OnFinishQuest?.Invoke(id);
+        ChangeQuestState(quest.questInfo.ID, QuestState.FINISHED);
     }
 
-    public event Action<Quest> OnChangeQuestState;
     public void ChangeQuestState(string id, QuestState state)
     {
         Quest quest = GetQuestByID(id);
         quest.state = state;
-        OnChangeQuestState?.Invoke(quest);
-    }
 
-    private void Start()
-    {
-        foreach (Quest quest in questMap.Values)
-        {
-            OnChangeQuestState(quest);
-        }
-    }
-    protected override void Awake()
-    {
-        base.Awake();
-        questMap = CreateQuestMap();
-
+        GamesEventManager.Instance.questEvents.ChangeQuestState(quest);
     }
 
     private void Update()
@@ -103,7 +111,7 @@ public class QuestManager : Singleton<QuestManager>
         foreach (QuestInfoSO questInfo in allQuests)
         {
             if (returnQuestMap.ContainsKey(questInfo.ID))
-            { 
+            {
                 Debug.LogWarning($"Quest with ID {questInfo.ID} already exists in the quest map. Skipping this quest.");
             }
             else
@@ -118,6 +126,7 @@ public class QuestManager : Singleton<QuestManager>
     
     private Quest GetQuestByID(string id)
     {
+
         Quest quest = questMap[id];
         if (quest == null)
         {

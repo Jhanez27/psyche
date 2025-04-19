@@ -16,13 +16,6 @@ namespace Inventory.UI
         [SerializeField]
         private Image borderImage;
 
-        //Item Events
-        public event Action<InventoryUIItem> OnItemClicked;
-        public event Action<InventoryUIItem> OnItemDroppedOn;
-        public event Action<InventoryUIItem> OnItemBeginDrag;
-        public event Action<InventoryUIItem> OnItemEndDrag;
-        public event Action<InventoryUIItem> OnItemRightMouseButtonClick;
-
         private bool empty = true;
 
         public void Awake()

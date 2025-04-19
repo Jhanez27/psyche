@@ -7,15 +7,13 @@ public class QuestPoint : MonoBehaviour
 {
     [Header("Quest")]
     [SerializeField]
-    private QuestInfoSO questInfoForPoint;
+    private QuestInfoSO questInfoForPoint; // Quest to complete
 
     [Header("Quest Configurations")]
     [SerializeField]
-    private bool startPoint = true;
+    private bool startPoint = true; // The interaction will be the starting point
     [SerializeField]
-    private bool finishPoint = true;
-    
-    private QuestInputHandler inputHandler;
+    private bool finishPoint = true; // The interaction will be the end point
 
     private bool playerIsNear = false;
     private string questID;
@@ -23,18 +21,19 @@ public class QuestPoint : MonoBehaviour
 
     private void Awake()
     {
-        inputHandler = GetComponent<QuestInputHandler>();
         questID = questInfoForPoint.ID;
     }
 
     private void OnEnable()
     {
-        QuestManager.Instance.OnChangeQuestState += QuestStateChange;
+        GamesEventManager.Instance.questEvents.OnChangeQuestState += QuestStateChange;
+        GamesEventManager.Instance.inputEvents.OnInteractPressed += InteractPressed;
     }
 
     private void OnDisable()
     {
-        QuestManager.Instance.OnChangeQuestState -= QuestStateChange;
+        GamesEventManager.Instance.questEvents.OnChangeQuestState -= QuestStateChange;
+        GamesEventManager.Instance.inputEvents.OnInteractPressed -= InteractPressed;
     }
 
     private void QuestStateChange(Quest quest)
@@ -42,29 +41,20 @@ public class QuestPoint : MonoBehaviour
         if(quest.questInfo.ID.Equals(questID))
         {
             currentQuestState = quest.state;
-
         }
     }
 
-    private void Update()
+    private void InteractPressed(InputEventContext context)
     {
-        if(inputHandler.inputSystem.Player.Interact.triggered)
-        {
-            SubmitPressed();
-        }
-    }
-
-    private void SubmitPressed()
-    {
-        if (playerIsNear)
+        if (playerIsNear && context.Equals(InputEventContext.DEFAULT))
         {
             if (currentQuestState.Equals(QuestState.CAN_START) && startPoint)
             {
-                QuestManager.Instance.StartQuest(questID);
+                GamesEventManager.Instance.questEvents.StartQuest(questID);
             }
             else if (currentQuestState.Equals(QuestState.CAN_FINISH) && finishPoint)
             {
-                QuestManager.Instance.FinishQuest(questID);
+                GamesEventManager.Instance.questEvents.FinishQuest(questID);
             }
         }
     }

@@ -16,6 +16,6 @@ MonoBehaviour:
   displayName: Know More About The CHaracter
   questPrerequisite: []
   questSteps:
-  - {fileID: 0}
+  - {fileID: 5631547846131636580, guid: f1f84fb769c49c6439c91242c7abb271, type: 3}
   experienceReward: 0
   goldReward: 0

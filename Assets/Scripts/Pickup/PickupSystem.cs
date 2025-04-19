@@ -7,8 +7,6 @@ public class PickupSystem : MonoBehaviour
     [SerializeField]
     private InventorySO inventory; // Reference to the player's inventory
 
-    public event Action<ItemSO, int> OnItemAdded;
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         PickupItem item = collision.GetComponent<PickupItem>(); // Get the PickupItem component from the collided object
