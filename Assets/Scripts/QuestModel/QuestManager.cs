@@ -1,11 +1,16 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
     [Header("Data Persistence Config")]
     [SerializeField] private bool loadQuestState = true;
+
+    [SerializeField]
+    private QuestLogPage logPage;
 
     //List of all Quests
     private Dictionary<string, Quest> questMap;
@@ -25,6 +30,13 @@ public class QuestManager : MonoBehaviour
     private void Awake()
     {
         questMap = CreateQuestMap();
+
+        List<Quest> quests = questMap.Values.ToList<Quest>();
+        foreach (Quest quest in quests)
+        {
+            Debug.Log(quest.questInfo.name + " Quest Manager");
+        }
+        PrepareUI(quests);
     }
 
     private void OnEnable()
@@ -33,6 +45,8 @@ public class QuestManager : MonoBehaviour
         GamesEventManager.Instance.questEvents.OnAdvanceQuest += AdvanceQuest;
         GamesEventManager.Instance.questEvents.OnFinishQuest += FinishQuest;
         GamesEventManager.Instance.questEvents.OnQuestStepStateChange += QuestStepChange;
+        GamesEventManager.Instance.inputEvents.OnQuestLogTogglePressed += QuestTogglePressed;
+        GamesEventManager.Instance.questUIEvents.OnDescriptionRequested += HandleLogDescriptionRequest;
     }
 
     private void OnDisable()
@@ -41,8 +55,14 @@ public class QuestManager : MonoBehaviour
         GamesEventManager.Instance.questEvents.OnAdvanceQuest -= AdvanceQuest;
         GamesEventManager.Instance.questEvents.OnFinishQuest -= FinishQuest;
         GamesEventManager.Instance.questEvents.OnQuestStepStateChange -= QuestStepChange;
+        GamesEventManager.Instance.inputEvents.OnQuestLogTogglePressed -= QuestTogglePressed;
+        GamesEventManager.Instance.questUIEvents.OnDescriptionRequested -= HandleLogDescriptionRequest;
     }
 
+    private void PrepareUI(List<Quest> quests)
+    {
+        logPage.InitializeQuestLogPage(quests);
+    }
     private void QuestStepChange(string id, int index, QuestStepState state)
     {
         Quest quest = GetQuestByID(id);
@@ -101,6 +121,32 @@ public class QuestManager : MonoBehaviour
             {
                 ChangeQuestState(quest.questInfo.ID, QuestState.CAN_START);
             }
+        }
+    }
+
+    private void QuestTogglePressed()
+    {
+        if(!logPage.isActiveAndEnabled && !DialogueManager.Instance.DialogueIsActive)
+        {
+            logPage.Show();
+
+            bool isFirst = true;
+            foreach(Quest quest in questMap.Values)
+            {
+                if(isFirst)
+                {
+                    isFirst = false;
+                    GamesEventManager.Instance.questUIEvents.DescriptionRequested(quest.questInfo.ID);
+                }
+
+                logPage.UpdateData(quest.questInfo.ID, quest.questInfo.displayName);
+            }
+            GamesEventManager.Instance.playerEvents.MovementDisabled();
+        }
+        else
+        {
+            logPage.Hide();
+            GamesEventManager.Instance.playerEvents.MovementEnabled();
         }
     }
 
@@ -204,6 +250,32 @@ public class QuestManager : MonoBehaviour
 
     private void HandleLogDescriptionRequest(string id)
     {
+        Quest logItem = questMap[id];
+        if (logItem != null)
+        {
+            Quest quest = questMap[id];
+            GameObject questStepObject;
 
+            if(quest.CurrentStepExists())
+            {
+                questStepObject = quest.questInfo.questSteps[quest.currentQuestStepIndex];
+            }
+            else
+            {
+                questStepObject = quest.questInfo.questSteps[quest.currentQuestStepIndex - 1];
+            }
+
+            if (questStepObject != null)
+            {
+                QuestStep questStep = questStepObject.GetComponent<QuestStep>();
+
+                logPage.UpdateDescription(
+                    quest.questInfo.name,
+                    quest.questInfo.description,
+                    questStep.QuestStepName,
+                    quest.GetFullStatusText()
+                );
+            }
+        }
     }
 }

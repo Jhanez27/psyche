@@ -11,16 +11,43 @@ public class QuestLogDescription : MonoBehaviour
     [SerializeField]
     private TMP_Text questDescription;
     [SerializeField]
-    private TMP_Text objectiveName;
+    private TMP_Text questObjective;
+    [SerializeField]
+    private TMP_Text questStepStatus;
 
-    private int currentQuestID;
+    private void Awake()
+    {
+        ResetDescription();
+    }
 
-    internal void ResetDescription()
+    private void OnEnable()
+    {
+        GamesEventManager.Instance.questEvents.OnChangeQuestState += QuestStateChange;
+    }
+
+    private void OnDisable()
+    {
+        GamesEventManager.Instance.questEvents.OnChangeQuestState -= QuestStateChange;
+    }
+
+    private void QuestStateChange(Quest quest)
+    {
+        if (quest == null)
+            return;
+    }
+    public void ResetDescription()
     {
         this.questName.text = "No Selected Quest";
         this.questDescription.text = string.Empty;
-        this.objectiveName.text = "Objective: None";
+        this.questObjective.text = "Objective: None";
+        this.questStepStatus.text = "Status: None";
+    }
 
-        this.currentQuestID = -1;
+    public void UpdateDescription(string name, string description, string objective, string status)
+    {
+        this.questName.text = name;
+        this.questDescription.text = description;
+        this.questObjective.text = "Objective: " + objective;
+        this.questStepStatus.text = status;
     }
 }

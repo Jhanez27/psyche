@@ -14,8 +14,6 @@ namespace Inventory.Model
         [field: SerializeField]
         public int Size { get; private set; } = 18; // Default inventory size
 
-        public event Action<Dictionary<int, InventoryItem>> OnInventoryUpdated;
-
         public void Initialize()
         {
             inventoryItems = new List<InventoryItem>(Size); // Initthisialize the inventory items list with the specified size
@@ -148,7 +146,7 @@ namespace Inventory.Model
         private void UpdateInventory()
         {
             //Changes the inventory look whenever there is a change in invetory states
-            OnInventoryUpdated?.Invoke(GetCurrentInventoryState());
+            GamesEventManager.Instance.inventoryModelEvents.InventoryUpdated(GetCurrentInventoryState());
         }
 
         internal void RemoveItem(int itemIndex, int amount)

@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ID>k__BackingField: IntroductionToJane
   displayName: Know More About The Character
+  description: You're suddenly transported into another land, and a different body
+    at that. Try and follow the life of the person to get a sense of what's going
+    on.
   questPrerequisite: []
   questSteps:
   - {fileID: 5631547846131636580, guid: f1f84fb769c49c6439c91242c7abb271, type: 3}

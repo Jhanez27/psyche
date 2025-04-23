@@ -11,6 +11,8 @@ public class GamesEventManager : MonoBehaviour
     public InventoryUIEvents inventoryUIEvents;
     public InventoryModelEvents inventoryModelEvents;
     public QuestEvents questEvents;
+    public QuestUIEvents questUIEvents;
+    public DialogueEvents dialogueEvents;
 
     private void Awake()
     {
@@ -29,5 +31,7 @@ public class GamesEventManager : MonoBehaviour
         this.inventoryUIEvents = new InventoryUIEvents();
         this.inventoryModelEvents = new InventoryModelEvents();
         this.questEvents = new QuestEvents();
+        this.questUIEvents = new QuestUIEvents();
+        this.dialogueEvents = new DialogueEvents(); 
     }
 }

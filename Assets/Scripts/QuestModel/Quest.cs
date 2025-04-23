@@ -1,3 +1,4 @@
+using NUnit.Framework.Interfaces;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -5,7 +6,7 @@ public class Quest
 {
     public QuestInfoSO questInfo;
     public QuestState state;
-    private int currentQuestStepIndex;
+    public int currentQuestStepIndex {  get; private set; }
     private QuestStepState[] stepStates;
     public Quest(QuestInfoSO questInfo)
     {
@@ -52,13 +53,13 @@ public class Quest
         }
     }
 
-    private GameObject GetCurrentQuestStepPrefab()
+    public GameObject GetCurrentQuestStepPrefab()
     {
         GameObject questStepPrefab = null;
 
         if(CurrentStepExists())
         {
-            questStepPrefab = questInfo.questSteps[currentQuestStepIndex];
+            questStepPrefab = questInfo.questSteps[currentQuestStepIndex] as GameObject;
         }
 
         return questStepPrefab;
@@ -69,6 +70,7 @@ public class Quest
         if(stepIndex < questInfo.questSteps.Length)
         {
             this.stepStates[stepIndex].state = stepState.state;
+            this.stepStates[stepIndex].status = stepState.status;
         }
         else
         {
@@ -79,5 +81,43 @@ public class Quest
     public QuestData GetQuestData()
     {
         return new QuestData(state, currentQuestStepIndex, stepStates);
+    }
+
+    public string GetFullStatusText()
+    {
+        string fullStatusText = string.Empty;
+
+        if(state == QuestState.REQUIREMENTS_NOT_MET)
+        {
+            fullStatusText = "Quest Requirements Not Met";
+        }
+        else if(state == QuestState.CAN_START)
+        {
+            fullStatusText = "Quest Can Start";
+        }
+        else 
+        {
+            for(int i = 0; i < currentQuestStepIndex; i++)
+            {
+                fullStatusText += "<s>" + stepStates[i].status + "</s>\n";
+            }
+
+            if (CurrentStepExists())
+            {
+                fullStatusText += stepStates[currentQuestStepIndex].status + "\n";
+            }
+
+            if(state == QuestState.CAN_FINISH)
+            {
+                fullStatusText += "The Quest can be finished";
+            }
+
+            else if (state == QuestState.CAN_FINISH)
+            {
+                fullStatusText += "The Quest is Finished";
+            }
+        }
+
+            return fullStatusText;
     }
 }

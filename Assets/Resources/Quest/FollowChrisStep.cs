@@ -12,6 +12,11 @@ public class FollowChrisStep : QuestStep
 
     private int currentAmount = 0;
 
+    private void Start()
+    {
+        UpdateState();
+    }
+
     private void OnEnable()
     {
         GamesEventManager.Instance.inventoryModelEvents.OnItemAdded += GetItemAdded;
@@ -42,7 +47,8 @@ public class FollowChrisStep : QuestStep
     private void UpdateState()
     {
         string state = currentAmount.ToString();
-        ChangeState(state);
+        string status = "Collected " + currentAmount + "/" + requiredAmount + " " + item.name + ".";
+        ChangeState(state, status);
     }
 
     protected override void SetQuestStepState(string state)

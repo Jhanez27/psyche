@@ -40,7 +40,7 @@ namespace Inventory
         private void PrepareInventoryData()
         {
             inventoryData.Initialize(); // Initialize the inventory data
-            inventoryData.OnInventoryUpdated += GetUpdateInventoryUI;
+            GamesEventManager.Instance.inventoryModelEvents.OnInventoryUpdated += GetUpdateInventoryUI;
             foreach (InventoryItem item in initialItems)
             {
                 if (!item.IsEmpty)
@@ -179,38 +179,10 @@ namespace Inventory
                 inventoryPage.Hide();
             }
         }
-        /*
-        public void Update() //Checks if OpenInventory key is triggered
-        {
-            if (inputHandler.PlayerControls.Player.OpenInventory.triggered)
-            {
-                if (!inventoryPage.isActiveAndEnabled && !DialogueManager.Instance.DialogueIsActive)
-                {
-                    // If the inventory page is not active and dialogue is not active, show the inventory page
-                    inventoryPage.Show();
-                    foreach (var item in inventoryData.GetCurrentInventoryState())
-                    {
-                        inventoryPage.UpdateData(item.Key, item.Value.item.Image, item.Value.quantity); // Update the inventory UI with the current inventory state
-                    }
 
-                    InventoryItem firstItem = inventoryData.GetItemAt(0); // Get the first item in the inventory
-                    if (!firstItem.IsEmpty)
-                    {
-                        inventoryPage.UpdateDescription(0, firstItem.item.Image, firstItem.item.name, firstItem.item.Description); // Update the inventory UI with the first item data
-                    }
-                    else
-                    {
-                        inventoryPage.ResetSelection(); // Clears the Inventory Description if item is empty
-                        return;
-                    }
-                }
-                else if (inventoryPage.isActiveAndEnabled && !DialogueManager.Instance.DialogueIsActive)
-                {
-                    // If the inventory page is active and dialogue is not active, hide the inventory page
-                    inventoryPage.Hide();
-                }
-            }
+        private void OnDestroy()
+        {
+            GamesEventManager.Instance.inventoryModelEvents.OnInventoryUpdated -= GetUpdateInventoryUI;
         }
-        */
     }
 }

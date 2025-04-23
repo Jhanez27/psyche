@@ -4,19 +4,22 @@ using UnityEngine.EventSystems;
 
 public class QuestLogItem : MonoBehaviour, IPointerClickHandler
 {
-    private TextMeshProUGUI logItemName;
+    [SerializeField]
+    private TMP_Text logItemName;
 
-    public void Initialize(string id)
+    public string ID { get; private set; }
+
+    public void SetLogData(string id, string name)
     {
-        logItemName = this.GetComponent<TextMeshProUGUI>();
-        logItemName.text = id;
+        logItemName.text = name;
+        this.ID = id;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button.Equals(PointerEventData.InputButton.Left))
         {
-
+            GamesEventManager.Instance.questUIEvents.LogItemClicked(this);
         }
     }
 }

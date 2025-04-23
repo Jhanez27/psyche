@@ -46,7 +46,6 @@ public class DialogueManager : MonoBehaviour
             return;
         }
     }
-
     public void StartDialogue(TextAsset inkJSON)
     {
         if(DialogueIsActive) return; //If dialogue is already active, do nothing
