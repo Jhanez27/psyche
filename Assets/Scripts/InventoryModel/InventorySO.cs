@@ -15,9 +15,10 @@ namespace Inventory.Model
         public int Size { get; private set; } = 18; // Default inventory size
 
         public event Action<Dictionary<int, InventoryItem>> OnInventoryUpdated;
+
         public void Initialize()
         {
-            inventoryItems = new List<InventoryItem>(Size); // Initialize the inventory items list with the specified size
+            inventoryItems = new List<InventoryItem>(Size); // Initthisialize the inventory items list with the specified size
             for (int i = 0; i < Size; i++)
             {
                 inventoryItems.Add(InventoryItem.GetEmptyItem()); // Fill the inventory with empty items
@@ -60,14 +61,13 @@ namespace Inventory.Model
             return 0;
         }
 
-
         private bool IsInventoryFull() => inventoryItems.Where(item => item.IsEmpty).Any() == false; // Check if the inventory is full
 
         private int AddStackableItem(ItemSO item, int quantity)
         {
             for (int i = 0; i < inventoryItems.Count; i++)
             {
-                if (!inventoryItems[i].IsEmpty)
+                if (!inventoryItems[i].IsEmpty) // Filling out nonfully stacked similar items
                 {
                     if (inventoryItems[i].item.ID == item.ID)
                     {
@@ -87,10 +87,11 @@ namespace Inventory.Model
                 }
             }
 
-            while(quantity > 0 && !IsInventoryFull())
+            while(quantity > 0 && !IsInventoryFull()) //Filling out empty slots
             {
                 int newQuantity = Mathf.Clamp(quantity, 0, item.MaxStackSize); // Clamp the quantity to the maximum stack size
                 quantity -= newQuantity; // Decrease the quantity by the amount added
+
                 AddItemToFirstFreeSlot(item, newQuantity); // Add the item to the first empty slot
             }
             return quantity; // Return the remaining quantity
@@ -113,11 +114,6 @@ namespace Inventory.Model
                 }
             }
             return 0; // Return 0 if the item was added successfully
-        }
-
-        public void AddItem(InventoryItem item)
-        {
-            AddItem(item.item, item.quantity);
         }
 
         public Dictionary<int, InventoryItem> GetCurrentInventoryState()

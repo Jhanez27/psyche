@@ -3,11 +3,9 @@ using UnityEngine;
 
 public class MouseFollower : MonoBehaviour
 {
-    [SerializeField]
-    private Canvas canvas; // Reference to the canvas
-    
-    [SerializeField]
-    private InventoryUIItem item; // Reference to the inventory item
+    //MouseFollower Properties
+    private Canvas canvas; // Where the MouseFollower will be displayed
+    private InventoryUIItem item; // The item which the MouseFollower will display
 
     public void Awake()
     {

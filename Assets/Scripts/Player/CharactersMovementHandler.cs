@@ -6,7 +6,7 @@ namespace Characters.Handlers
     public class CharactersMovementHandler : MonoBehaviour
     {
         [Header("Character Physics")]
-        [SerializeField] private float moveSpeed = 1f;
+        [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private float dashSpeed = 4f;
 
         [Header("Character Components")]
@@ -41,7 +41,7 @@ namespace Characters.Handlers
             rb.MovePosition(rb.position + Movement * (moveSpeed * Time.fixedDeltaTime));
         }
 
-        public void Dash()
+        public void DashPressed()
         {
             if (isDashing) return;
             Debug.Log("Yes");

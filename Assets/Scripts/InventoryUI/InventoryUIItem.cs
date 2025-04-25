@@ -16,13 +16,6 @@ namespace Inventory.UI
         [SerializeField]
         private Image borderImage;
 
-        //Item Events
-        public event Action<InventoryUIItem> OnItemClicked;
-        public event Action<InventoryUIItem> OnItemDroppedOn;
-        public event Action<InventoryUIItem> OnItemBeginDrag;
-        public event Action<InventoryUIItem> OnItemEndDrag;
-        public event Action<InventoryUIItem> OnItemRightMouseButtonClick;
-
         private bool empty = true;
 
         public void Awake()
@@ -63,32 +56,36 @@ namespace Inventory.UI
         {
             if (eventData.button == PointerEventData.InputButton.Right)
             {
-                OnItemRightMouseButtonClick?.Invoke(this);
+                GamesEventManager.Instance.inventoryUIEvents.ItemRightMouseButtonClicked(this);
             }
             else if (eventData.button == PointerEventData.InputButton.Left)
             {
-                OnItemClicked?.Invoke(this);
+                GamesEventManager.Instance.inventoryUIEvents.ItemClicked(this);
             }
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-
+            // No implementation here, only Begin and Drop PointerEvents are needed
+            // The function is needed for the IDragHandler interface
         }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if (!empty) { OnItemBeginDrag?.Invoke(this); }
+            if (!empty) 
+            { 
+                GamesEventManager.Instance.inventoryUIEvents.ItemBeginDrag(this);
+            }
         }
 
         public void OnDrop(PointerEventData eventData)
         {
-            OnItemDroppedOn?.Invoke(this);
+            GamesEventManager.Instance.inventoryUIEvents.ItemDroppedOn(this);
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            OnItemEndDrag?.Invoke(this);
+            GamesEventManager.Instance.inventoryUIEvents.ItemEndDrag(this);
         }
     }
 }

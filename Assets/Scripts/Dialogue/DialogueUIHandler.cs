@@ -31,8 +31,8 @@ public class DialogueUIHandler : MonoBehaviour
     [SerializeField] private GameObject choiceButtonPrefab; //Panel for displaying choices
     [SerializeField] private Transform choiceButtonContainer; //Container for the choice buttons
 
-    [Header("Timeline Elements")]
-    [SerializeField] private PlayableDirector timeline; //Panel for displaying the timeline
+    [Header("Timeline")]
+    [SerializeField] private TimelineHandler timelineHandler; //Timeline handler for managing cutscenes
 
     private Coroutine typingCoroutine; //Coroutine for typing effect
     private string currentText; //Current text being displayed
@@ -42,6 +42,7 @@ public class DialogueUIHandler : MonoBehaviour
         dialoguePanel.SetActive(false); //Defaultly hides the dialogue panel
         typingCoroutine = null; //Initializes the typing coroutine to null
         audioSource = GetComponent<AudioSource>(); //Gets the audio source component
+        timelineHandler = GetComponent<TimelineHandler>(); //Gets the timeline handler component
     }
 
     private void OnEnable()
@@ -52,7 +53,7 @@ public class DialogueUIHandler : MonoBehaviour
         DialogueManager.Instance.OnDialogueChoicesUpdate += ShowChoices; //Subscribes to the choices update event
         DialogueManager.Instance.OnDialogueLineSkip += SkipTyping; //Subscribes to the line skip event
         DialogueManager.Instance.OnDialogueEnd += HideDialogue;
-        DialogueManager.Instance.OnDialogueEnd += ResumeTimeline;
+
         DialogueManager.Instance.OnDialogueSpeakerUpdate += UpdateSpeaker; //Subscribes to the speaker update event
         DialogueManager.Instance.OnDialoguePortraitUpdate += UpdatePortrait; //Subscribes to the portrait update event
         DialogueManager.Instance.OnDialogueLayoutUpdate += UpdateLayout; //Subscribes to the layout update event
@@ -66,7 +67,7 @@ public class DialogueUIHandler : MonoBehaviour
         DialogueManager.Instance.OnDialogueChoicesUpdate -= ShowChoices; //Unsubscribes from the choices update event
         DialogueManager.Instance.OnDialogueLineSkip -= SkipTyping; //Unsubscribes from the line skip event
         DialogueManager.Instance.OnDialogueEnd -= HideDialogue;
-        DialogueManager.Instance.OnDialogueEnd -= ResumeTimeline;
+
         DialogueManager.Instance.OnDialogueSpeakerUpdate -= UpdateSpeaker; //Unsubscribes from the speaker update event
         DialogueManager.Instance.OnDialoguePortraitUpdate -= UpdatePortrait; //Unsubscribes from the portrait update event
         DialogueManager.Instance.OnDialogueLayoutUpdate -= UpdateLayout; //Unsubscribes from the layout update event
@@ -205,41 +206,4 @@ public class DialogueUIHandler : MonoBehaviour
             layoutAnimator.Play(animClipName); //Sets the trigger for the animator to show the correct layout
         }
     }
-
-    public void PlayTimeline()
-    {
-        if (timeline != null && !timeline.state.Equals(PlayState.Playing)) //Checks if the timeline is not already playing
-        {
-            timeline.Play(); //Plays the timeline
-            DialogueManager.Instance.TimelineIsActive = true; //Sets the timeline state to playing
-        }
-    }
-
-    public void StopTimeline()
-    {
-        if (timeline != null && timeline.state.Equals(PlayState.Playing)) //Checks if the timeline is playing
-        {
-            timeline.Stop(); //Stops the timeline
-            DialogueManager.Instance.TimelineIsActive = false; //Sets the timeline state to not playing
-        }
-    }
-
-    public void PauseTimeline()
-    {
-        if (timeline != null && timeline.state.Equals(PlayState.Playing)) //Checks if the timeline is playing
-        {
-            timeline.Pause(); //Pauses the timeline
-            DialogueManager.Instance.TimelineIsActive = false; //Sets the timeline state to not playing
-        }
-    }
-
-    public void ResumeTimeline()
-    {
-        if (timeline != null && timeline.state.Equals(PlayState.Paused)) //Checks if the timeline is paused
-        {
-            timeline.Resume(); //Resumes the timeline
-            DialogueManager.Instance.TimelineIsActive = true; //Sets the timeline state to playing
-        }
-    }
-
 }

@@ -1,4 +1,5 @@
 using Inventory.Model;
+using System;
 using UnityEngine;
 
 public class PickupSystem : MonoBehaviour
@@ -12,6 +13,9 @@ public class PickupSystem : MonoBehaviour
         if(item != null)
         {
             int quantityRemaining = inventory.AddItem(item.Item, item.Quantity); // Add the item to the inventory
+
+            GamesEventManager.Instance.inventoryModelEvents.ItemAdded(item.Item, item.Quantity - quantityRemaining);
+
             if (quantityRemaining == 0)
             {
                 item.DestroyItem(); // Destroy the pickup item if added successfully
@@ -22,6 +26,5 @@ public class PickupSystem : MonoBehaviour
 
             }
         }
-
     }
 }

@@ -16,8 +16,6 @@ namespace Inventory
         public List<InventoryItem> initialItems = new List<InventoryItem>();
         public bool InventoryIsActive => inventoryPage.isActiveAndEnabled; // Property to check if the inventory is active
 
-        private CharactersInputHandler inputHandler;
-
         [SerializeField]
         private AudioClip dropClip;
         [SerializeField]
@@ -25,20 +23,18 @@ namespace Inventory
 
         private void Awake()
         {
-            inputHandler = GetComponent<CharactersInputHandler>(); // Get the input handler component
-
             PrepareUI();
             PrepareInventoryData();
         }
 
         private void OnEnable()
         {
-            inputHandler.PlayerControls.Enable(); // Enable the input system
+            GamesEventManager.Instance.inputEvents.OnInventoryTogglePressed += InventoryTogglePressed;
         }
 
         private void OnDisable()
         {
-            inputHandler.PlayerControls.Disable(); // Disable the input system
+            GamesEventManager.Instance.inputEvents.OnInventoryTogglePressed -= InventoryTogglePressed;
         }
 
         private void PrepareInventoryData()
@@ -49,7 +45,7 @@ namespace Inventory
             {
                 if (!item.IsEmpty)
                 {
-                    inventoryData.AddItem(item);
+                    inventoryData.AddItem(item.item, item.quantity);
                 }
             }
         }
@@ -68,10 +64,10 @@ namespace Inventory
             inventoryPage.InitializeInventoryUI(inventoryData.Size); // Initialize the inventory UI with the specified size 
             
             // Subscribe to the item events
-            inventoryPage.OnDescriptionRequested += HandleDescriptionRequested; // Subscribe to the description request event
-            inventoryPage.OnItemActionRequested += HandleItemActionRequested; // Subscribe to the item action request event
-            inventoryPage.OnStartDragging += HandleItemDragStart; // Subscribe to the item drag start event
-            inventoryPage.OnItemSwapped += HandleItemSwap; // Subscribe to the item swap event
+            GamesEventManager.Instance.inventoryUIEvents.OnDescriptionRequested += HandleDescriptionRequested; // Subscribe to the description request event
+            GamesEventManager.Instance.inventoryUIEvents.OnItemActionRequested += HandleItemActionRequested; // Subscribe to the item action request event
+            GamesEventManager.Instance.inventoryUIEvents.OnStartDragging += HandleItemDragStart; // Subscribe to the item drag start event
+            GamesEventManager.Instance.inventoryUIEvents.OnItemSwapped += HandleItemSwap; // Subscribe to the item swap event
         }
 
         private void HandleDescriptionRequested(int itemIndex)
@@ -155,6 +151,35 @@ namespace Inventory
             inventoryData.SwapItems(itemIndex1, itemIndex2);
         }
 
+        private void InventoryTogglePressed()
+        {
+            if (!inventoryPage.isActiveAndEnabled && !DialogueManager.Instance.DialogueIsActive)
+            {
+                // If the inventory page is not active and dialogue is not active, show the inventory page
+                inventoryPage.Show();
+                foreach (var item in inventoryData.GetCurrentInventoryState())
+                {
+                    inventoryPage.UpdateData(item.Key, item.Value.item.Image, item.Value.quantity); // Update the inventory UI with the current inventory state
+                }
+
+                InventoryItem firstItem = inventoryData.GetItemAt(0); // Get the first item in the inventory
+                if (!firstItem.IsEmpty)
+                {
+                    inventoryPage.UpdateDescription(0, firstItem.item.Image, firstItem.item.name, firstItem.item.Description); // Update the inventory UI with the first item data
+                }
+                else
+                {
+                    inventoryPage.ResetSelection(); // Clears the Inventory Description if item is empty
+                    return;
+                }
+            }
+            else if (inventoryPage.isActiveAndEnabled && !DialogueManager.Instance.DialogueIsActive)
+            {
+                // If the inventory page is active and dialogue is not active, hide the inventory page
+                inventoryPage.Hide();
+            }
+        }
+        /*
         public void Update() //Checks if OpenInventory key is triggered
         {
             if (inputHandler.PlayerControls.Player.OpenInventory.triggered)
@@ -186,5 +211,6 @@ namespace Inventory
                 }
             }
         }
+        */
     }
 }

@@ -20,12 +20,6 @@ namespace Inventory.UI
 
         private int currentDraggedItemIndex = -1; // Index of the currently dragged item
 
-        /// Events for item interactions
-        public event Action<int> OnDescriptionRequested; // Event for item description request
-        public event Action<int> OnItemActionRequested; // Event for item action request
-        public event Action<int> OnStartDragging; // Event for item drag start
-        public event Action<int, int> OnItemSwapped; // Event for item swap
-
         [SerializeField]
         private ItemActionPanel itemActionPanel; // Reference to the item action panel UI
 
@@ -44,11 +38,11 @@ namespace Inventory.UI
                 inventoryItems.Add(newItem); // Add the new item to the list
 
                 //Subscribe to item events
-                newItem.OnItemClicked += HandleItemSelection;
-                newItem.OnItemBeginDrag += HandleItemBeginDrag;
-                newItem.OnItemEndDrag += HandleItemEndDrag;
-                newItem.OnItemDroppedOn += HandleItemSwap;
-                newItem.OnItemRightMouseButtonClick += HandleShowItemActions;
+                GamesEventManager.Instance.inventoryUIEvents.OnItemClicked += HandleItemSelection;
+                GamesEventManager.Instance.inventoryUIEvents.OnItemBeginDrag += HandleItemBeginDrag;
+                GamesEventManager.Instance.inventoryUIEvents.OnItemEndDrag += HandleItemEndDrag;
+                GamesEventManager.Instance.inventoryUIEvents.OnItemDroppedOn += HandleItemSwap;
+                GamesEventManager.Instance.inventoryUIEvents.OnItemRightMouseButtonClicked += HandleShowItemActions;
             }
         }
 
@@ -65,7 +59,7 @@ namespace Inventory.UI
             if (index == -1)
                 return;
 
-            OnDescriptionRequested?.Invoke(index); // Invoke the item description request event
+            GamesEventManager.Instance.inventoryUIEvents.DescriptionRequested(index); // Invoke the item description request event
         }
 
         private void HandleItemBeginDrag(InventoryUIItem item)
@@ -76,7 +70,7 @@ namespace Inventory.UI
 
             currentDraggedItemIndex = index; // Set the current dragged item index
             HandleItemSelection(item); // Handle item selection
-            OnStartDragging?.Invoke(index); // Invoke the item drag start event
+            GamesEventManager.Instance.inventoryUIEvents.StartDragging(index); // Invoke the item drag start event
         }
 
         private void HandleItemEndDrag(InventoryUIItem item)
@@ -92,7 +86,7 @@ namespace Inventory.UI
                 return;
             }
 
-            OnItemSwapped?.Invoke(currentDraggedItemIndex, index); // Invoke the item swap event
+            GamesEventManager.Instance.inventoryUIEvents.ItemSwapped(currentDraggedItemIndex, index); // Invoke the item swap event
             HandleItemSelection(item);
         }
 
@@ -115,7 +109,7 @@ namespace Inventory.UI
             if (index == -1)
                 return;
 
-            OnItemActionRequested?.Invoke(index); // Invoke the item action request event
+            GamesEventManager.Instance.inventoryUIEvents.ItemActionRequested(index); // Invoke the item action request event
         }
 
         public void Show()

@@ -4,70 +4,65 @@ using UnityEngine;
 
 namespace Characters
 {
-    public class CharactersController : Singleton<CharactersController>
+    public class CharactersController : MonoBehaviour
     {
         private InventoryController inventoryController;
         private CharactersMovementHandler movementHandler;
-        private CharactersInputHandler inputHandler;
         private CharactersAnimationHandler animationHandler;
 
-        private bool canMove;
+        private bool MovementEnabled = true;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
-
             inventoryController = GetComponent<InventoryController>();
             movementHandler = GetComponent<CharactersMovementHandler>();
-            inputHandler = GetComponent<CharactersInputHandler>();
             animationHandler = GetComponent<CharactersAnimationHandler>();
-
-            canMove = true;
         }
 
         private void OnEnable()
         {
-            inputHandler.OnDashRequested += movementHandler.Dash;
-            inputHandler.PlayerControls.Enable();
+            GamesEventManager.Instance.playerEvents.OnMovementEnabled += EnableMovement;
+            GamesEventManager.Instance.playerEvents.OnMovementDisabled += DisableMovement;
+            GamesEventManager.Instance.inputEvents.OnDashPressed += movementHandler.DashPressed;
+            GamesEventManager.Instance.inputEvents.OnMovePressed += movementHandler.SetMovement;
         }
 
         private void OnDisable()
         {
-            inputHandler.OnDashRequested -= movementHandler.Dash;
-            inputHandler.PlayerControls.Disable();
+            GamesEventManager.Instance.playerEvents.OnMovementEnabled += EnableMovement;
+            GamesEventManager.Instance.playerEvents.OnMovementDisabled += DisableMovement;
+            GamesEventManager.Instance.inputEvents.OnDashPressed -= movementHandler.DashPressed;
+            GamesEventManager.Instance.inputEvents.OnMovePressed -= movementHandler.SetMovement;
         }
 
         private void Update()
         {
-            PlayerInput();
+            UpdateAnimations();
         }
 
         private void FixedUpdate()
         {
-            //Unable to move when Dialogue is Active
-            if (DialogueManager.Instance.DialogueIsActive || !canMove || inventoryController.InventoryIsActive)
-            {
-                return;
-            }
-            else
-            {
-                movementHandler.Move();
-            }
+            UpdateMovement();
         }
 
-        private void PlayerInput()
+        private void UpdateMovement() // Responsible for Player Movement
         {
-            if (DialogueManager.Instance.DialogueIsActive || !canMove || inventoryController.InventoryIsActive)
+            //Unable to move when Dialogue is Active
+            if (DialogueManager.Instance.DialogueIsActive || !MovementEnabled || inventoryController.InventoryIsActive)
             {
-
-                movementHandler.SetMovement(Vector2.zero); //Disable Player Movement when Dialogue is Active
+                movementHandler.SetMovement(Vector2.zero);
+            }
+            
+            movementHandler.Move();
+        }
+        private void UpdateAnimations() // Responsible for Player Animations
+        {
+            if (DialogueManager.Instance.DialogueIsActive || !MovementEnabled || inventoryController.InventoryIsActive)
+            {
                 animationHandler.SetIdle(); //Set the Animator to Idle
 
                 return;
             }
-
-            //Get the Player Movement Input
-            movementHandler.SetMovement(inputHandler.GetMovementInput());
 
             //Set the Animator Parameters
             animationHandler.SetMovement(movementHandler.Movement, movementHandler.LastMovement);
@@ -75,12 +70,13 @@ namespace Characters
 
         public void EnableMovement()
         {
-            canMove = true;
+            MovementEnabled = true;
         }
 
         public void DisableMovement()
         {
-            canMove = false;
+            MovementEnabled = false;
+            movementHandler.SetMovement(Vector2.zero);
         }
     }
 }
