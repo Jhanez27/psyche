@@ -20,6 +20,8 @@ public class DialogueEvents
     public event Action OnNextDisabled;
     public event Action<bool> OnChoicesToggled; // Event for when the Choices are Displayed
 
+    public event Action<string, Ink.Runtime.Object> OnInkVariableChanged; // Event for when a Variable is Changed
+
     // Functions for Invoking Events
     // Functions for Dialogue Progression
     public void EnterDialogue(string knotName, DialogueSource source)
@@ -68,5 +70,12 @@ public class DialogueEvents
     public void ToggleChoices(bool choicesDisplayed)
     {
         OnChoicesToggled?.Invoke(choicesDisplayed);
+    }
+
+
+    // Functions for Variable Changes
+    public void ChangeInkVariables(string variableName, Ink.Runtime.Object value)
+    {
+        OnInkVariableChanged?.Invoke(variableName, value);
     }
 }

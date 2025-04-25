@@ -25,7 +25,7 @@ public class DialogueManager : MonoBehaviour
     //Ink JSON Tags
     private const string SPEAKER_TAG = "Speaker";
     private const string EMOTION_TAG = "Emotion";
-    private const string PORTRAIT_TAG = "Portrait";
+    private const string LAYOUT_TAG = "Portrait";
 
     [Header("Story Configuration")]
     [SerializeField] private TextAsset inkJSON; //Ink JSON file to be used for the dialogue
@@ -39,6 +39,7 @@ public class DialogueManager : MonoBehaviour
     public bool ChoicesDisplayed { get; private set; } = false; //Property to check if the choices are displayed
     public bool IsDialogueCooldown { get; private set; } = false; //Property to check if the dialogue is on cooldown
 
+    private InkDialogueVariables inkDialogueVariables; //Ink dialogue variables to be used for the dialogue
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
@@ -51,6 +52,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         story = new Story(inkJSON.text); //Initialize the story with the ink JSON text
+        inkDialogueVariables = new InkDialogueVariables(story); //Initialize the ink dialogue variables
     }
 
     private void OnEnable()
@@ -115,6 +117,8 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning("Knot name is empty, using default path.");
         }
 
+        inkDialogueVariables.SyncVariablesAndStartListening(story); //Sync the variables and start listening to the story
+
         ContinueOrExitStory();
     }
     private void ContinueOrExitStory()
@@ -122,6 +126,12 @@ public class DialogueManager : MonoBehaviour
         if (story.canContinue)
         {
             string dialogueLine = story.Continue(); //Continue the story and get the next line
+            List<string> storyTags = story.currentTags; //Get the current tags from the story
+
+            if(storyTags.Count > 0) //If there are tags present
+            {
+                HandleTags(storyTags); //Handle the tags
+            }
 
             while (IsLineBlank(dialogueLine) && story.canContinue) //Check if the line is blank
             {
@@ -151,8 +161,6 @@ public class DialogueManager : MonoBehaviour
         
         GamesEventManager.Instance.dialogueEvents.FinishDialogue(); //Exit the dialogue
         ActiveUIManager.Instance.CloseUI(ActiveUIType.Dialogue);
-        story.ResetState(); //Reset the story state
-
         if (dialogueSource == DialogueSource.GAMEPLAY)
         {
             GamesEventManager.Instance.playerEvents.MovementEnabled(); //Enable player movement
@@ -163,7 +171,11 @@ public class DialogueManager : MonoBehaviour
 
         }
         GamesEventManager.Instance.inputEvents.ChangeInputEventContext(InputEventContext.DEFAULT); //Change the input event context back to default
-        
+
+        inkDialogueVariables.StopListening(story); //Stop listening to the story variables
+
+
+        story.ResetState(); //Reset the story state
         StartCoroutine(DialogueCooldown()); //Start the dialogue cooldown coroutine
     }
     private IEnumerator DialogueCooldown()
@@ -248,14 +260,14 @@ public class DialogueManager : MonoBehaviour
                 switch (tagName)
                 {
                     case SPEAKER_TAG:
-                        OnDialogueSpeakerUpdate?.Invoke(tagValue); //Invoke the speaker update event with the tag value
-                        OnDialoguePortraitUpdate?.Invoke(tagValue); //Invoke the emotion update event with the tag value
+                        GamesEventManager.Instance.dialogueEvents.UpdateDialogueSpeaker(tagValue); //Update the dialogue speaker with the tag value
+                        GamesEventManager.Instance.dialogueEvents.UpdateDialoguePortrait(tagValue); //Update the dialogue emotion with the tag value
                         break;
                     case EMOTION_TAG:
                         //Invoke the emotion update event with the tag value
                         break;
-                    case PORTRAIT_TAG:
-                        OnDialogueLayoutUpdate?.Invoke(tagValue); //Invoke the portrait update event with the tag value
+                    case LAYOUT_TAG:
+                        GamesEventManager.Instance.dialogueEvents.UpdateDialoguePortrait(tagValue); //Update the dialogue portrait with the tag value
                         break;
                     default:
                         Debug.LogWarning("Unknown tag: " + tagName); //Log a warning for unknown tags
