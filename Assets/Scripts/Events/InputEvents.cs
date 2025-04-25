@@ -19,27 +19,23 @@ public class InputEvents
     {
         OnMovePressed?.Invoke(movement);
     }
-
     public void DashPressed()
     {
         OnDashPressed?.Invoke();
     }
-
     public void InteractPressed()
     {
         OnInteractPressed?.Invoke(this.InputEventContext);
     }
-
     public void NextPressed()
     {
+        Debug.Log("Next Pressed!");
         OnNextPressed?.Invoke();
     }
-
     public void InventoryTogglePressed()
     {
         OnInventoryTogglePressed?.Invoke();
     }
-
     public void QuestLogTogglePressed()
     {
         OnQuestLogTogglePressed?.Invoke();

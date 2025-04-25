@@ -1838,6 +1838,7 @@ GameObject:
   - component: {fileID: 536765875}
   - component: {fileID: 536765876}
   - component: {fileID: 536765877}
+  - component: {fileID: 536765878}
   m_Layer: 5
   m_Name: SceneDialogue
   m_TagString: Untagged
@@ -1953,7 +1954,6 @@ MonoBehaviour:
   typingDelay: 0.005
   choiceButtonPrefab: {fileID: 5863964523675299724, guid: 5db18fe14ffae14479d78dbf832f1cfe, type: 3}
   choiceButtonContainer: {fileID: 2116019493}
-  timelineHandler: {fileID: 0}
 --- !u!82 &536765875
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2094,6 +2094,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeline: {fileID: 569515095}
+--- !u!114 &536765878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536765869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 10
+    m_Right: 10
+    m_Top: 10
+    m_Bottom: 10
+  m_ChildAlignment: 7
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &547082268
 GameObject:
   m_ObjectHideFlags: 0
@@ -2256,20 +2282,12 @@ PlayableDirector:
   m_SceneBindings:
   - key: {fileID: 794040482138991034, guid: 0468b0a885a48394a98606d9bcbf40c3, type: 2}
     value: {fileID: 1722905043}
-  - key: {fileID: -6873310123513939167, guid: 0468b0a885a48394a98606d9bcbf40c3, type: 2}
-    value: {fileID: 1223863107}
-  - key: {fileID: 3969385156110689735, guid: 0468b0a885a48394a98606d9bcbf40c3, type: 2}
-    value: {fileID: 2136281338}
   - key: {fileID: -7348604997981006570, guid: 0468b0a885a48394a98606d9bcbf40c3, type: 2}
     value: {fileID: 2142378935}
-  - key: {fileID: -5181528517097874242, guid: 0468b0a885a48394a98606d9bcbf40c3, type: 2}
-    value: {fileID: 1223863107}
   - key: {fileID: -7576819201295842655, guid: 0468b0a885a48394a98606d9bcbf40c3, type: 2}
     value: {fileID: 2142378932}
-  - key: {fileID: 979358620863669905, guid: 0468b0a885a48394a98606d9bcbf40c3, type: 2}
-    value: {fileID: 536765876}
-  - key: {fileID: -1556148093546452173, guid: 0468b0a885a48394a98606d9bcbf40c3, type: 2}
-    value: {fileID: 1223863107}
+  - key: {fileID: -8700622585465677208, guid: 0468b0a885a48394a98606d9bcbf40c3, type: 2}
+    value: {fileID: 1003156171}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &569515096
@@ -2331,6 +2349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24b5fedec2566eb4787e462f6905100f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inkJSON: {fileID: 4900000, guid: 086cb06a47b89d54e826925e64097934, type: 3}
 --- !u!1 &586755117
 GameObject:
   m_ObjectHideFlags: 0
@@ -2341,6 +2360,7 @@ GameObject:
   m_Component:
   - component: {fileID: 586755118}
   - component: {fileID: 586755119}
+  - component: {fileID: 586755120}
   m_Layer: 0
   m_Name: GamesEventManager
   m_TagString: Untagged
@@ -2375,6 +2395,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ff83d354989cc04ea2c25a2ddf8d8a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &586755120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586755117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: f28a19ec4cde62c4a987c1d7842714ef, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 586755117}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 586755117}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &608779571
 GameObject:
   m_ObjectHideFlags: 0
@@ -8828,6 +8890,7 @@ MonoBehaviour:
   questInfoForPoint: {fileID: 11400000, guid: 8e4ee4a961640c843908deab35c2cf1a, type: 2}
   startPoint: 1
   finishPoint: 1
+  dialogueKnotName: 
 --- !u!58 &817672358
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -13456,6 +13519,126 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1003156170
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1003156173}
+  - component: {fileID: 1003156171}
+  - component: {fileID: 1003156172}
+  m_Layer: 0
+  m_Name: GamesEventManagerProxy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1003156171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003156170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: dfed4b461c2ea07419a565bbf741f45f, type: 2}
+    - {fileID: 11400000, guid: 0406523de63f8004db7ecc83440795c3, type: 2}
+    - {fileID: 11400000, guid: a859f2ba680f735418f4d19d32eeb5a8, type: 2}
+    - {fileID: 11400000, guid: 91808e70a83abd8489d7d978024d1465, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1003156172}
+          m_TargetAssemblyTypeName: GamesEventManagerProxy, Assembly-CSharp
+          m_MethodName: TriggerDialogueEntered
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Start
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1003156172}
+          m_TargetAssemblyTypeName: GamesEventManagerProxy, Assembly-CSharp
+          m_MethodName: TriggerPauseTimeline
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1003156172}
+          m_TargetAssemblyTypeName: GamesEventManagerProxy, Assembly-CSharp
+          m_MethodName: TriggerFinishTimeline
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1003156172}
+          m_TargetAssemblyTypeName: GamesEventManagerProxy, Assembly-CSharp
+          m_MethodName: TriggerStartTimeline
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &1003156172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003156170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4846884232be90048b7f3a59b1445d0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1003156173
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003156170}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1378376010}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1055796558
 GameObject:
   m_ObjectHideFlags: 0
@@ -13798,8 +13981,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1223863103}
   - component: {fileID: 1223863104}
-  - component: {fileID: 1223863105}
-  - component: {fileID: 1223863107}
+  - component: {fileID: 1223863109}
+  - component: {fileID: 1223863108}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
@@ -13868,7 +14051,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 3, y: 3}
   m_EdgeRadius: 0
---- !u!114 &1223863105
+--- !u!114 &1223863108
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13877,87 +14060,49 @@ MonoBehaviour:
   m_GameObject: {fileID: 1223863102}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d9870608ccd99d459c42c53f654db6f, type: 3}
+  m_Script: {fileID: 11500000, guid: aa7210146a4789048a4340667f91d179, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visualCue: {fileID: 825501078}
-  inkJSON: {fileID: 4900000, guid: 086cb06a47b89d54e826925e64097934, type: 3}
-  isCutsceneTrigger: 1
---- !u!114 &1223863107
-MonoBehaviour:
+  questInfoForPoint: {fileID: 11400000, guid: 8e4ee4a961640c843908deab35c2cf1a, type: 2}
+  startPoint: 1
+  finishPoint: 0
+  dialogueKnotName: Start
+--- !u!58 &1223863109
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1223863102}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Events:
-    m_Signals:
-    - {fileID: 11400000, guid: 5236bd6df775e2b4d9a2a4cf97e9dfb1, type: 2}
-    - {fileID: 11400000, guid: 4265795e84c41de4f84399c786a721ad, type: 2}
-    - {fileID: 11400000, guid: 5a2101a5c3db301429c277359fc8529f, type: 2}
-    - {fileID: 11400000, guid: f28a19ec4cde62c4a987c1d7842714ef, type: 2}
-    m_Events:
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1223863105}
-          m_TargetAssemblyTypeName: DialogueTrigger, Assembly-CSharp
-          m_MethodName: SetVisualCueAllowed
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1223863105}
-          m_TargetAssemblyTypeName: DialogueTrigger, Assembly-CSharp
-          m_MethodName: SetCanInteract
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1223863105}
-          m_TargetAssemblyTypeName: DialogueTrigger, Assembly-CSharp
-          m_MethodName: SetCanInteract
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1223863105}
-          m_TargetAssemblyTypeName: DialogueTrigger, Assembly-CSharp
-          m_MethodName: StartDialogueScene
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.5
 --- !u!1 &1236069185
 GameObject:
   m_ObjectHideFlags: 0
@@ -14014,6 +14159,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1378376010}
+  - component: {fileID: 1378376011}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -14037,8 +14183,21 @@ Transform:
   - {fileID: 574259439}
   - {fileID: 586755118}
   - {fileID: 516563618}
+  - {fileID: 1003156173}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1378376011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378376009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2841ba5debc8a9d49a47368266ae2ebc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1391930893
 GameObject:
   m_ObjectHideFlags: 0
@@ -18012,10 +18171,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 536765873}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 400, y: -148.07999}
+  m_SizeDelta: {x: 400, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2116019494
 MonoBehaviour:
@@ -18070,13 +18229,13 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
+    m_Top: 15
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 200, y: 24}
-  m_Spacing: {x: 0, y: 12}
+  m_CellSize: {x: 400, y: 24}
+  m_Spacing: {x: 0, y: 5}
   m_Constraint: 1
   m_ConstraintCount: 1
 --- !u!114 &2116019497
@@ -18129,9 +18288,9 @@ RectTransform:
   - {fileID: 2081329327}
   m_Father: {fileID: 536765873}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 1.05, y: 20}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 768.27, y: 153.84}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &2128308885
@@ -18471,7 +18630,19 @@ MonoBehaviour:
     m_ActionId: 2776c80d-3c14-4091-8c56-d04ced07a2b0
     m_ActionName: 'Player/Previous[/Keyboard/1]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2136281345}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: NextPressed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba
     m_ActionName: 'Player/Next[/Mouse/leftButton,/Keyboard/x]'
   - m_PersistentCalls:
@@ -19759,11 +19930,11 @@ SceneRoots:
   - {fileID: 662816378}
   - {fileID: 1378376010}
   - {fileID: 1828145132}
-  - {fileID: 2136281334}
   - {fileID: 536765873}
   - {fileID: 1725651666}
   - {fileID: 924665745}
   - {fileID: 1613676674}
+  - {fileID: 2136281334}
   - {fileID: 2142378933}
   - {fileID: 1535558020}
   - {fileID: 837812395}

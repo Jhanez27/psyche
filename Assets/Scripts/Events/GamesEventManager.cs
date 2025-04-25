@@ -13,6 +13,7 @@ public class GamesEventManager : MonoBehaviour
     public QuestEvents questEvents;
     public QuestUIEvents questUIEvents;
     public DialogueEvents dialogueEvents;
+    public TimelineEvents timelineEvents;
 
     private void Awake()
     {
@@ -33,5 +34,6 @@ public class GamesEventManager : MonoBehaviour
         this.questEvents = new QuestEvents();
         this.questUIEvents = new QuestUIEvents();
         this.dialogueEvents = new DialogueEvents(); 
+        this.timelineEvents = new TimelineEvents();
     }
 }

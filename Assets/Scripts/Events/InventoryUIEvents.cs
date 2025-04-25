@@ -19,23 +19,24 @@ public class InventoryUIEvents
     public event Action<InventoryUIItem> OnItemEndDrag; // Event for When the Mouse Stops Dragging the Item
     public event Action<InventoryUIItem> OnItemRightMouseButtonClicked; //Event for Right-Clicking the Item
 
+    // Inventory Boolean Toggle Events
+    public event Action OnInventoryEnabled; // Event for When the Inventory is Enabled
+    public event Action OnInventoryDisabled; // Event for When the Inventory is Disabled
+
     // Functions for Invoking Input Events
     // InventoryPage Items
     public void DescriptionRequested(int itemIndex)
     {
         OnDescriptionRequested?.Invoke(itemIndex);
     }
-
     public void ItemActionRequested(int itemIndex)
     {
         OnItemActionRequested?.Invoke(itemIndex);
     }
-
     public void StartDragging(int itemIndex)
     {
         OnStartDragging?.Invoke(itemIndex);
     }
-
     public void ItemSwapped(int itemIndex1, int itemIndex2)
     {
         OnItemSwapped?.Invoke(itemIndex1, itemIndex2);
@@ -46,24 +47,30 @@ public class InventoryUIEvents
     {
         OnItemClicked?.Invoke(item);
     }
-
     public void ItemDroppedOn(InventoryUIItem item)
     {
         OnItemDroppedOn?.Invoke(item);
     }
-
     public void ItemBeginDrag(InventoryUIItem item)
     {
         OnItemBeginDrag?.Invoke(item);
     }
-
     public void ItemEndDrag(InventoryUIItem item)
     {
         OnItemEndDrag?.Invoke(item);
     }
-
     public void ItemRightMouseButtonClicked(InventoryUIItem item)
     {
         OnItemRightMouseButtonClicked?.Invoke(item);
+    }
+
+    // Inventory Boolean Toggle 
+    public void EnableInventory()
+    {
+        OnInventoryEnabled?.Invoke();
+    }
+    public void DisableInventory()
+    {
+        OnInventoryDisabled?.Invoke();
     }
 }

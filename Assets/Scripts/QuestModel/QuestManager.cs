@@ -14,6 +14,7 @@ public class QuestManager : MonoBehaviour
 
     //List of all Quests
     private Dictionary<string, Quest> questMap;
+    private bool canInteract = true;
 
     private void Start()
     {
@@ -38,7 +39,6 @@ public class QuestManager : MonoBehaviour
         }
         PrepareUI(quests);
     }
-
     private void OnEnable()
     {
         GamesEventManager.Instance.questEvents.OnStartQuest += StartQuest;
@@ -48,7 +48,6 @@ public class QuestManager : MonoBehaviour
         GamesEventManager.Instance.inputEvents.OnQuestLogTogglePressed += QuestTogglePressed;
         GamesEventManager.Instance.questUIEvents.OnDescriptionRequested += HandleLogDescriptionRequest;
     }
-
     private void OnDisable()
     {
         GamesEventManager.Instance.questEvents.OnStartQuest -= StartQuest;
@@ -58,113 +57,29 @@ public class QuestManager : MonoBehaviour
         GamesEventManager.Instance.inputEvents.OnQuestLogTogglePressed -= QuestTogglePressed;
         GamesEventManager.Instance.questUIEvents.OnDescriptionRequested -= HandleLogDescriptionRequest;
     }
-
-    private void PrepareUI(List<Quest> quests)
-    {
-        logPage.InitializeQuestLogPage(quests);
-    }
-    private void QuestStepChange(string id, int index, QuestStepState state)
-    {
-        Quest quest = GetQuestByID(id);
-        quest.StoreQuestStepState(state, index);
-        ChangeQuestState(quest.questInfo.ID, quest.state);
-    }
-
-    public void StartQuest(string id)
-    {
-        Debug.Log("Quest Started " + id);
-
-        Quest quest = GetQuestByID(id);
-        quest.InstantiateCurrentQuestStep(this.transform);
-        ChangeQuestState(quest.questInfo.ID, QuestState.IN_PROGRESS);
-    }
-
-    public void AdvanceQuest(string id)
-    {
-        Quest quest = GetQuestByID(id);
-
-        quest.MoveToNextStep();
-
-        if (quest.CurrentStepExists())
-        {
-            quest.InstantiateCurrentQuestStep(this.transform);
-        }
-        else
-        {
-            ChangeQuestState(quest.questInfo.ID, QuestState.CAN_FINISH);
-        }
-        
-    }
-
-    public void FinishQuest(string id)
-    {
-        Debug.Log("Quest Finished");
-
-        Quest quest = GetQuestByID(id);
-        ClaimRewards(quest);
-        ChangeQuestState(quest.questInfo.ID, QuestState.FINISHED);
-    }
-
-    public void ChangeQuestState(string id, QuestState state)
-    {
-        Quest quest = GetQuestByID(id);
-        quest.state = state;
-
-        GamesEventManager.Instance.questEvents.ChangeQuestState(quest);
-    }
-
     private void Update()
     {
-        foreach (Quest quest in questMap.Values) 
+        foreach (Quest quest in questMap.Values)
         {
-            if(quest.state == QuestState.REQUIREMENTS_NOT_MET && CheckRequirementsMet(quest))
+            if (quest.state == QuestState.REQUIREMENTS_NOT_MET && CheckRequirementsMet(quest))
             {
                 ChangeQuestState(quest.questInfo.ID, QuestState.CAN_START);
             }
         }
     }
-
-    private void QuestTogglePressed()
+    private void OnApplicationQuit() // Saves quests whenever the game is exited
     {
-        if(!logPage.isActiveAndEnabled && !DialogueManager.Instance.DialogueIsActive)
+        foreach (Quest quest in questMap.Values)
         {
-            logPage.Show();
-
-            bool isFirst = true;
-            foreach(Quest quest in questMap.Values)
-            {
-                if(isFirst)
-                {
-                    isFirst = false;
-                    GamesEventManager.Instance.questUIEvents.DescriptionRequested(quest.questInfo.ID);
-                }
-
-                logPage.UpdateData(quest.questInfo.ID, quest.questInfo.displayName);
-            }
-            GamesEventManager.Instance.playerEvents.MovementDisabled();
-        }
-        else
-        {
-            logPage.Hide();
-            GamesEventManager.Instance.playerEvents.MovementEnabled();
+            SaveQuest(quest);
         }
     }
 
-    private void ClaimRewards(Quest quest)
+    // UI Prepapration
+    private void PrepareUI(List<Quest> quests) // Iniitializes the quest log page
     {
-        Debug.Log("Rewards Claimed!");
+        logPage.InitializeQuestLogPage(quests);
     }
-
-    private bool CheckRequirementsMet(Quest quest) // Checks whether each prerequisite quest is satisfied
-    {
-        foreach (QuestInfoSO prerequisiteQuestInfo in quest.questInfo.questPrerequisite)
-        {
-            if(GetQuestByID(prerequisiteQuestInfo.ID).state != QuestState.FINISHED)
-                return false;
-        }
-        return true;
-    }
-
     private Dictionary<string, Quest> CreateQuestMap()
     {
         //Load all QuestInfoSO from the Resources folder
@@ -183,9 +98,137 @@ public class QuestManager : MonoBehaviour
         }
 
         return returnQuestMap;
-    }   
-    
-    
+    }
+
+    // Quest Progression
+    public void StartQuest(string id)
+    {
+        Debug.Log("Quest Started " + id);
+
+        Quest quest = GetQuestByID(id);
+        quest.InstantiateCurrentQuestStep(this.transform);
+        ChangeQuestState(quest.questInfo.ID, QuestState.IN_PROGRESS);
+    }
+    public void AdvanceQuest(string id)
+    {
+        Quest quest = GetQuestByID(id);
+
+        quest.MoveToNextStep();
+
+        if (quest.CurrentStepExists())
+        {
+            quest.InstantiateCurrentQuestStep(this.transform);
+        }
+        else
+        {
+            ChangeQuestState(quest.questInfo.ID, QuestState.CAN_FINISH);
+        }
+    }
+    public void FinishQuest(string id)
+    {
+        Debug.Log("Quest Finished");
+
+        Quest quest = GetQuestByID(id);
+        ClaimRewards(quest);
+        ChangeQuestState(quest.questInfo.ID, QuestState.FINISHED);
+    }
+
+    // Quest Input 
+    private void QuestTogglePressed()
+    {
+        if (!logPage.isActiveAndEnabled && ActiveUIManager.Instance.CanOpenUI(ActiveUIType.QuestLog) && canInteract)
+        {
+            logPage.Show();
+            ActiveUIManager.Instance.OpenUI(ActiveUIType.QuestLog);
+
+            bool isFirst = true;
+            foreach (Quest quest in questMap.Values)
+            {
+                if (isFirst)
+                {
+                    isFirst = false;
+                    GamesEventManager.Instance.questUIEvents.DescriptionRequested(quest.questInfo.ID);
+                }
+
+                logPage.UpdateData(quest.questInfo.ID, quest.questInfo.displayName);
+            }
+            GamesEventManager.Instance.playerEvents.MovementDisabled();
+        }
+        else
+        {
+            logPage.Hide();
+            GamesEventManager.Instance.playerEvents.MovementEnabled();
+            ActiveUIManager.Instance.CloseUI(ActiveUIType.QuestLog);
+        }
+    }
+
+    // Quest Display
+    private void HandleLogDescriptionRequest(string id)
+    {
+        Quest logItem = questMap[id];
+        if (logItem != null)
+        {
+            Quest quest = questMap[id];
+            GameObject questStepObject;
+
+            if (quest.CurrentStepExists())
+            {
+                questStepObject = quest.questInfo.questSteps[quest.currentQuestStepIndex];
+            }
+            else
+            {
+                questStepObject = quest.questInfo.questSteps[quest.currentQuestStepIndex - 1];
+            }
+
+            if (questStepObject != null)
+            {
+                QuestStep questStep = questStepObject.GetComponent<QuestStep>();
+
+                logPage.UpdateDescription(
+                    quest.questInfo.name,
+                    quest.questInfo.description,
+                    questStep.QuestStepName,
+                    quest.GetFullStatusText()
+                );
+            }
+        }
+    }
+
+    // Quest Attribute Updates
+    private void QuestStepChange(string id, int index, QuestStepState state)
+    {
+        Quest quest = GetQuestByID(id);
+        quest.StoreQuestStepState(state, index);
+        ChangeQuestState(quest.questInfo.ID, quest.state);
+    }
+    public void ChangeQuestState(string id, QuestState state)
+    {
+        Quest quest = GetQuestByID(id);
+        quest.state = state;
+
+        GamesEventManager.Instance.questEvents.ChangeQuestState(quest);
+    }
+
+    //Quest Boolean Updates
+    private void EnableInteract()
+    {
+        canInteract = true;
+    }
+    private void DisableInteract()
+    {
+        canInteract = false;
+    }
+
+    // Quest Access and Checking
+    private bool CheckRequirementsMet(Quest quest) // Checks whether each prerequisite quest is satisfied
+    {
+        foreach (QuestInfoSO prerequisiteQuestInfo in quest.questInfo.questPrerequisite)
+        {
+            if (GetQuestByID(prerequisiteQuestInfo.ID).state != QuestState.FINISHED)
+                return false;
+        }
+        return true;
+    }
     private Quest GetQuestByID(string id) // Get corresponding Quest through ID
     {
 
@@ -197,15 +240,13 @@ public class QuestManager : MonoBehaviour
         return quest;
     }
 
-    private void OnApplicationQuit() // Saves quests whenever the game is exited
+    // Quest Rewards
+    private void ClaimRewards(Quest quest)
     {
-        foreach (Quest quest in questMap.Values)
-        {
-            SaveQuest(quest);
-        }
+        Debug.Log("Rewards Claimed!");
     }
 
-    // Data Persistence through Saving 
+    // Quest Data Persistence
     private void SaveQuest(Quest quest)
     {
         try
@@ -221,8 +262,6 @@ public class QuestManager : MonoBehaviour
             Debug.LogError("Failed to save quest with id: " + quest.questInfo.ID + " : " + e);
         }
     }
-
-    // Data Persistence through Loading
     private Quest LoadQuest(QuestInfoSO questInfo)
     {
         Quest quest = null;
@@ -246,36 +285,5 @@ public class QuestManager : MonoBehaviour
         }
 
         return quest;
-    }
-
-    private void HandleLogDescriptionRequest(string id)
-    {
-        Quest logItem = questMap[id];
-        if (logItem != null)
-        {
-            Quest quest = questMap[id];
-            GameObject questStepObject;
-
-            if(quest.CurrentStepExists())
-            {
-                questStepObject = quest.questInfo.questSteps[quest.currentQuestStepIndex];
-            }
-            else
-            {
-                questStepObject = quest.questInfo.questSteps[quest.currentQuestStepIndex - 1];
-            }
-
-            if (questStepObject != null)
-            {
-                QuestStep questStep = questStepObject.GetComponent<QuestStep>();
-
-                logPage.UpdateDescription(
-                    quest.questInfo.name,
-                    quest.questInfo.description,
-                    questStep.QuestStepName,
-                    quest.GetFullStatusText()
-                );
-            }
-        }
     }
 }

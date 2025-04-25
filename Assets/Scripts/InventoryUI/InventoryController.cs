@@ -15,6 +15,7 @@ namespace Inventory
 
         public List<InventoryItem> initialItems = new List<InventoryItem>();
         public bool InventoryIsActive => inventoryPage.isActiveAndEnabled; // Property to check if the inventory is active
+        private bool canOpenInventory = true; // Flag to check if the inventory can be opened
 
         [SerializeField]
         private AudioClip dropClip;
@@ -26,17 +27,24 @@ namespace Inventory
             PrepareUI();
             PrepareInventoryData();
         }
-
         private void OnEnable()
         {
             GamesEventManager.Instance.inputEvents.OnInventoryTogglePressed += InventoryTogglePressed;
+            GamesEventManager.Instance.inventoryUIEvents.OnInventoryEnabled += EnableInventory; // Subscribe to the inventory enabled event
+            GamesEventManager.Instance.inventoryUIEvents.OnInventoryDisabled += DisableInventory; // Subscribe to the inventory disabled event
         }
-
         private void OnDisable()
         {
             GamesEventManager.Instance.inputEvents.OnInventoryTogglePressed -= InventoryTogglePressed;
+            GamesEventManager.Instance.inventoryUIEvents.OnInventoryEnabled -= EnableInventory; // Unsubscribe from the inventory enabled event
+            GamesEventManager.Instance.inventoryUIEvents.OnInventoryDisabled -= DisableInventory; // Unsubscribe from the inventory disabled event
+        }
+        private void OnDestroy()
+        {
+            GamesEventManager.Instance.inventoryModelEvents.OnInventoryUpdated -= GetUpdateInventoryUI;
         }
 
+        // Inventory Preparations
         private void PrepareInventoryData()
         {
             inventoryData.Initialize(); // Initialize the inventory data
@@ -49,7 +57,18 @@ namespace Inventory
                 }
             }
         }
+        private void PrepareUI()
+        {
+            inventoryPage.InitializeInventoryUI(inventoryData.Size); // Initialize the inventory UI with the specified size 
 
+            // Subscribe to the item events
+            GamesEventManager.Instance.inventoryUIEvents.OnDescriptionRequested += HandleDescriptionRequested; // Subscribe to the description request event
+            GamesEventManager.Instance.inventoryUIEvents.OnItemActionRequested += HandleItemActionRequested; // Subscribe to the item action request event
+            GamesEventManager.Instance.inventoryUIEvents.OnStartDragging += HandleItemDragStart; // Subscribe to the item drag start event
+            GamesEventManager.Instance.inventoryUIEvents.OnItemSwapped += HandleItemSwap; // Subscribe to the item swap event
+        }
+        
+        // InventoryModel Updates
         private void GetUpdateInventoryUI(Dictionary<int, InventoryItem> inventoryState)
         {
             inventoryPage.ResetAllItems();
@@ -59,17 +78,7 @@ namespace Inventory
             }
         }
 
-        private void PrepareUI()
-        {
-            inventoryPage.InitializeInventoryUI(inventoryData.Size); // Initialize the inventory UI with the specified size 
-            
-            // Subscribe to the item events
-            GamesEventManager.Instance.inventoryUIEvents.OnDescriptionRequested += HandleDescriptionRequested; // Subscribe to the description request event
-            GamesEventManager.Instance.inventoryUIEvents.OnItemActionRequested += HandleItemActionRequested; // Subscribe to the item action request event
-            GamesEventManager.Instance.inventoryUIEvents.OnStartDragging += HandleItemDragStart; // Subscribe to the item drag start event
-            GamesEventManager.Instance.inventoryUIEvents.OnItemSwapped += HandleItemSwap; // Subscribe to the item swap event
-        }
-
+        // InventoryUI Updates
         private void HandleDescriptionRequested(int itemIndex)
         {
             InventoryItem inventoryItem = inventoryData.GetItemAt(itemIndex); // Get the item at the specified index
@@ -85,6 +94,7 @@ namespace Inventory
             }
         }
 
+        //InventoryItem Actions
         public void PerformAction(int itemIndex)
         {
             InventoryItem inventoryItem = inventoryData.GetItemAt(itemIndex); // Get the item at the specified index
@@ -108,7 +118,6 @@ namespace Inventory
                 }
             }
         }
-
         private void HandleItemActionRequested(int itemIndex)
         {
             InventoryItem inventoryItem = inventoryData.GetItemAt(itemIndex); // Get the item at the specified index
@@ -129,14 +138,12 @@ namespace Inventory
                     inventoryPage.ResetSelection();
             }
         }
-
         private void DropItem(int itemIndex, int quantity)
         {
             inventoryData.RemoveItem(itemIndex, quantity); // Remove the item from the inventory
             inventoryPage.ResetSelection(); // Reset the item selection
             audioSource.PlayOneShot(dropClip); // Play the drop sound effect
         }
-
         private void HandleItemDragStart(int itemIndex)
         {
             InventoryItem inventoryItem = inventoryData.GetItemAt(itemIndex);
@@ -145,18 +152,20 @@ namespace Inventory
                 inventoryPage.CreateDraggedItem(inventoryItem.item.Image, inventoryItem.quantity);
             }
         }
-
         private void HandleItemSwap(int itemIndex1, int itemIndex2)
         {
             inventoryData.SwapItems(itemIndex1, itemIndex2);
         }
 
+        // Inventory UI Toggle
         private void InventoryTogglePressed()
         {
-            if (!inventoryPage.isActiveAndEnabled && !DialogueManager.Instance.DialogueIsActive)
+            if (!inventoryPage.isActiveAndEnabled && ActiveUIManager.Instance.CanOpenUI(ActiveUIType.Inventory) && canOpenInventory)
             {
                 // If the inventory page is not active and dialogue is not active, show the inventory page
                 inventoryPage.Show();
+                ActiveUIManager.Instance.OpenUI(ActiveUIType.Inventory); // Set the active UI type to inventory
+
                 foreach (var item in inventoryData.GetCurrentInventoryState())
                 {
                     inventoryPage.UpdateData(item.Key, item.Value.item.Image, item.Value.quantity); // Update the inventory UI with the current inventory state
@@ -177,12 +186,18 @@ namespace Inventory
             {
                 // If the inventory page is active and dialogue is not active, hide the inventory page
                 inventoryPage.Hide();
+                ActiveUIManager.Instance.CloseUI(ActiveUIType.Inventory); // Set the active UI type to none
             }
         }
 
-        private void OnDestroy()
+        // Inventory Boolean Toggle
+        private void EnableInventory()
         {
-            GamesEventManager.Instance.inventoryModelEvents.OnInventoryUpdated -= GetUpdateInventoryUI;
+            canOpenInventory = true; // Enable the inventory
+        }
+        private void DisableInventory()
+        {
+            canOpenInventory = false; // Disable the inventory
         }
     }
 }

@@ -15,7 +15,7 @@ public class QuestPoint : MonoBehaviour
     [SerializeField]
     private bool finishPoint = true; // The interaction will be the end point
 
-    [Header("Quest Dialogue COnfiguration")]
+    [Header("Quest Dialogue Configuration")]
     [SerializeField]
     private string dialogueKnotName; // The name of the knot to be used in the dialogue system
 
@@ -50,11 +50,13 @@ public class QuestPoint : MonoBehaviour
 
     private void InteractPressed(InputEventContext context)
     {
-        if (playerIsNear && context.Equals(InputEventContext.DEFAULT))
+        if (playerIsNear && context.Equals(InputEventContext.DEFAULT) && ActiveUIManager.Instance.CanOpenUI(ActiveUIType.Dialogue))
         {
-            if(!dialogueKnotName.Equals(string.Empty))
+            ActiveUIManager.Instance.OpenUI(ActiveUIType.Dialogue); // Open the dialogue UI
+
+            if (!dialogueKnotName.Equals(string.Empty))
             {
-                GamesEventManager.Instance.dialogueEvents.EnterDialogue(dialogueKnotName);
+                GamesEventManager.Instance.dialogueEvents.EnterDialogue(dialogueKnotName, DialogueSource.GAMEPLAY);
             }
             else
             {

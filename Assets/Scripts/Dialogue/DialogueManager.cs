@@ -5,18 +5,12 @@ using Ink.Runtime;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class DialogueManager : MonoBehaviour
 {
     //Singleton Pattern 
     public static DialogueManager Instance {get; private set; } 
-
-    //Event Driven Architecture for Dialogue System
-    public event Action OnDialogueStart;
-    public event Action<string> OnDialogueUpdate;
-    public event Action<Story> OnDialogueChoicesUpdate;
-    public event Action OnDialogueLineSkip;
-    public event Action OnDialogueEnd;
     
     //Event Driven Architecture for Dialogue UI
     public event Action<string> OnDialogueSpeakerUpdate;
@@ -24,16 +18,26 @@ public class DialogueManager : MonoBehaviour
     public event Action<string> OnDialoguePortraitUpdate;
     public event Action<string> OnDialogueLayoutUpdate;
 
-    public bool DialogueIsActive { get; private set; } //Property to check if the dialogue is active
     public bool ShowVisualCue { get; private set; } //Property to check if the visual cue is active
     public bool IsTyping { get; set; } //Property to check if the dialogue is being typed out
     public bool TimelineIsActive { get; set; } //Property to check if the timeline is active
-    private Story currentStory; //Current story object 
 
     //Ink JSON Tags
     private const string SPEAKER_TAG = "Speaker";
     private const string EMOTION_TAG = "Emotion";
     private const string PORTRAIT_TAG = "Portrait";
+
+    [Header("Story Configuration")]
+    [SerializeField] private TextAsset inkJSON; //Ink JSON file to be used for the dialogue
+
+    private Story story;
+    private int currentChoiceIndex = -1; //Current choice index for the story
+    private DialogueSource dialogueSource = DialogueSource.GAMEPLAY; //Source of the dialogue (Gameplay or Timeline)
+
+    public bool DialogueIsActive { get; private set; } = false; //Property to check if the dialogue is active
+    public bool CanInteract { get; private set; } = true; //Property to check if the player can interact with the dialogue
+    public bool ChoicesDisplayed { get; private set; } = false; //Property to check if the choices are displayed
+    public bool IsDialogueCooldown { get; private set; } = false; //Property to check if the dialogue is on cooldown
 
     private void Awake()
     {
@@ -45,66 +49,191 @@ public class DialogueManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-    }
-    public void StartDialogue(TextAsset inkJSON)
-    {
-        if(DialogueIsActive) return; //If dialogue is already active, do nothing
 
-        Debug.Log("Starting dialogue with JSON: " + inkJSON.name); //Log the name of the JSON file
-        
-        currentStory = new Story(inkJSON.text);
-        DialogueIsActive = true;
-        OnDialogueStart?.Invoke(); 
-        ContinueStory();
+        story = new Story(inkJSON.text); //Initialize the story with the ink JSON text
     }
 
-    public void EndDialogue()
+    private void OnEnable()
     {
-        if(!DialogueIsActive) return; //If dialogue is not active, do nothing
-
-        StartCoroutine(DelayDialogueEnd()); //Start the coroutine to delay the end of the dialogue
+        GamesEventManager.Instance.dialogueEvents.OnDialogueEntered += EnterDialogue; 
+        GamesEventManager.Instance.inputEvents.OnNextPressed += NextDialoguePressed; //Subscribe to the continue event
+        GamesEventManager.Instance.dialogueEvents.OnUpdateChoiceIndex += UpdateChoiceIndex; //Subscribe to the choice index update event
+        GamesEventManager.Instance.dialogueEvents.OnTypingPerformed += ToggleTypingStatus; //Subscribe to the typing status event
+        GamesEventManager.Instance.dialogueEvents.OnNextEnabled += EnableInteraction; //Subscribe to the enable interaction event
+        GamesEventManager.Instance.dialogueEvents.OnNextDisabled += DisableInteraction; //Subscribe to the disable interaction event
+        GamesEventManager.Instance.dialogueEvents.OnChoicesToggled += ToggleChoiceStatus; //Subscribe to the choice status event
+    }
+    private void OnDisable()
+    {
+        GamesEventManager.Instance.dialogueEvents.OnDialogueEntered -= EnterDialogue;
+        GamesEventManager.Instance.inputEvents.OnNextPressed -= NextDialoguePressed; //Unsubscribe to the continue event
+        GamesEventManager.Instance.dialogueEvents.OnUpdateChoiceIndex -= UpdateChoiceIndex; //Unsubscribe from the choice index update event
+        GamesEventManager.Instance.dialogueEvents.OnTypingPerformed -= ToggleTypingStatus; //Unsubscribe from the typing status event
+        GamesEventManager.Instance.dialogueEvents.OnNextEnabled -= EnableInteraction; //Subscribe to the enable interaction event
+        GamesEventManager.Instance.dialogueEvents.OnNextDisabled -= DisableInteraction; //Subscribe to the disable interaction event
+        GamesEventManager.Instance.dialogueEvents.OnChoicesToggled -= ToggleChoiceStatus; //Unsubscribe from the choice status event
     }
 
-    public void ContinueStory()
+    // Input Functions
+    private void NextDialoguePressed() // Function to handle the next button press
     {
-        if(currentStory != null && currentStory.canContinue)
+        if (DialogueIsActive && CanInteract) // Only do somethjing when the Dialogue is Active
         {
-            string nextLine = currentStory.Continue();
-            //Debug.Log($"Continuing story: {nextLine}");
-
-            OnDialogueUpdate?.Invoke(nextLine);
-            OnDialogueChoicesUpdate?.Invoke(currentStory);
-
-            HandleTags(currentStory.currentTags);
+            if(IsTyping) //If the dialogue is not being typed out
+            {
+                Debug.Log("Skipping Typing"); //Log the typing skip
+                SkipTyping(); //Skip the typing
+            }
+            else if (!ChoicesDisplayed)
+            {
+                Debug.Log("Continuing Dialogue"); //Log the dialogue continuation
+                ContinueOrExitStory(); //Continue or exit the story
+            }
         }
-        else if(currentStory.currentChoices.Count > 0)
-        {
-            Debug.Log("Waiting for player choice...");
+    }
+
+    // Functions for Dialogue Progression
+    private void EnterDialogue(string knotName, DialogueSource source)
+    {
+        if(DialogueIsActive || IsDialogueCooldown) return; //If dialogue is already active, do nothing
+
+        DialogueIsActive = true; //Set the dialogue state to inactive
+        dialogueSource = source; //Set the dialogue source
+
+        ActiveUIManager.Instance.OpenUI(ActiveUIType.Dialogue); //Open the dialogue UI
+
+        GamesEventManager.Instance.inputEvents.ChangeInputEventContext(InputEventContext.DIALOGUE); //Change the input event context to dialogue
+        GamesEventManager.Instance.playerEvents.MovementDisabled(); //Disable player movement
+        GamesEventManager.Instance.dialogueEvents.StartDialogue(); //Show the dialogue UI
+
+        if (!knotName.Equals(string.Empty))
+            {
+            story.ChoosePathString(knotName); //Choose the path string for the story
         }
         else
         {
-            Debug.Log("End of dialogue reached.");
-            EndDialogue();
+            Debug.LogWarning("Knot name is empty, using default path.");
+        }
+
+        ContinueOrExitStory();
+    }
+    private void ContinueOrExitStory()
+    {
+        if (story.canContinue)
+        {
+            string dialogueLine = story.Continue(); //Continue the story and get the next line
+
+            while (IsLineBlank(dialogueLine) && story.canContinue) //Check if the line is blank
+            {
+                dialogueLine = story.Continue(); //Continue the story until a non-blank line is found
+            }
+
+            if (IsLineBlank(dialogueLine) && !story.canContinue)
+            {
+                ExitDialogue();
+            }
+            else
+            {
+                GamesEventManager.Instance.dialogueEvents.DisplayDialogue(dialogueLine, story.currentChoices);
+            }
+        }
+
+        else 
+        {
+            ExitDialogue(); //Exit the dialogue if there are no more lines
         }
     }
+    private void ExitDialogue()
+    {
+        Debug.Log("Exiting Dialogue"); //Log the dialogue exit
 
+        DialogueIsActive = false; //Set the dialogue state to inactive
+        
+        GamesEventManager.Instance.dialogueEvents.FinishDialogue(); //Exit the dialogue
+        ActiveUIManager.Instance.CloseUI(ActiveUIType.Dialogue);
+        story.ResetState(); //Reset the story state
+
+        if (dialogueSource == DialogueSource.GAMEPLAY)
+        {
+            GamesEventManager.Instance.playerEvents.MovementEnabled(); //Enable player movement
+        }
+        else
+        {
+            GamesEventManager.Instance.timelineEvents.StartTimeline(); //Finish the timeline
+
+        }
+        GamesEventManager.Instance.inputEvents.ChangeInputEventContext(InputEventContext.DEFAULT); //Change the input event context back to default
+        
+        StartCoroutine(DialogueCooldown()); //Start the dialogue cooldown coroutine
+    }
+    private IEnumerator DialogueCooldown()
+    {
+        IsDialogueCooldown = true; //Set the dialogue cooldown state to true
+        yield return new WaitForSeconds(0.2f); //Wait for 0.5 seconds
+        IsDialogueCooldown = false; //Set the dialogue cooldown state to false
+    }
     public void SkipTyping()
     {
         if (IsTyping)
         {
-            Debug.Log("Skipping typing...");
-            OnDialogueLineSkip?.Invoke(); //Invoke the line skip event
-            IsTyping = false; //Set typing state to false
+            GamesEventManager.Instance.dialogueEvents.SkipDialogue();
         }
+        
+    }
+    private bool IsLineBlank(string dialogueLine)
+    {
+        return dialogueLine.Trim().Equals(string.Empty) || dialogueLine.Trim().Equals("\n"); //Check if the dialogue line is blank
+    }
+    
+    // Funtions for Choice Updates
+    private void UpdateChoiceIndex(int index)
+    {
+        currentChoiceIndex = index; //Update the current choice index
+        story.ChooseChoiceIndex(currentChoiceIndex); //Choose the choice index in the story
+        ContinueOrExitStory(); //Continue or exit the story
+        ToggleChoiceStatus(false);
     }
 
-    public IEnumerator DelayDialogueEnd()
+    // Function for Toggling Manager Booleans
+    private void ToggleTypingStatus(bool isTyping)
     {
-        yield return new WaitForSeconds(0.2f); //Wait for 1 second before ending the dialogue
-        
-        DialogueIsActive = false; //Set the dialogue state to inactive
-        OnDialogueEnd?.Invoke(); //Invoke the dialogue end event
+        Debug.Log("Sent IsTyping Value: " + isTyping); //Log the typing status
+        this.IsTyping = isTyping; //Set the typing status
     }
+    private void EnableInteraction()
+    {
+        CanInteract = true; //Set the interaction status
+    }
+    private void DisableInteraction()
+    {
+        CanInteract = false; //Set the interaction status
+    }
+    private void ToggleChoiceStatus(bool choiceStatus)
+    {
+        ChoicesDisplayed = choiceStatus; //Set the choice status
+    }
+
+
+
+
+
+
+
+
+
+    public void StartDialogue(TextAsset inkJSON)
+    {
+    }
+
+    public void EndDialogue()
+    {
+    }
+
+    public void ContinueStory()
+    {
+    }
+
+
 
     private void HandleTags(List<string> storyTags)
     {
@@ -133,21 +262,6 @@ public class DialogueManager : MonoBehaviour
                         break;
                 }
             }
-        }
-    }
-
-    public void ChooseChoiceIndex(int index)
-    {
-        if (currentStory != null && currentStory.currentChoices != null && 
-            index >= 0 && index < currentStory.currentChoices.Count)
-        {
-            Debug.Log($"Making choice: {index} - {currentStory.currentChoices[index].text}");
-            currentStory.ChooseChoiceIndex(index);
-            ContinueStory(); // This should progress the story
-        }
-        else
-        {
-            Debug.LogWarning($"Invalid choice index: {index}. Valid choices: {currentStory?.currentChoices?.Count ?? 0}");
         }
     }
 }
