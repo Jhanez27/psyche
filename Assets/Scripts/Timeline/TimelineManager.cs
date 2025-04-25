@@ -61,7 +61,7 @@ public class TimelineManager : MonoBehaviour
         GamesEventManager.Instance.questEvents.EnableInteract(); //Enables the quest log UI
 
         Debug.Log("Movement, Next, Inventory, and Interact Enabled");
-        Debug.Log("Active UI Type: " + ActiveUIManager.Instance.activeUIType); //Logs the active UI type
+        Debug.Log("Active UI Type: " + ActiveUIManager.Instance.ActiveUIType); //Logs the active UI type
     }
 
     // Function for Changing Timeline

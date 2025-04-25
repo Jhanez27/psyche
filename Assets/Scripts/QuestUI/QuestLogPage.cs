@@ -85,4 +85,6 @@ public class QuestLogPage : MonoBehaviour
     {
         this.descriptionPanel.UpdateDescription(name, description, objective, status);
     }
+
+    
 }

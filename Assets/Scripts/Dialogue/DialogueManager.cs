@@ -73,7 +73,7 @@ public class DialogueManager : MonoBehaviour
     // Input Functions
     private void NextDialoguePressed() // Function to handle the next button press
     {
-        if (dialogueIsActive && canInteract) // Only do somethjing when the Dialogue is Active
+        if (dialogueIsActive && canInteract && ActiveUIManager.Instance.ActiveUIType.Equals(ActiveUIType.Dialogue)) // Only do somethjing when the Dialogue is Active
         {
             if(isTyping) //If the dialogue is not being typed out
             {
@@ -113,7 +113,7 @@ public class DialogueManager : MonoBehaviour
 
         inkDialogueVariables.SyncVariablesAndStartListening(story); //Sync the variables and start listening to the story
 
-        Debug.Log("Active UI Type: " + ActiveUIManager.Instance.activeUIType); //Log the active UI type
+        Debug.Log("Active UI Type: " + ActiveUIManager.Instance.ActiveUIType); //Log the active UI type
         ContinueOrExitStory();
     }
     private void ContinueOrExitStory()
@@ -169,14 +169,14 @@ public class DialogueManager : MonoBehaviour
 
         inkDialogueVariables.StopListening(story); //Stop listening to the story variables
 
-        Debug.Log("Active UI Type: " + ActiveUIManager.Instance.activeUIType); //Log the active UI type
+        Debug.Log("Active UI Type: " + ActiveUIManager.Instance.ActiveUIType); //Log the active UI type
         story.ResetState(); //Reset the story state
         StartCoroutine(DialogueCooldown()); //Start the dialogue cooldown coroutine
     }
     private IEnumerator DialogueCooldown()
     {
         isDialogueCooldown = true; //Set the dialogue cooldown state to true
-        yield return new WaitForSeconds(0.2f); //Wait for 0.5 seconds
+        yield return new WaitForSeconds(0.5f); //Wait for 0.5 seconds
         isDialogueCooldown = false; //Set the dialogue cooldown state to false
     }
     public void SkipTyping()

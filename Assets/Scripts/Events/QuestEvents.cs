@@ -11,6 +11,7 @@ public class QuestEvents
     public event Action<string, int, QuestStepState> OnQuestStepStateChange; // Event for changing the QuestStepState
     public event Action OnInteractEnabled; // Event for enabling interaction
     public event Action OnInteractDisabled; // Event for disabling interaction
+    public event Action<string> OnInteractInCollision; // Event for detecting interaction in collision
 
     //Functions for Invoking Quest Events
     public void StartQuest(string id)
@@ -40,6 +41,10 @@ public class QuestEvents
     public void DisableInteract()
     {
         OnInteractDisabled?.Invoke();
+    }
+    public void InteractInCollision(string id)
+    {
+        OnInteractInCollision?.Invoke(id);
     }
 
 }

@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEditor.VersionControl;
 using UnityEngine;
 
@@ -20,8 +21,10 @@ public class QuestPoint : MonoBehaviour
     private string dialogueKnotName; // The name of the knot to be used in the dialogue system
 
     private bool playerIsNear = false;
+    private bool questInteractEnabled = true; // Whether the quest log toggle is enabled
     private string questID;
     private QuestState currentQuestState;
+    
 
     private void Awake()
     {
@@ -32,12 +35,16 @@ public class QuestPoint : MonoBehaviour
     {
         GamesEventManager.Instance.questEvents.OnChangeQuestState += QuestStateChange;
         GamesEventManager.Instance.inputEvents.OnInteractPressed += InteractPressed;
+        GamesEventManager.Instance.questEvents.OnInteractEnabled += EnableQuestInteract;
+        GamesEventManager.Instance.questEvents.OnInteractDisabled += DisableQuestInteract;
     }
 
     private void OnDisable()
     {
         GamesEventManager.Instance.questEvents.OnChangeQuestState -= QuestStateChange;
         GamesEventManager.Instance.inputEvents.OnInteractPressed -= InteractPressed;
+        GamesEventManager.Instance.questEvents.OnInteractEnabled -= EnableQuestInteract;
+        GamesEventManager.Instance.questEvents.OnInteractDisabled -= DisableQuestInteract;
     }
 
     private void QuestStateChange(Quest quest)
@@ -50,7 +57,7 @@ public class QuestPoint : MonoBehaviour
 
     private void InteractPressed(InputEventContext context)
     {
-        if (playerIsNear && context.Equals(InputEventContext.DEFAULT) && ActiveUIManager.Instance.CanOpenUI(ActiveUIType.Dialogue))
+        if (playerIsNear && context.Equals(InputEventContext.DEFAULT) && questInteractEnabled)
         {
             if (!dialogueKnotName.Equals(string.Empty))
             {
@@ -67,7 +74,10 @@ public class QuestPoint : MonoBehaviour
                 {
                     GamesEventManager.Instance.questEvents.FinishQuest(questID);
                 }
-            }          
+            }
+
+            Debug.Log("Interacted with " + tag);
+            GamesEventManager.Instance.questEvents.InteractInCollision(this.gameObject.tag); // Pass the tag for Collision
         }
     }
 
@@ -85,5 +95,14 @@ public class QuestPoint : MonoBehaviour
         {
             playerIsNear = false;
         }
+    }
+
+    private void EnableQuestInteract()
+    {
+        questInteractEnabled = true;
+    }
+    private void DisableQuestInteract()
+    {
+        questInteractEnabled = false;
     }
 }

@@ -182,7 +182,7 @@ namespace Inventory
                     return;
                 }
             }
-            else if (ActiveUIManager.Instance.activeUIType.Equals(ActiveUIType.Inventory))
+            else if (ActiveUIManager.Instance.ActiveUIType.Equals(ActiveUIType.Inventory))
             {
                 // If the inventory page is active and dialogue is not active, hide the inventory page
                 inventoryPage.Hide();

@@ -43,6 +43,8 @@ public class QuestManager : MonoBehaviour
         GamesEventManager.Instance.questEvents.OnQuestStepStateChange += QuestStepChange;
         GamesEventManager.Instance.inputEvents.OnQuestLogTogglePressed += QuestTogglePressed;
         GamesEventManager.Instance.questUIEvents.OnDescriptionRequested += HandleLogDescriptionRequest;
+        GamesEventManager.Instance.questEvents.OnInteractEnabled += EnableInteract;
+        GamesEventManager.Instance.questEvents.OnInteractDisabled += DisableInteract;
     }
     private void OnDisable()
     {
@@ -52,6 +54,8 @@ public class QuestManager : MonoBehaviour
         GamesEventManager.Instance.questEvents.OnQuestStepStateChange -= QuestStepChange;
         GamesEventManager.Instance.inputEvents.OnQuestLogTogglePressed -= QuestTogglePressed;
         GamesEventManager.Instance.questUIEvents.OnDescriptionRequested -= HandleLogDescriptionRequest;
+        GamesEventManager.Instance.questEvents.OnInteractEnabled -= EnableInteract;
+        GamesEventManager.Instance.questEvents.OnInteractDisabled -= DisableInteract;
     }
     private void Update()
     {

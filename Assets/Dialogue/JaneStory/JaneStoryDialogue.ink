@@ -4,16 +4,20 @@ EXTERNAL StartQuest(string id)
 EXTERNAL AdvanceQuest(string id)
 EXTERNAL FinishQuest(string id)
 
-=== Start ===
-Jane? Jane! #Speaker: Christopher #Layout: Right
-What?! Chris? What?! What’s happen- #Speaker: Jane #Layout: Left
-Sir’s already here! Come quick before he checks our attendance. #Speaker: Christopher #Layout: Right
-Wait! #Speaker: Jane #Layout: Left
-* [Follow]
-    PAGDALI! #Speaker: Christopher #Layout: Right
-    ~ StartQuest("IntroductionToJane")
-* [Continue Sleeping]
-    Bahala ka araa, uy! #Speaker: Christopher #Layout: Right
+// quest names
+VAR IntroductionToJaneID = "IntroductionToJane"
 
-- Ok #Speaker: Jane #Layout: Left
--> DONE
+// quest states (quest id + "State")
+VAR IntroductionToJaneQuestState = "REQUIREMENTS_NOT_MET"
+
+INCLUDE IntroductionToJane.ink
+
+=== SampleSwitch ===
+{ IntroductionToJaneQuestState :
+        - "REQUIREMENTS_NOT_MET": 
+        - "CAN_START": 
+        - "IN_PROGRESS":
+        - "CAN_FINISH":
+        - "FINISHED":
+        - else: -> END
+}
