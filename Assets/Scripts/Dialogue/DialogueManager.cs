@@ -9,24 +9,6 @@ using UnityEngine.InputSystem;
 
 public class DialogueManager : MonoBehaviour
 {
-    //Singleton Pattern 
-    public static DialogueManager Instance {get; private set; } 
-    
-    //Event Driven Architecture for Dialogue UI
-    public event Action<string> OnDialogueSpeakerUpdate;
-    public event Action<string> OnDialogueEmotionUpdate;
-    public event Action<string> OnDialoguePortraitUpdate;
-    public event Action<string> OnDialogueLayoutUpdate;
-
-    public bool ShowVisualCue { get; private set; } //Property to check if the visual cue is active
-    public bool IsTyping { get; set; } //Property to check if the dialogue is being typed out
-    public bool TimelineIsActive { get; set; } //Property to check if the timeline is active
-
-    //Ink JSON Tags
-    private const string SPEAKER_TAG = "Speaker";
-    private const string EMOTION_TAG = "Emotion";
-    private const string LAYOUT_TAG = "Portrait";
-
     [Header("Story Configuration")]
     [SerializeField] private TextAsset inkJSON; //Ink JSON file to be used for the dialogue
 
@@ -34,27 +16,35 @@ public class DialogueManager : MonoBehaviour
     private int currentChoiceIndex = -1; //Current choice index for the story
     private DialogueSource dialogueSource = DialogueSource.GAMEPLAY; //Source of the dialogue (Gameplay or Timeline)
 
-    public bool DialogueIsActive { get; private set; } = false; //Property to check if the dialogue is active
-    public bool CanInteract { get; private set; } = true; //Property to check if the player can interact with the dialogue
-    public bool ChoicesDisplayed { get; private set; } = false; //Property to check if the choices are displayed
-    public bool IsDialogueCooldown { get; private set; } = false; //Property to check if the dialogue is on cooldown
+    // Boolean Properties for Dialogue Manager
+    private bool dialogueIsActive = false; //Property to check if the dialogue is active
+    private bool canInteract = true; //Property to check if the player can interact with the dialogue
+    private bool choicesDisplayed = false; //Property to check if the choices are displayed
+    private bool isDialogueCooldown = false; //Property to check if the dialogue is on cooldown
+    private bool isTyping = false; //Property to check if the dialogue is being typed out
+    private bool ShowVisualCue = true; //Property to check if the visual cue is active
 
+    //Ink JSON Tags
+    private const string SPEAKER_TAG = "Speaker";
+    private const string LAYOUT_TAG = "Layout";
+
+    // Ink Dialogue Integration
+    private InkExternalFunctions inkExternalFunctions; //Ink external functions to be used for the dialogue
     private InkDialogueVariables inkDialogueVariables; //Ink dialogue variables to be used for the dialogue
+
     private void Awake()
     {
-        if (Instance == null) { Instance = this; }
-        else
-        {
-            //If there is already an instance of DialogueManager, destroy this one which is a duplicate
-            Debug.LogWarning("DialogueManager instance already exists, destroying duplicate.");
-            Destroy(gameObject);
-            return;
-        }
-
         story = new Story(inkJSON.text); //Initialize the story with the ink JSON text
+
+        inkExternalFunctions = new InkExternalFunctions(); //Initialize the ink external functions
+        inkExternalFunctions.Bind(story); //Bind the external functions to the story
+
         inkDialogueVariables = new InkDialogueVariables(story); //Initialize the ink dialogue variables
     }
-
+    private void OnDestroy()
+    {
+        inkExternalFunctions.Unbind(story); //Unbind the external functions from the story
+    }
     private void OnEnable()
     {
         GamesEventManager.Instance.dialogueEvents.OnDialogueEntered += EnterDialogue; 
@@ -64,6 +54,8 @@ public class DialogueManager : MonoBehaviour
         GamesEventManager.Instance.dialogueEvents.OnNextEnabled += EnableInteraction; //Subscribe to the enable interaction event
         GamesEventManager.Instance.dialogueEvents.OnNextDisabled += DisableInteraction; //Subscribe to the disable interaction event
         GamesEventManager.Instance.dialogueEvents.OnChoicesToggled += ToggleChoiceStatus; //Subscribe to the choice status event
+        GamesEventManager.Instance.dialogueEvents.OnInkVariableChanged += UpdateInkVariable; //Subscribe to the ink variable changed event
+        GamesEventManager.Instance.questEvents.OnChangeQuestState += QuestStateChange; //Subscribe to the quest state change event
     }
     private void OnDisable()
     {
@@ -74,19 +66,21 @@ public class DialogueManager : MonoBehaviour
         GamesEventManager.Instance.dialogueEvents.OnNextEnabled -= EnableInteraction; //Subscribe to the enable interaction event
         GamesEventManager.Instance.dialogueEvents.OnNextDisabled -= DisableInteraction; //Subscribe to the disable interaction event
         GamesEventManager.Instance.dialogueEvents.OnChoicesToggled -= ToggleChoiceStatus; //Unsubscribe from the choice status event
+        GamesEventManager.Instance.dialogueEvents.OnInkVariableChanged -= UpdateInkVariable; //Unsubscribe from the ink variable changed event
+        GamesEventManager.Instance.questEvents.OnChangeQuestState -= QuestStateChange; //Unsubscribe from the quest state change event
     }
 
     // Input Functions
     private void NextDialoguePressed() // Function to handle the next button press
     {
-        if (DialogueIsActive && CanInteract) // Only do somethjing when the Dialogue is Active
+        if (dialogueIsActive && canInteract) // Only do somethjing when the Dialogue is Active
         {
-            if(IsTyping) //If the dialogue is not being typed out
+            if(isTyping) //If the dialogue is not being typed out
             {
                 Debug.Log("Skipping Typing"); //Log the typing skip
                 SkipTyping(); //Skip the typing
             }
-            else if (!ChoicesDisplayed)
+            else if (!choicesDisplayed)
             {
                 Debug.Log("Continuing Dialogue"); //Log the dialogue continuation
                 ContinueOrExitStory(); //Continue or exit the story
@@ -97,9 +91,9 @@ public class DialogueManager : MonoBehaviour
     // Functions for Dialogue Progression
     private void EnterDialogue(string knotName, DialogueSource source)
     {
-        if(DialogueIsActive || IsDialogueCooldown) return; //If dialogue is already active, do nothing
+        if(dialogueIsActive || isDialogueCooldown) return; //If dialogue is already active, do nothing
 
-        DialogueIsActive = true; //Set the dialogue state to inactive
+        dialogueIsActive = true; //Set the dialogue state to inactive
         dialogueSource = source; //Set the dialogue source
 
         ActiveUIManager.Instance.OpenUI(ActiveUIType.Dialogue); //Open the dialogue UI
@@ -119,6 +113,7 @@ public class DialogueManager : MonoBehaviour
 
         inkDialogueVariables.SyncVariablesAndStartListening(story); //Sync the variables and start listening to the story
 
+        Debug.Log("Active UI Type: " + ActiveUIManager.Instance.activeUIType); //Log the active UI type
         ContinueOrExitStory();
     }
     private void ContinueOrExitStory()
@@ -157,7 +152,7 @@ public class DialogueManager : MonoBehaviour
     {
         Debug.Log("Exiting Dialogue"); //Log the dialogue exit
 
-        DialogueIsActive = false; //Set the dialogue state to inactive
+        dialogueIsActive = false; //Set the dialogue state to inactive
         
         GamesEventManager.Instance.dialogueEvents.FinishDialogue(); //Exit the dialogue
         ActiveUIManager.Instance.CloseUI(ActiveUIType.Dialogue);
@@ -174,19 +169,19 @@ public class DialogueManager : MonoBehaviour
 
         inkDialogueVariables.StopListening(story); //Stop listening to the story variables
 
-
+        Debug.Log("Active UI Type: " + ActiveUIManager.Instance.activeUIType); //Log the active UI type
         story.ResetState(); //Reset the story state
         StartCoroutine(DialogueCooldown()); //Start the dialogue cooldown coroutine
     }
     private IEnumerator DialogueCooldown()
     {
-        IsDialogueCooldown = true; //Set the dialogue cooldown state to true
+        isDialogueCooldown = true; //Set the dialogue cooldown state to true
         yield return new WaitForSeconds(0.2f); //Wait for 0.5 seconds
-        IsDialogueCooldown = false; //Set the dialogue cooldown state to false
+        isDialogueCooldown = false; //Set the dialogue cooldown state to false
     }
     public void SkipTyping()
     {
-        if (IsTyping)
+        if (isTyping)
         {
             GamesEventManager.Instance.dialogueEvents.SkipDialogue();
         }
@@ -209,50 +204,28 @@ public class DialogueManager : MonoBehaviour
     // Function for Toggling Manager Booleans
     private void ToggleTypingStatus(bool isTyping)
     {
-        Debug.Log("Sent IsTyping Value: " + isTyping); //Log the typing status
-        this.IsTyping = isTyping; //Set the typing status
+        this.isTyping = isTyping; //Set the typing status
     }
     private void EnableInteraction()
     {
-        CanInteract = true; //Set the interaction status
+        canInteract = true; //Set the interaction status
     }
     private void DisableInteraction()
     {
-        CanInteract = false; //Set the interaction status
+        canInteract = false; //Set the interaction status
     }
     private void ToggleChoiceStatus(bool choiceStatus)
     {
-        ChoicesDisplayed = choiceStatus; //Set the choice status
+        choicesDisplayed = choiceStatus; //Set the choice status
     }
 
-
-
-
-
-
-
-
-
-    public void StartDialogue(TextAsset inkJSON)
-    {
-    }
-
-    public void EndDialogue()
-    {
-    }
-
-    public void ContinueStory()
-    {
-    }
-
-
-
+    // Function for Handling Tags
     private void HandleTags(List<string> storyTags)
     {
         foreach (string tag in storyTags)
         {
             string[] tagParts = tag.Split(':'); //Split the tag into parts
-            if(tagParts.Length == 2)
+            if (tagParts.Length == 2)
             {
                 string tagName = tagParts[0].Trim(); //Get the tag name
                 string tagValue = tagParts[1].Trim(); //Get the tag value
@@ -261,13 +234,10 @@ public class DialogueManager : MonoBehaviour
                 {
                     case SPEAKER_TAG:
                         GamesEventManager.Instance.dialogueEvents.UpdateDialogueSpeaker(tagValue); //Update the dialogue speaker with the tag value
-                        GamesEventManager.Instance.dialogueEvents.UpdateDialoguePortrait(tagValue); //Update the dialogue emotion with the tag value
-                        break;
-                    case EMOTION_TAG:
-                        //Invoke the emotion update event with the tag value
+                        GamesEventManager.Instance.dialogueEvents.UpdateDialoguePortrait(tagValue); //Update the dialogue portrait with the tag value
                         break;
                     case LAYOUT_TAG:
-                        GamesEventManager.Instance.dialogueEvents.UpdateDialoguePortrait(tagValue); //Update the dialogue portrait with the tag value
+                        GamesEventManager.Instance.dialogueEvents.UpdateDialogueLayout(tagValue); //Update the dialogue portrait with the tag value
                         break;
                     default:
                         Debug.LogWarning("Unknown tag: " + tagName); //Log a warning for unknown tags
@@ -275,5 +245,18 @@ public class DialogueManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    // Function for Updating Ink Variables
+    private void UpdateInkVariable(string name, Ink.Runtime.Object value)
+    {
+        inkDialogueVariables.UpdateVariableState(name, value); //Update the ink variable state
+    }
+    private void QuestStateChange(Quest quest)
+    {
+        GamesEventManager.Instance.dialogueEvents.ChangeInkVariables(
+            quest.questInfo.ID + "State",
+            new StringValue(quest.state.ToString())
+            );
     }
 }

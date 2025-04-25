@@ -29,7 +29,6 @@ public class InputEvents
     }
     public void NextPressed()
     {
-        Debug.Log("Next Pressed!");
         OnNextPressed?.Invoke();
     }
     public void InventoryTogglePressed()

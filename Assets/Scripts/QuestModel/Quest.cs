@@ -19,7 +19,6 @@ public class Quest
             stepStates[i] = new QuestStepState();
         }
     }
-
     public Quest(QuestInfoSO questInfo, QuestState questState, int currentQuestStepInde, QuestStepState[] questStepStates)
     {
         this.questInfo = questInfo;
@@ -33,16 +32,17 @@ public class Quest
         }
     }
 
+    // Quest Progression
     public void MoveToNextStep()
     {
         currentQuestStepIndex++;
     }
-
     public bool CurrentStepExists()
     {
         return currentQuestStepIndex < questInfo.questSteps.Length;
     }
 
+    // Quest State Instantiation
     public void InstantiateCurrentQuestStep(Transform parent)
     {
         GameObject questStepPrefab = GetCurrentQuestStepPrefab();
@@ -53,6 +53,7 @@ public class Quest
         }
     }
 
+    // Quest Step Prefab Retrieval
     public GameObject GetCurrentQuestStepPrefab()
     {
         GameObject questStepPrefab = null;
@@ -65,6 +66,7 @@ public class Quest
         return questStepPrefab;
     }
 
+    // Quest Data and Step State Persistence
     public void StoreQuestStepState(QuestStepState stepState, int stepIndex)
     {
         if(stepIndex < questInfo.questSteps.Length)
@@ -77,12 +79,12 @@ public class Quest
             Debug.Log("Index " + stepIndex + " is out of bounds.");
         }
     }
-
     public QuestData GetQuestData()
     {
         return new QuestData(state, currentQuestStepIndex, stepStates);
     }
 
+    // Quest Display 
     public string GetFullStatusText()
     {
         string fullStatusText = string.Empty;

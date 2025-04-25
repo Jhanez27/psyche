@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ink.Runtime;
 
-public class InkDialogueVariables : MonoBehaviour
+public class InkDialogueVariables
 {
     private Dictionary<string, Ink.Runtime.Object> variables;
 
@@ -30,6 +30,7 @@ public class InkDialogueVariables : MonoBehaviour
         if(variables.ContainsKey(name))
         {
             variables[name] = value;
+
 
             Debug.Log("Updated dialogue variable: " + name + " to " + value.ToString());
         }

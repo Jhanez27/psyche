@@ -1,16 +1,19 @@
 INCLUDE Globals.ink
 
-->Start
+EXTERNAL StartQuest(string id)
+EXTERNAL AdvanceQuest(string id)
+EXTERNAL FinishQuest(string id)
 
 === Start ===
-Jane? Jane! #Speaker: Christopher #Emotion: Shock #Portrait: Right
-What?! Chris? What?! What’s happen- #Speaker: Jane #Emotion: Shock #Portrait: Left
-Sir’s already here! Come quick before he checks our attendance. #Speaker: Christopher #Emotion: Neutral #Portrait: Right
-Wait! #Speaker: Jane #Emotion: Shock #Portrait: Left
+Jane? Jane! #Speaker: Christopher #Layout: Right
+What?! Chris? What?! What’s happen- #Speaker: Jane #Layout: Left
+Sir’s already here! Come quick before he checks our attendance. #Speaker: Christopher #Layout: Right
+Wait! #Speaker: Jane #Layout: Left
 * [Follow]
-    PAGDALI! #Speaker: Christopher #Emotion: Neutral #Portrait: Right
+    PAGDALI! #Speaker: Christopher #Layout: Right
+    ~ StartQuest("IntroductionToJane")
 * [Continue Sleeping]
-    Bahala ka araa, uy! #Speaker: Christopher #Emotion: Neutral #Portrait: Right
+    Bahala ka araa, uy! #Speaker: Christopher #Layout: Right
 
-- Ok #Speaker: Jane #Emotion: Shock #Portrait: Left
+- Ok #Speaker: Jane #Layout: Left
 -> DONE

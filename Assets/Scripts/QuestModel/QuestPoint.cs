@@ -52,10 +52,9 @@ public class QuestPoint : MonoBehaviour
     {
         if (playerIsNear && context.Equals(InputEventContext.DEFAULT) && ActiveUIManager.Instance.CanOpenUI(ActiveUIType.Dialogue))
         {
-            ActiveUIManager.Instance.OpenUI(ActiveUIType.Dialogue); // Open the dialogue UI
-
             if (!dialogueKnotName.Equals(string.Empty))
             {
+                ActiveUIManager.Instance.OpenUI(ActiveUIType.Dialogue); // Open the dialogue UI
                 GamesEventManager.Instance.dialogueEvents.EnterDialogue(dialogueKnotName, DialogueSource.GAMEPLAY);
             }
             else

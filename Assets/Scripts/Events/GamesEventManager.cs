@@ -19,11 +19,9 @@ public class GamesEventManager : MonoBehaviour
     {
         if(Instance != null)
         {
-            Debug.Log("Instance Already Exists");
             return;
         }
 
-        Debug.Log("Instantiating GamesEventManager");
         Instance = this;
 
         // Initialization of All Listed Game Events

@@ -35,7 +35,6 @@ public class QuestLogPage : MonoBehaviour
 
     public void InitializeQuestLogPage(List<Quest> questList)
     {
-        Debug.Log(questList.Count);
         foreach(Quest quest in questList)
         {
             LoadLogItems(quest);

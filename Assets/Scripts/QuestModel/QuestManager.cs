@@ -33,10 +33,6 @@ public class QuestManager : MonoBehaviour
         questMap = CreateQuestMap();
 
         List<Quest> quests = questMap.Values.ToList<Quest>();
-        foreach (Quest quest in quests)
-        {
-            Debug.Log(quest.questInfo.name + " Quest Manager");
-        }
         PrepareUI(quests);
     }
     private void OnEnable()
@@ -103,16 +99,15 @@ public class QuestManager : MonoBehaviour
     // Quest Progression
     public void StartQuest(string id)
     {
-        Debug.Log("Quest Started " + id);
-
         Quest quest = GetQuestByID(id);
         quest.InstantiateCurrentQuestStep(this.transform);
         ChangeQuestState(quest.questInfo.ID, QuestState.IN_PROGRESS);
+
+        Debug.Log("Current Quest Step Index: " + quest.currentQuestStepIndex);
     }
     public void AdvanceQuest(string id)
     {
         Quest quest = GetQuestByID(id);
-
         quest.MoveToNextStep();
 
         if (quest.CurrentStepExists())
@@ -126,8 +121,6 @@ public class QuestManager : MonoBehaviour
     }
     public void FinishQuest(string id)
     {
-        Debug.Log("Quest Finished");
-
         Quest quest = GetQuestByID(id);
         ClaimRewards(quest);
         ChangeQuestState(quest.questInfo.ID, QuestState.FINISHED);
@@ -165,33 +158,41 @@ public class QuestManager : MonoBehaviour
     // Quest Display
     private void HandleLogDescriptionRequest(string id)
     {
-        Quest logItem = questMap[id];
-        if (logItem != null)
+        if(!questMap.ContainsKey(id))
         {
-            Quest quest = questMap[id];
-            GameObject questStepObject;
-
-            if (quest.CurrentStepExists())
-            {
-                questStepObject = quest.questInfo.questSteps[quest.currentQuestStepIndex];
-            }
-            else
-            {
-                questStepObject = quest.questInfo.questSteps[quest.currentQuestStepIndex - 1];
-            }
-
-            if (questStepObject != null)
-            {
-                QuestStep questStep = questStepObject.GetComponent<QuestStep>();
-
-                logPage.UpdateDescription(
-                    quest.questInfo.name,
-                    quest.questInfo.description,
-                    questStep.QuestStepName,
-                    quest.GetFullStatusText()
-                );
-            }
+            Debug.LogError($"Quest with ID {id} not found in the quest map.");
+            return;
         }
+
+        Quest quest = questMap[id];
+        GameObject questStepObject;
+
+        Debug.Log("Quest Step Index: " + quest.currentQuestStepIndex + ". Current Step Exists: " + quest.CurrentStepExists());
+        if (quest.CurrentStepExists())
+        {
+            questStepObject = quest.questInfo.questSteps[quest.currentQuestStepIndex];
+        }
+        else
+        {
+            questStepObject = quest.questInfo.questSteps[quest.currentQuestStepIndex - 1];
+        }
+
+        if (questStepObject != null)
+        {
+            QuestStep questStep = questStepObject.GetComponent<QuestStep>();
+
+            logPage.UpdateDescription(
+                quest.questInfo.name,
+                quest.questInfo.description,
+                questStep.QuestStepName,
+                quest.GetFullStatusText()
+            );
+        }
+        else
+        {
+            Debug.LogError($"Quest step object is null for quest ID {id}.");
+        }
+
     }
 
     // Quest Attribute Updates

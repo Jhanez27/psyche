@@ -160,7 +160,7 @@ namespace Inventory
         // Inventory UI Toggle
         private void InventoryTogglePressed()
         {
-            if (!inventoryPage.isActiveAndEnabled && ActiveUIManager.Instance.CanOpenUI(ActiveUIType.Inventory) && canOpenInventory)
+            if (ActiveUIManager.Instance.CanOpenUI(ActiveUIType.Inventory) && canOpenInventory)
             {
                 // If the inventory page is not active and dialogue is not active, show the inventory page
                 inventoryPage.Show();
@@ -182,7 +182,7 @@ namespace Inventory
                     return;
                 }
             }
-            else if (inventoryPage.isActiveAndEnabled && !DialogueManager.Instance.DialogueIsActive)
+            else if (ActiveUIManager.Instance.activeUIType.Equals(ActiveUIType.Inventory))
             {
                 // If the inventory page is active and dialogue is not active, hide the inventory page
                 inventoryPage.Hide();

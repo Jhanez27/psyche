@@ -33,7 +33,6 @@ public class DialogueUIHandler : MonoBehaviour
 
     private Coroutine typingCoroutine; //Coroutine for typing effect
     private string currentText; //Current text being displayed
-    private bool IsTyping = false; //Flag to check if typing is in progress
 
     private void Awake()
     {
@@ -43,30 +42,26 @@ public class DialogueUIHandler : MonoBehaviour
 
         ResetPanelContent(); //Resets the panel content
     }
-
     private void OnEnable()
     {
-        DialogueManager.Instance.OnDialogueSpeakerUpdate += UpdateSpeaker; //Subscribes to the speaker update event
-        DialogueManager.Instance.OnDialoguePortraitUpdate += UpdatePortrait; //Subscribes to the portrait update event
-        DialogueManager.Instance.OnDialogueLayoutUpdate += UpdateLayout; //Subscribes to the layout update event
-
         // Subscribe Events to GamesEventManager
         GamesEventManager.Instance.dialogueEvents.OnDialogueStarted += ShowDialogue;
         GamesEventManager.Instance.dialogueEvents.OnDisplayDialogue += DisplayDialogue;
         GamesEventManager.Instance.dialogueEvents.OnDialogueSkipped += SkipTyping; //Subscribes to the skip typing event
-        GamesEventManager.Instance.dialogueEvents.OnDialogueFinished += HideDialogue; 
+        GamesEventManager.Instance.dialogueEvents.OnDialogueFinished += HideDialogue;
+        GamesEventManager.Instance.dialogueEvents.OnDialogueSpeakerUpdate += UpdateSpeaker; //Subscribes to the speaker update event
+        GamesEventManager.Instance.dialogueEvents.OnDialoguePortraitUpdate += UpdatePortrait; //Subscribes to the portrait update event
+        GamesEventManager.Instance.dialogueEvents.OnDialogueLayoutUpdate += UpdateLayout; //Subscribes to the layout update event
     }
-
     private void OnDisable()
     {
-        DialogueManager.Instance.OnDialogueSpeakerUpdate -= UpdateSpeaker; //Unsubscribes from the speaker update event
-        DialogueManager.Instance.OnDialoguePortraitUpdate -= UpdatePortrait; //Unsubscribes from the portrait update event
-        DialogueManager.Instance.OnDialogueLayoutUpdate -= UpdateLayout; //Unsubscribes from the layout update event
-
         GamesEventManager.Instance.dialogueEvents.OnDialogueStarted -= ShowDialogue;
         GamesEventManager.Instance.dialogueEvents.OnDisplayDialogue -= DisplayDialogue;
         GamesEventManager.Instance.dialogueEvents.OnDialogueSkipped -= SkipTyping; //Unsubscribes from the skip typing event
         GamesEventManager.Instance.dialogueEvents.OnDialogueFinished -= HideDialogue;
+        GamesEventManager.Instance.dialogueEvents.OnDialogueSpeakerUpdate -= UpdateSpeaker; //Unsubscribes from the speaker update event
+        GamesEventManager.Instance.dialogueEvents.OnDialoguePortraitUpdate -= UpdatePortrait; //Unsubscribes from the portrait update event
+        GamesEventManager.Instance.dialogueEvents.OnDialogueLayoutUpdate -= UpdateLayout; //Unsubscribes from the layout update event
     }
     
     //For Displaying the DialoguePanel
@@ -107,8 +102,6 @@ public class DialogueUIHandler : MonoBehaviour
     }
     private IEnumerator TypeText(string text)
     {
-        Debug.Log("Typing Started"); //Logs the start of typing
-
         GamesEventManager.Instance.dialogueEvents.PerformTyping(true); //Sets the typing state to true
         ResetPanelContent(); //Resets the panel content
         yield return new WaitForSeconds(typingDelay); //Waits for the specified delay before starting to type
@@ -128,7 +121,6 @@ public class DialogueUIHandler : MonoBehaviour
 
         GamesEventManager.Instance.dialogueEvents.PerformTyping(false); //Sets the typing state to false after typing is complete
         typingCoroutine = null; //Resets the typing coroutine to null
-        Debug.Log("Typing Finished"); //Logs the end of typing
     }
     public void SkipTyping()
     {
@@ -140,7 +132,6 @@ public class DialogueUIHandler : MonoBehaviour
 
         dialogueText.text = currentText; //Clears the dialogue text
         GamesEventManager.Instance.dialogueEvents.PerformTyping(false); //Sets the typing state to false
-        Debug.Log("Typing Skipped");
     }
 
     //Functions for Updating the Choices
@@ -171,14 +162,11 @@ public class DialogueUIHandler : MonoBehaviour
         return true;
     }
 
-    
-
-
+    //Functions for Updating UI with Ink Tags
     private void UpdateSpeaker(string speakerName)
     {
         nameText.text = speakerName; //Updates the name text with the speaker's name
     }
-
     private void UpdatePortrait(string animClipName)
     {
         //Updates the character portrait based on the speaker's name
@@ -187,7 +175,6 @@ public class DialogueUIHandler : MonoBehaviour
             portraitAnimator.Play(animClipName); //Sets the trigger for the animator to show the correct portrait
         }
     }
-
     private void UpdateLayout(string animClipName)
     {
         //Updates the layout based on the speaker's name
@@ -196,6 +183,4 @@ public class DialogueUIHandler : MonoBehaviour
             layoutAnimator.Play(animClipName); //Sets the trigger for the animator to show the correct layout
         }
     }
-
-    
 }

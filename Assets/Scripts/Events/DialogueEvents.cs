@@ -22,6 +22,11 @@ public class DialogueEvents
 
     public event Action<string, Ink.Runtime.Object> OnInkVariableChanged; // Event for when a Variable is Changed
 
+    public event Action<string> OnDialogueSpeakerUpdate; // Event for when the Dialogue Speaker is Updated
+    public event Action<string> OnDialoguePortraitUpdate; // Event for when the Dialogue Portrait is Updated
+    public event Action<string> OnDialogueLayoutUpdate; // Event for when the Dialogue Layout is Updated
+
+
     // Functions for Invoking Events
     // Functions for Dialogue Progression
     public void EnterDialogue(string knotName, DialogueSource source)
@@ -56,7 +61,6 @@ public class DialogueEvents
     // Functions for Boolean Toggling
     public void PerformTyping(bool isTyping)
     {
-        Debug.Log("PerformTyping: " + isTyping);
         OnTypingPerformed?.Invoke(isTyping);
     }
     public void EnableNext()
@@ -77,5 +81,19 @@ public class DialogueEvents
     public void ChangeInkVariables(string variableName, Ink.Runtime.Object value)
     {
         OnInkVariableChanged?.Invoke(variableName, value);
+    }
+
+    // Functions for Dialogue UI Updates
+    public void UpdateDialogueSpeaker(string speakerName)
+    {
+        OnDialogueSpeakerUpdate?.Invoke(speakerName);
+    }
+    public void UpdateDialoguePortrait(string portraitName)
+    {
+        OnDialoguePortraitUpdate?.Invoke(portraitName);
+    }
+    public void UpdateDialogueLayout(string layoutName)
+    {
+        OnDialogueLayoutUpdate?.Invoke(layoutName);
     }
 }
