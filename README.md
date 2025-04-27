@@ -18,6 +18,10 @@ Development of a Graphic Novel VSU Exploration Game
                     <td>PC.010.002</td>
                     <td>2025-04-11</td>
                 </tr>
+                 <tr>
+                    <td>PC.010.003</td>
+                    <td>2025-04-27</td>
+                </tr>
             </table>
             <br>
             <span>PC.010.001 Release Notes</span><br>
