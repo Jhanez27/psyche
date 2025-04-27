@@ -9,52 +9,107 @@ public class DialogueTrigger : MonoBehaviour
     //Visual Cue refers to the interactible notifying the player if it can be interacted with
     [SerializeField] private GameObject visualCue;
     
-    
-    [Header("Ink JSON")]
-    //Ink JSON refers to the JSON file that contains the dialogue
-    [SerializeField] private TextAsset inkJSON;
+    [Header("Dialogue Configuration")]
+    [SerializeField] private TextAsset inkJSON; //Ink JSON file for the dialogue
+    [SerializeField] private bool isCutsceneTrigger = false; //Checks if the trigger is a cutscene trigger
 
-    private bool playerInRange;
+    private bool canInteract = true;
+
+    private bool playerInRange = false;
+    private bool visualCueAllowed = true;
     private InputSystem_Actions inputSystem;
 
     private void Awake()
     {
-        //Set the attributes to default values
-        this.playerInRange = false;
-        this.visualCue.SetActive(false);
+        HideVisualCue();
+
+        inputSystem = new InputSystem_Actions();
+    }
+
+    private void OnEnable()
+    {
+        inputSystem.Enable();
+    }
+
+    private void OnDisable()
+    {
+        inputSystem.Disable();
+    }
+
+    public void HideVisualCue()
+    {
+        visualCue.SetActive(false);
+    }
+
+    public void SetVisualCueAllowed(bool allowed)
+    {
+        visualCueAllowed = allowed;
+        if (!allowed) { visualCue.SetActive(false); }
+    }
+
+    public void SetCanInteract(bool canInteract)
+    {
+        this.canInteract = canInteract;
+        if (!canInteract) { visualCue.SetActive(false); }
+    }
+
+    public void ChangeInkJSON(TextAsset newText)
+    {
+        if(newText != null)
+        {
+            inkJSON = newText;
+        }
     }
 
     private void Update()
     {
-        if(this.playerInRange){
+        if(playerInRange && !DialogueManager.Instance.DialogueIsActive && canInteract){
             //Shows the visual cue when the player is in range
-            this.visualCue.SetActive(true);
+            if(visualCueAllowed) { visualCue.SetActive(true);}
             if (inputSystem.Player.Interact.triggered){
-                DialogueManager.GetInstance().EnterDialogueMode(this.inkJSON);
+                DialogueManager.Instance.StartDialogue(this.inkJSON);
             }
         }
         else
         {
             //Hides the visual cue when the player is not in range
-            this.visualCue.SetActive(false);
+            visualCue.SetActive(false);
+        }
+    }
+
+    public void StartDialogueScene()
+    {
+        if(isCutsceneTrigger)
+        {
+            DialogueManager.Instance.StartDialogue(this.inkJSON);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Player in range of dialogue trigger");
         //Checks if the player is in range
         if(collision.gameObject.CompareTag("Player"))
         {
-            this.playerInRange = true;
+            playerInRange = true;
         }
     }
 
-    private void OnTExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         //Checks if the player is not in range
         if(collision.gameObject.CompareTag("Player"))
         {
-            this.playerInRange = false;
+            playerInRange = false;
         }
     }
+
+    private void OnDestroy()
+    {
+        if(inputSystem != null)
+        {
+            inputSystem.Disable();
+        }
+    }
+
 }

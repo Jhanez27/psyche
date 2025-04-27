@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa854ba88e1600e46bb6c8f8af89a560, type: 3}
+  m_Name: IntroductionToJane
+  m_EditorClassIdentifier: 
+  <ID>k__BackingField: IntroductionToJane
+  displayName: Know More About The CHaracter
+  questPrerequisite: []
+  questSteps:
+  - {fileID: 5631547846131636580, guid: f1f84fb769c49c6439c91242c7abb271, type: 3}
+  experienceReward: 0
+  goldReward: 0

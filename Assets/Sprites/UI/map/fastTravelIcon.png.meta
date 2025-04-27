@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      fastTravelIcon_0: -5829551947120861535
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
