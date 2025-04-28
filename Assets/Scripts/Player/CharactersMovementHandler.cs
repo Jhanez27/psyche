@@ -44,8 +44,6 @@ namespace Characters.Handlers
         public void DashPressed()
         {
             if (isDashing) return;
-            Debug.Log("Yes");
-
 
             isDashing = true;
             moveSpeed *= dashSpeed;

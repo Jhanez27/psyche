@@ -8,7 +8,6 @@ public class InputManager : MonoBehaviour
     {
         if(context.performed || context.canceled)
         {
-            Debug.Log("Move Pressed");
             Vector2 movement = context.ReadValue<Vector2>();
             GamesEventManager.Instance.inputEvents.MovePressed(movement);
         }
@@ -18,7 +17,6 @@ public class InputManager : MonoBehaviour
     {
         if (context.started)
         {
-            Debug.Log("Dash Pressed");
             GamesEventManager.Instance.inputEvents.DashPressed();
         }
     }
@@ -27,7 +25,6 @@ public class InputManager : MonoBehaviour
     {
         if(context.started)
         {
-            Debug.Log("Interact Pressed");
             GamesEventManager.Instance.inputEvents.InteractPressed();
         }
     }
@@ -36,7 +33,6 @@ public class InputManager : MonoBehaviour
     {
         if(context.started)
         {
-            Debug.Log("Next Pressed");
             GamesEventManager.Instance.inputEvents.NextPressed();
         }
     }
@@ -45,7 +41,6 @@ public class InputManager : MonoBehaviour
     {
         if(context.started)
         {
-            Debug.Log("Inventory Toggle Pressed");
             GamesEventManager.Instance.inputEvents.InventoryTogglePressed();
         }
     }
@@ -54,7 +49,6 @@ public class InputManager : MonoBehaviour
     {
         if (context.started)
         {
-            Debug.Log("QuestLogToggle Pressed");
             GamesEventManager.Instance.inputEvents.QuestLogTogglePressed();
         }
     }

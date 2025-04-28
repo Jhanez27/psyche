@@ -48,7 +48,7 @@ namespace Characters
         private void UpdateMovement() // Responsible for Player Movement
         {
             //Unable to move when Dialogue is Active
-            if (DialogueManager.Instance.DialogueIsActive || !MovementEnabled || inventoryController.InventoryIsActive)
+            if (!MovementEnabled || !ActiveUIManager.Instance.ActiveUIType.Equals(ActiveUIType.None))
             {
                 movementHandler.SetMovement(Vector2.zero);
             }
@@ -57,7 +57,7 @@ namespace Characters
         }
         private void UpdateAnimations() // Responsible for Player Animations
         {
-            if (DialogueManager.Instance.DialogueIsActive || !MovementEnabled || inventoryController.InventoryIsActive)
+            if (!MovementEnabled || !ActiveUIManager.Instance.ActiveUIType.Equals(ActiveUIType.None))
             {
                 animationHandler.SetIdle(); //Set the Animator to Idle
 
