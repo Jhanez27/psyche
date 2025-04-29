@@ -11,16 +11,17 @@ public class GamesEventManager : MonoBehaviour
     public InventoryUIEvents inventoryUIEvents;
     public InventoryModelEvents inventoryModelEvents;
     public QuestEvents questEvents;
+    public QuestUIEvents questUIEvents;
+    public DialogueEvents dialogueEvents;
+    public TimelineEvents timelineEvents;
 
     private void Awake()
     {
         if(Instance != null)
         {
-            Debug.Log("Instance Already Exists");
             return;
         }
 
-        Debug.Log("Instantiating GamesEventManager");
         Instance = this;
 
         // Initialization of All Listed Game Events
@@ -29,5 +30,8 @@ public class GamesEventManager : MonoBehaviour
         this.inventoryUIEvents = new InventoryUIEvents();
         this.inventoryModelEvents = new InventoryModelEvents();
         this.questEvents = new QuestEvents();
+        this.questUIEvents = new QuestUIEvents();
+        this.dialogueEvents = new DialogueEvents(); 
+        this.timelineEvents = new TimelineEvents();
     }
 }

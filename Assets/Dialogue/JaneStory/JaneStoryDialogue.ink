@@ -1,16 +1,23 @@
 INCLUDE Globals.ink
 
-->Start
+EXTERNAL StartQuest(string id)
+EXTERNAL AdvanceQuest(string id)
+EXTERNAL FinishQuest(string id)
 
-=== Start ===
-Jane? Jane! #Speaker: Christopher #Emotion: Shock #Portrait: Right
-What?! Chris? What?! What’s happen- #Speaker: Jane #Emotion: Shock #Portrait: Left
-Sir’s already here! Come quick before he checks our attendance. #Speaker: Christopher #Emotion: Neutral #Portrait: Right
-Wait! #Speaker: Jane #Emotion: Shock #Portrait: Left
-* [Follow]
-    PAGDALI! #Speaker: Christopher #Emotion: Neutral #Portrait: Right
-* [Continue Sleeping]
-    Bahala ka araa, uy! #Speaker: Christopher #Emotion: Neutral #Portrait: Right
+// quest names
+VAR IntroductionToJaneID = "IntroductionToJane"
 
-- Ok #Speaker: Jane #Emotion: Shock #Portrait: Left
--> DONE
+// quest states (quest id + "State")
+VAR IntroductionToJaneQuestState = "REQUIREMENTS_NOT_MET"
+
+INCLUDE IntroductionToJane.ink
+
+=== SampleSwitch ===
+{ IntroductionToJaneQuestState :
+        - "REQUIREMENTS_NOT_MET": 
+        - "CAN_START": 
+        - "IN_PROGRESS":
+        - "CAN_FINISH":
+        - "FINISHED":
+        - else: -> END
+}
