@@ -16,8 +16,8 @@ public class AuthManager : MonoBehaviour
     public TMP_InputField emailInput;
     public TMP_InputField passwordInput;
     public TMP_Text responseText;
-    public GameObject responseBox;
-    public GameObject accountManage;
+    //public GameObject responseBox;
+    //public GameObject accountManage;
     public GameObject main_menu;
 
     private string supabaseUrl = "https://vrebhfnaijcupcyrcjiw.supabase.co";
@@ -49,19 +49,23 @@ public class AuthManager : MonoBehaviour
         if (request.result == UnityWebRequest.Result.Success)
         {
             string response = request.downloadHandler.text;
-            responseBox.SetActive(true);
+            //responseBox.SetActive(true);
+            main_menu.SetActive(false);
+            //accountManage.SetActive(false);
             emailInput.text = "";
             passwordInput.text = "";
             Debug.Log("Login success: " + response);
-            accountManage.SetActive(false);
-            main_menu.SetActive(false);
+            
+            
         }
         else
         {
             string raw = request.downloadHandler.text;
             SupabaseError error = JsonUtility.FromJson<SupabaseError>(raw);
-            responseBox.SetActive(true);
+            //responseBox.SetActive(true);
             responseText.text = "" + (error?.msg ?? "Login failed. Please try again.");
         }
     }
+
+
 }

@@ -21,7 +21,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Cutscenes/2_RuinsDCSTCutscene.unity
     guid: 02160cf3c887859459019eb634a28668
   - enabled: 1
-    path: Assets/Scenes/Dystopia Land/RuinsLobbyDCSTScene.unity
+    path: Assets/Scenes/Dystopia Land/oldVersionsOfScenes/RuinsLobbyDCSTScene.unity
     guid: 29f7d932ae4e8514b9af9163e89dc2f2
   - enabled: 1
     path: Assets/Scenes/Dystopia Land/DCSTenvironmentNew.unity
@@ -29,6 +29,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Dystopia Land/MainGateFirstSceneNew.unity
     guid: 902899a3d476cc94185fad968ce87718
+  - enabled: 1
+    path: Assets/Scenes/Dystopia Land/RuinsLobbyDCSTSceneNoMapTutoral.unity
+    guid: 568b7f574dc6be94187a6b66c93d9f63
   - enabled: 1
     path: Assets/Scenes/Jane's Story/Jane's House Scene.unity
     guid: e83908f980c30914dbe3303f99f722d3

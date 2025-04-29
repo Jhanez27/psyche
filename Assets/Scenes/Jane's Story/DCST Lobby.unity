@@ -17418,6 +17418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionName: ToDCSTstairs
+  playerController: {fileID: 0}
 --- !u!1 &1314123329
 GameObject:
   m_ObjectHideFlags: 0
@@ -27864,6 +27865,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionName: toDCSTLobby
+  playerController: {fileID: 0}
 --- !u!61 &4072864626073568082
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -32894,6 +32896,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionName: toDCSTLobby103
+  playerController: {fileID: 0}
 --- !u!61 &5590667783383315801
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -33295,7 +33298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

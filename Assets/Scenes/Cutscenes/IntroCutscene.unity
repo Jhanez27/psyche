@@ -225,6 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionName: toJane'sHouse
+  playerController: {fileID: 0}
 --- !u!114 &704719093697593742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5392,6 +5393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionName: janeHouseTP
+  playerController: {fileID: 0}
 --- !u!114 &6780890894516048430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5545,7 +5547,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
