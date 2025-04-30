@@ -188,6 +188,8 @@ namespace Inventory
                 inventoryPage.Hide();
                 ActiveUIManager.Instance.CloseUI(ActiveUIType.Inventory); // Set the active UI type to none
             }
+
+            Debug.Log(ActiveUIManager.Instance.ActiveUIType);
         }
 
         // Inventory Boolean Toggle

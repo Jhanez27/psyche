@@ -13,4 +13,9 @@ public class CameraController : Singleton<CameraController>
         cinemachineVirtualCamera = Object.FindFirstObjectByType<CinemachineCamera>();
         cinemachineVirtualCamera.Follow = PlayerController.Instance.transform;
     }
+
+    private void OnDestroy()
+    {
+        Debug.Log("Destroying CameraController");
+    }
 }

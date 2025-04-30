@@ -1,13 +1,20 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(PlayerInput))]
-public class InputManager : MonoBehaviour
+public class InputManager : Singleton<InputManager>
 {
+    [SerializeField]
+    private PlayerInput playerInput;
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
     public void MovePressed(InputAction.CallbackContext context)
     {
         if(context.performed || context.canceled)
         {
+            Debug.Log("HO1");
             Vector2 movement = context.ReadValue<Vector2>();
             GamesEventManager.Instance.inputEvents.MovePressed(movement);
         }
@@ -25,6 +32,7 @@ public class InputManager : MonoBehaviour
     {
         if(context.started)
         {
+            Debug.Log("HI");
             GamesEventManager.Instance.inputEvents.InteractPressed();
         }
     }

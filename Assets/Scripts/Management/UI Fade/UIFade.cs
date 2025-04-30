@@ -7,6 +7,7 @@ public class UIFade : Singleton<UIFade>
 {
     [SerializeField] private Image fadeScreen;
     [SerializeField] private float fadeSpeed = 1f;
+    [SerializeField] private BaseSingleton baseSingleton;
 
     private IEnumerator fadeRoutine;
 

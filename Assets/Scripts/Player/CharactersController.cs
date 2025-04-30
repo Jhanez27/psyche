@@ -1,12 +1,12 @@
 using Characters.Handlers;
 using Inventory;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Characters
 {
     public class CharactersController : MonoBehaviour
     {
-        private InventoryController inventoryController;
         private CharactersMovementHandler movementHandler;
         private CharactersAnimationHandler animationHandler;
 
@@ -14,7 +14,6 @@ namespace Characters
 
         private void Awake()
         {
-            inventoryController = GetComponent<InventoryController>();
             movementHandler = GetComponent<CharactersMovementHandler>();
             animationHandler = GetComponent<CharactersAnimationHandler>();
         }
@@ -33,13 +32,14 @@ namespace Characters
             GamesEventManager.Instance.playerEvents.OnMovementDisabled += DisableMovement;
             GamesEventManager.Instance.inputEvents.OnDashPressed -= movementHandler.DashPressed;
             GamesEventManager.Instance.inputEvents.OnMovePressed -= movementHandler.SetMovement;
+
+            Debug.Log("Disabled and Unsubscribed");
         }
 
         private void Update()
         {
             UpdateAnimations();
         }
-
         private void FixedUpdate()
         {
             UpdateMovement();
@@ -47,6 +47,8 @@ namespace Characters
 
         private void UpdateMovement() // Responsible for Player Movement
         {
+            Debug.Log((!MovementEnabled).ToString() + " " + ActiveUIManager.Instance.ActiveUIType);
+
             //Unable to move when Dialogue is Active
             if (!MovementEnabled || !ActiveUIManager.Instance.ActiveUIType.Equals(ActiveUIType.None))
             {
@@ -72,7 +74,6 @@ namespace Characters
         {
             MovementEnabled = true;
         }
-
         public void DisableMovement()
         {
             MovementEnabled = false;
