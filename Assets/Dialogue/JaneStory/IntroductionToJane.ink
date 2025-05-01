@@ -16,6 +16,10 @@ Pssst. Jane over here! #Speaker: Christopher #Layout: Right
 }
 -> DONE
 
+=== LaiExtraDialogue ===
+It's really a matter of time until someone fails the subject.  #Speaker: Lai #Layout: Right
+-> DONE
+
 
 === JaneSeated ===
 ~ JaneIsSeated = true
