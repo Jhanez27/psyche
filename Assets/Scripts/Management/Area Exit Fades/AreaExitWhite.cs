@@ -12,7 +12,8 @@ public class AreaExitWhite : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.GetComponent<PlayerController>())
+        //if (other.gameObject.GetComponent<PlayerController>()) Original code
+        if (other.gameObject.tag.Equals("Player"))
         {
             SceneManagement.Instance.SetTransitionName(sceneTransitionName);
             UIFade.Instance.FadeToWhite();
@@ -27,6 +28,8 @@ public class AreaExitWhite : MonoBehaviour
             waitToLoadTime -= Time.deltaTime;
             yield return null;
         }
+
+        Debug.Log(sceneTransitionName + " and" + SceneManagement.Instance.SceneTransitionName);
 
         SceneManager.LoadScene(sceneToLoad);
     }

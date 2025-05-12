@@ -14,7 +14,7 @@ public class PickupSystem : MonoBehaviour
         {
             int quantityRemaining = inventory.AddItem(item.Item, item.Quantity); // Add the item to the inventory
 
-            GamesEventManager.Instance.inventoryModelEvents.ItemAdded(item.Item, item.Quantity - quantityRemaining);
+            GamesEventManager.Instance.inventoryModelEvents.DetectItemAdded(item.Item, item.Quantity - quantityRemaining);
 
             if (quantityRemaining == 0)
             {

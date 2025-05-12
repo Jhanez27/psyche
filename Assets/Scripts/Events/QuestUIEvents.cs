@@ -11,13 +11,11 @@ public class QuestUIEvents
     //Functions for Invoking Events
     public void LogItemClicked(QuestLogItem logItem)
     {
-        Debug.Log("LogItem clicked");
         OnLogItemClicked?.Invoke(logItem);
     }
 
     public void DescriptionRequested(string id)
     {
-        Debug.Log("Description Requested");
         OnDescriptionRequested?.Invoke(id);
     }
 }

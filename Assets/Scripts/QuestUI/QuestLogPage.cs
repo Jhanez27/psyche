@@ -86,5 +86,10 @@ public class QuestLogPage : MonoBehaviour
         this.descriptionPanel.UpdateDescription(name, description, objective, status);
     }
 
-    
+    private void OnDestroy()
+    {
+        //GamesEventManager.Instance.questUIEvents.OnLogItemClicked -= HandleLogItemSelection;
+        Debug.Log("Destroying QuestLogPage");
+    }
+
 }

@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DialogueManager : MonoBehaviour
+public class DialogueManager : Singleton<DialogueManager>
 {
     [Header("Story Configuration")]
     [SerializeField] private TextAsset inkJSON; //Ink JSON file to be used for the dialogue
@@ -20,7 +20,7 @@ public class DialogueManager : MonoBehaviour
     private bool dialogueIsActive = false; //Property to check if the dialogue is active
     private bool canInteract = true; //Property to check if the player can interact with the dialogue
     private bool choicesDisplayed = false; //Property to check if the choices are displayed
-    private bool isDialogueCooldown = false; //Property to check if the dialogue is on cooldown
+    public bool isDialogueCooldown { get; private set; } = false; //Property to check if the dialogue is on cooldown
     private bool isTyping = false; //Property to check if the dialogue is being typed out
     private bool ShowVisualCue = true; //Property to check if the visual cue is active
 
@@ -32,8 +32,10 @@ public class DialogueManager : MonoBehaviour
     private InkExternalFunctions inkExternalFunctions; //Ink external functions to be used for the dialogue
     private InkDialogueVariables inkDialogueVariables; //Ink dialogue variables to be used for the dialogue
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake(); //Call the base Awake method
+
         story = new Story(inkJSON.text); //Initialize the story with the ink JSON text
 
         inkExternalFunctions = new InkExternalFunctions(); //Initialize the ink external functions

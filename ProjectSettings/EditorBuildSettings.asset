@@ -38,6 +38,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Jane's Story/Room 103.unity
     guid: 4760324490ee1bd489cceb17d6cdc05d
+  - enabled: 1
+    path: Assets/Scenes/Jane's Story/HeinrichIntroductionClass.unity
+    guid: fd70601db63eb7943994b762ac6ee37a
+  - enabled: 1
+    path: Assets/Scenes/Jane's Story/StartingScene.unity
+    guid: 706fec490aabc9b4e8c63bc1d8f04fb8
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
