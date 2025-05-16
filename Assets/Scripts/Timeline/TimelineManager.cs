@@ -51,6 +51,7 @@ public class TimelineManager : MonoBehaviour
             timeline.Pause(); //Pauses the timeline
             GamesEventManager.Instance.dialogueEvents.EnableNext(); //Enables the next button
             GamesEventManager.Instance.questEvents.EnableInteract(); //Enables the quest log UI
+            timeline.Evaluate(); //Evaluates the timeline to the current time
         }
     }
     private void FinishTimeline()

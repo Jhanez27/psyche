@@ -17,6 +17,7 @@ public class InputEvents
     // Functions for Invoking Input Events
     public void MovePressed(Vector2 movement)
     {
+        Debug.Log("Move Pressed Event");
         OnMovePressed?.Invoke(movement);
     }
     public void DashPressed()
