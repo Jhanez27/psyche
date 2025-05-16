@@ -16,6 +16,7 @@ public class InkDialogueVariables
         }
     }
 
+
     public void SyncVariablesAndStartListening(Story story)
     {
         SyncVariableToStory(story);
@@ -43,4 +44,17 @@ public class InkDialogueVariables
             story.variablesState.SetGlobal(kvp.Key, kvp.Value);
         }
     }    
+
+    public bool GetBoolVariableState(string name)
+    {
+        if (variables.ContainsKey(name) && variables[name] is BoolValue boolValue) // Checks if the key is in variables and value is a boolean
+        {
+            return boolValue.value; // Access the actual boolean value
+        }
+        else
+        {
+            Debug.LogWarning($"Variable '{name}' is not a boolean or does not exist.");
+            return false; // Default value if the variable is not found or not a boolean
+        }
+    }
 }

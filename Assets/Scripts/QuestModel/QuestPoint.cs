@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor.VersionControl;
 using UnityEngine;
@@ -30,7 +31,9 @@ public class QuestPoint : MonoBehaviour
     {
         questID = questInfoForPoint.ID;
     }
-
+    private void Start()
+    {
+    }
     private void OnEnable()
     {
         GamesEventManager.Instance.questEvents.OnChangeQuestState += QuestStateChange;
@@ -83,7 +86,6 @@ public class QuestPoint : MonoBehaviour
                 }
             }
 
-            Debug.Log("Interacted with " + tag);
             GamesEventManager.Instance.questEvents.InteractInCollision(this.gameObject.tag); // Pass the tag for Collision
         }
     }
