@@ -17,9 +17,24 @@ Pssst. Jane over here! #Speaker: Christopher #Layout: Right
 -> DONE
 
 === LaiExtraDialogue ===
-It's really a matter of time until someone fails the subject.  #Speaker: Lai #Layout: Right
+{ JaneIsSeated == false:
+    It's really a matter of time until someone fails the subject.  #Speaker: Lai #Layout: Left
+}
 -> DONE
 
+=== NoelleExtraDialogue ===
+{ JaneIsSeated == false:
+    Rigen was a girl in the Maybog doing alright, but she became a princess in Gabas.  #Speaker: Noelle #Layout: Left
+    Now she's gotta figure out howto do it right, so much to fuck and see  #Speaker: Noelle #Layout: Left
+    Up the DCST with my family, in a store that's just for honesty.  #Speaker: Noelle #Layout: Left
+}
+-> DONE
+
+=== NoellesExtraDialogue ===
+{ JaneIsSeated == false:
+    I hope things turn out for the better. This really isn't a good sign... Rigen love Maniego  #Speaker: Noelle #Layout: Left
+}
+-> DONE
 
 === JaneSeated ===
 ~ JaneIsSeated = true
@@ -40,11 +55,13 @@ Good morning, sir. #Speaker: Noelle #Layout: Right
 I have recently checked your latest laboratory exercise, and honestly I haven’t been the most disappointed in my life. #Speaker: Heinrich #Layout: Left
 I’ve designed it to be difficult to understand, but easy to solve. #Speaker: Heinrich #Layout: Left
 I’ve added all those additional information to confuse you, but only a few managed to find the right answer. #Speaker: Heinrich #Layout: Left
--> DONE
-
-
-=== HeinrichAnger ===
 You’re already in your third year, a year closer to graduation - that is if you can do so on time. #Speaker: Heinrich #Layout: Left
 Please be reminded that your occupation and the world does not spoonfeed you the answers, and with the evergrowing busy society, thousands of irrelevant information bombard you. #Speaker: Heinrich #Layout: Left
 Navigating even the simplest answers are made challenging. How can you really tell that you’re ready for the industry if you fail to recognise a simple task? #Speaker: Heinrich #Layout: Left
+He’s definitely not on a good mood. #Speaker: Pipes #Layout: Right
+... #Speaker: Heinrich #Layout: Left
+I expect you here to be the cream of the crop once you finish this subject, and I will not allow any student to pass this subject completely unprepared. Do I make myself clear? #Speaker: Heinrich #Layout: Left
+Yes, sir. #Speaker: Lai #Layout: Right
+Yes, sir. #Speaker: Noelle #Layout: Right
+... #Speaker: Jane #Layout: Left
 -> DONE

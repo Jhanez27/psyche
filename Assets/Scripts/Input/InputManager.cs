@@ -14,8 +14,8 @@ public class InputManager : Singleton<InputManager>
     {
         if(context.performed || context.canceled)
         {
-            Debug.Log("HO1");
             Vector2 movement = context.ReadValue<Vector2>();
+            Debug.Log("HO1 " + movement.ToString());
             GamesEventManager.Instance.inputEvents.MovePressed(movement);
         }
     }
