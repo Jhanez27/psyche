@@ -3739,6 +3739,8 @@ MonoBehaviour:
   emailInput: {fileID: 330564511}
   passwordInput: {fileID: 1900458441}
   responseText: {fileID: 1332880443}
+  onObject: {fileID: 1360582627}
+  offObject: {fileID: 708563239}
   main_menu: {fileID: 1435190141}
 --- !u!4 &554148469
 Transform:
@@ -5121,6 +5123,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1360582627}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &708563242
 MonoBehaviour:
@@ -10571,6 +10585,8 @@ MonoBehaviour:
   emailInput: {fileID: 452503573}
   passwordInput: {fileID: 1343371686}
   responseText: {fileID: 2007234790}
+  onObject: {fileID: 1360582627}
+  offObject: {fileID: 708563239}
   main_menu: {fileID: 708563239}
 --- !u!1 &1443839929
 GameObject:

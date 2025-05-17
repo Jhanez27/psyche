@@ -16,7 +16,8 @@ public class AuthManager : MonoBehaviour
     public TMP_InputField emailInput;
     public TMP_InputField passwordInput;
     public TMP_Text responseText;
-    //public GameObject responseBox;
+    public GameObject onObject;
+    public GameObject offObject;
     //public GameObject accountManage;
     public GameObject main_menu;
 
@@ -49,9 +50,9 @@ public class AuthManager : MonoBehaviour
         if (request.result == UnityWebRequest.Result.Success)
         {
             string response = request.downloadHandler.text;
-            //responseBox.SetActive(true);
+            onObject.SetActive(true);
             main_menu.SetActive(false);
-            //accountManage.SetActive(false);
+            offObject.SetActive(false);
             emailInput.text = "";
             passwordInput.text = "";
             Debug.Log("Login success: " + response);

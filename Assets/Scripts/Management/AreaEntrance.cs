@@ -11,8 +11,10 @@ public class AreaEntrance : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log(transitionName + " is the transition name, and " + SceneManagement.Instance.SceneTransitionName + " is the sceneManagement.");
         if (transitionName == SceneManagement.Instance.SceneTransitionName)
         {
+            Debug.Log(playerController != null);
             if (playerController != null)
             {
                 playerController.transform.position = this.transform.position;
