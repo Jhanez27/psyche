@@ -30,6 +30,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Dystopia Land/MainGateFirstSceneNew.unity
     guid: 902899a3d476cc94185fad968ce87718
   - enabled: 1
+    path: Assets/Scenes/Dystopia Land/DCSTenvironmentNew(WithMAp).unity
+    guid: 3b9d0c005b21a8e40a8e49a57e218293
+  - enabled: 1
+    path: Assets/Scenes/Dystopia Land/MainGateFirstSceneNew(WithMap).unity
+    guid: a2d14ce82ed4b94468b424515001311e
+  - enabled: 1
     path: Assets/Scenes/Jane's Story/Jane's House Scene.unity
     guid: e83908f980c30914dbe3303f99f722d3
   - enabled: 1
