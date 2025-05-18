@@ -254,6 +254,10 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         inkDialogueVariables.UpdateVariableState(name, value); //Update the ink variable state
     }
+    public bool GetBoolInkVariableValue(string name)
+    {
+        return inkDialogueVariables.GetBoolVariableState(name);
+    }
     private void QuestStateChange(Quest quest)
     {
         GamesEventManager.Instance.dialogueEvents.ChangeInkVariables(

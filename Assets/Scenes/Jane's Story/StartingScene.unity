@@ -7152,7 +7152,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 0468b0a885a48394a98606d9bcbf40c3, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -18671,6 +18671,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4846884232be90048b7f3a59b1445d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  npcTag: 
+  dialogueName: 
 --- !u!4 &1003156173
 Transform:
   m_ObjectHideFlags: 0
@@ -21292,7 +21294,7 @@ Transform:
   m_GameObject: {fileID: 1424691787}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.42, y: -2.54, z: 0}
+  m_LocalPosition: {x: -0.6, y: -3.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22738,7 +22740,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -350908408369970039, guid: 9bdaf9c3f44321c459693b9283cbad21, type: 3}
+  m_Sprite: {fileID: -7385789195546760866, guid: bab3383c9bcab3d45804f4bb9c87d40f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

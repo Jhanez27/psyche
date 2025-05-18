@@ -47,8 +47,6 @@ namespace Characters
 
         private void UpdateMovement() // Responsible for Player Movement
         {
-            Debug.Log("Movement Update: " + (!MovementEnabled).ToString() + " " + ActiveUIManager.Instance.ActiveUIType);
-
             //Unable to move when Dialogue is Active
             if (!MovementEnabled || !ActiveUIManager.Instance.ActiveUIType.Equals(ActiveUIType.None))
             {
