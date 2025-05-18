@@ -45,6 +45,7 @@ Yeah, and he’s really pissed. #Speaker: Christopher #Layout: Right
 
 
 === HeinrichEnter ===
+~HeinrichIntroduced = true
 Good morning, class. #Speaker: Heinrich #Layout: Left
 Good morning... #Speaker: Jane #Layout: Left
 Good morning, sir! #Speaker: Lai #Layout: Right
@@ -97,8 +98,33 @@ Please wait a while.#Speaker: Heinrich #Layout: Left
 
 === LaiQuestion ===
 But, sir. How about the discussion? I think we still have some chapters left in our module that are included in the coverage. #Speaker: Lai #Layout: Right
-Do have to do independent study or d- #Speaker: Lai #Layout: Right
+Do we have to do independent study or d- #Speaker: Lai #Layout: Right
 A lecture session will be conducted later this 4 in the afternoon. In the meantime, use the remaining time to reflect on your recent performance. #Speaker: Heinrich #Layout: Left
 Don’t forget to submit your attendance slips at the table in front. Please form in line, as well. I will be returning your Laboratory Exercises shortly. #Speaker: Heinrich #Layout: Left
+-> DONE
 
+=== ChristopherBeforeGoingInLine ===
+{ HeinrichIntroduced == true:
+    ~ TalkedToChristopherBeforeFallingInLine = true
+    Guys, I think I’m gonna cry. I really feel like I failed the exercise. #Speaker: Jane #Layout: Left
+    Jane, trust me. There’s only one way to find out~ #Speaker: Pipes #Layout: Right
+    Pipes, the girl is about to cry! Don’t make it worse. #Speaker: Christopher #Layout: Right
+    I’M NOT! I’m just trying to lighten the mood, that’s all. #Speaker: Pipes #Layout: Right
+    ... #Speaker: Jane #Layout: Left
+    Hey, hey. I’m sorry. What matters is that you tried your best, and if things comes to worse, which I hope things wont, we still have the final term exam. #Speaker: Pipes #Layout: Right
+    Yeah, we can still pass this horrid subject. Let’s fall in line and meet our inevitable fate. I wanna get out of this room as quickly as possible. #Speaker: Christopher #Layout: Right
+    I agree. Let's get outta here! #Speaker: Pipes #Layout: Right
+}
+-> DONE
+
+=== RetrievedPaper ===
+{ TalkedToChristopherBeforeFallingInLine == true && ClaimedPaper == false:
+    ... #Speaker: Heinrich #Layout: Right
+    Jane... #Speaker: Heinrich #Layout: Right
+    Yes, sir? #Speaker: Jane #Layout: Left
+    Hmmm... #Speaker: Heinrich #Layout: Right
+    Disappointed, but not surprised... Claim your paper. #Speaker: Heinrich #Layout: Right
+    Yes, sir. #Speaker: Jane #Layout: Left
+    ~ ClaimedPaper = true
+}
 -> DONE

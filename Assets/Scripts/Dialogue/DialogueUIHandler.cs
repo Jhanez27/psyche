@@ -106,20 +106,25 @@ public class DialogueUIHandler : MonoBehaviour
         ResetPanelContent(); //Resets the panel content
         yield return new WaitForSeconds(typingDelay); //Waits for the specified delay before starting to type
 
+
+        if (typingSound != null && audioSource != null) //Checks if the typing sound and audio source are set
+        {
+            audioSource.clip = typingSound;
+            audioSource.Play();//Plays the typing sound effect
+        }
+
         int ctr = 0;
         foreach (char letter in text)
         {
             dialogueText.text += letter; //Adds each letter to the dialogue text
             ctr++; //Increments the counter for the number of letters typed
 
-            if (typingSound != null && audioSource != null) //Checks if the typing sound and audio source are set
-            {
-                audioSource.PlayOneShot(typingSound); //Plays the typing sound effect
-            }
             yield return new WaitForSeconds(1 / typingSpeed); //Waits for the specified typing speed before adding the next letter
         }
 
         GamesEventManager.Instance.dialogueEvents.PerformTyping(false); //Sets the typing state to false after typing is complete
+
+        audioSource.Pause();
         typingCoroutine = null; //Resets the typing coroutine to null
     }
     public void SkipTyping()
@@ -127,6 +132,7 @@ public class DialogueUIHandler : MonoBehaviour
         if (typingCoroutine != null) //Checks if the typing coroutine is running
         {
             StopCoroutine(typingCoroutine); //Stops the typing coroutine
+            audioSource.Pause();
             typingCoroutine = null;
         }
 

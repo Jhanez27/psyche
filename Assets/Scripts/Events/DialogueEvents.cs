@@ -26,7 +26,6 @@ public class DialogueEvents
     public event Action<string> OnDialoguePortraitUpdate; // Event for when the Dialogue Portrait is Updated
     public event Action<string> OnDialogueLayoutUpdate; // Event for when the Dialogue Layout is Updated
 
-
     // Functions for Invoking Events
     // Functions for Dialogue Progression
     public void EnterDialogue(string knotName, DialogueSource source)

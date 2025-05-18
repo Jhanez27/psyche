@@ -40,14 +40,29 @@ public class QuestPoint : MonoBehaviour
         GamesEventManager.Instance.inputEvents.OnInteractPressed += InteractPressed;
         GamesEventManager.Instance.questEvents.OnInteractEnabled += EnableQuestInteract;
         GamesEventManager.Instance.questEvents.OnInteractDisabled += DisableQuestInteract;
+        GamesEventManager.Instance.questEvents.OnChangeDialogueKnotName += ChangeDialogueKnotName;
     }
-
     private void OnDisable()
     {
         GamesEventManager.Instance.questEvents.OnChangeQuestState -= QuestStateChange;
         GamesEventManager.Instance.inputEvents.OnInteractPressed -= InteractPressed;
         GamesEventManager.Instance.questEvents.OnInteractEnabled -= EnableQuestInteract;
         GamesEventManager.Instance.questEvents.OnInteractDisabled -= DisableQuestInteract;
+        GamesEventManager.Instance.questEvents.OnChangeDialogueKnotName -= ChangeDialogueKnotName;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            playerIsNear = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            playerIsNear = false;
+        }
     }
 
     private void QuestStateChange(Quest quest)
@@ -90,22 +105,6 @@ public class QuestPoint : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.CompareTag("Player"))
-        {
-            playerIsNear = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if(collision.CompareTag("Player"))
-        {
-            playerIsNear = false;
-        }
-    }
-
     private void EnableQuestInteract()
     {
         questInteractEnabled = true;
@@ -113,5 +112,13 @@ public class QuestPoint : MonoBehaviour
     private void DisableQuestInteract()
     {
         questInteractEnabled = false;
+    }
+
+    private void ChangeDialogueKnotName(string npcTag, string knotName)
+    {
+        if (this.gameObject.tag == npcTag)
+        {
+            this.dialogueKnotName = knotName;
+        }
     }
 }
