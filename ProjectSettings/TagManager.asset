@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 3
   tags:
   - Pipes
+  - Chris
+  - Heinrich
+  - Lai
+  - Noelle
+  - James
+  - Dane
   layers:
   - Default
   - TransparentFX
@@ -44,6 +50,12 @@ TagManager:
     locked: 0
   - name: PlayerInBehind
     uniqueID: 3681961011
+    locked: 0
+  - name: NPCS
+    uniqueID: 100311793
+    locked: 0
+  - name: DialogueBox
+    uniqueID: 3126820285
     locked: 0
   m_RenderingLayers:
   - Default

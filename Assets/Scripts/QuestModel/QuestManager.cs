@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class QuestManager : MonoBehaviour
+public class QuestManager : Singleton<QuestManager>
 {
     [Header("Data Persistence Config")]
     [SerializeField] private bool loadQuestState = true;
 
     [SerializeField]
     private QuestLogPage logPage;
+
 
     //List of all Quests
     private Dictionary<string, Quest> questMap;
@@ -28,8 +29,10 @@ public class QuestManager : MonoBehaviour
             GamesEventManager.Instance.questEvents.ChangeQuestState(quest);
         }
     }
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        Debug.Log("Creating Quesr Manager with " + (logPage != null).ToString());
         questMap = CreateQuestMap();
 
         List<Quest> quests = questMap.Values.ToList<Quest>();
@@ -74,7 +77,11 @@ public class QuestManager : MonoBehaviour
             SaveQuest(quest);
         }
     }
+    private void OnDestroy()
+    {
+        Debug.Log("Destroying QuestManager with " + (logPage != null).ToString());
 
+    }
     // UI Prepapration
     private void PrepareUI(List<Quest> quests) // Iniitializes the quest log page
     {
@@ -171,7 +178,6 @@ public class QuestManager : MonoBehaviour
         Quest quest = questMap[id];
         GameObject questStepObject;
 
-        Debug.Log("Quest Step Index: " + quest.currentQuestStepIndex + ". Current Step Exists: " + quest.CurrentStepExists());
         if (quest.CurrentStepExists())
         {
             questStepObject = quest.questInfo.questSteps[quest.currentQuestStepIndex];

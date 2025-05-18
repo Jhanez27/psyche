@@ -18,7 +18,7 @@ public class ActiveUIManager : MonoBehaviour
 
     public bool CanOpenUI(ActiveUIType uiType)
     {
-        return ActiveUIType == ActiveUIType.None || ActiveUIType == uiType; // Check if the UI can be opened
+        return ActiveUIType == ActiveUIType.None; // Check if the UI can be opened
     }
 
     public void OpenUI(ActiveUIType uiType)

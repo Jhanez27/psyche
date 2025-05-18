@@ -23,13 +23,13 @@ public class FollowChrisStep : QuestStep
 
     private void OnEnable()
     {
-        GamesEventManager.Instance.inventoryModelEvents.OnItemAdded += GetItemAdded;
+        GamesEventManager.Instance.inventoryModelEvents.OnItemAddDetected += GetItemAdded;
         GamesEventManager.Instance.questEvents.OnInteractInCollision += CheckCollision;
     }
 
     private void OnDisable()
     {
-        GamesEventManager.Instance.inventoryModelEvents.OnItemAdded -= GetItemAdded;
+        GamesEventManager.Instance.inventoryModelEvents.OnItemAddDetected -= GetItemAdded;
         GamesEventManager.Instance.questEvents.OnInteractInCollision -= CheckCollision;
     }
 

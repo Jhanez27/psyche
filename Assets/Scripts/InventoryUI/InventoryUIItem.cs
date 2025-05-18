@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -22,6 +23,25 @@ namespace Inventory.UI
         {
             ResetData();
             Deselect();
+        }
+
+        void Update()
+        {
+            if (Input.GetMouseButtonDown(0)) // Left mouse button
+            {
+                PointerEventData pointerData = new PointerEventData(EventSystem.current)
+                {
+                    position = Input.mousePosition
+                };
+
+                List<RaycastResult> results = new List<RaycastResult>();
+                EventSystem.current.RaycastAll(pointerData, results);
+
+                foreach (var result in results)
+                {
+                    Debug.Log($"Raycast hit: {result.gameObject.name}");
+                }
+            }
         }
 
         public void ResetData()
@@ -54,6 +74,7 @@ namespace Inventory.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            Debug.Log("Pointer Clicked on Item");
             if (eventData.button == PointerEventData.InputButton.Right)
             {
                 GamesEventManager.Instance.inventoryUIEvents.ItemRightMouseButtonClicked(this);
