@@ -225,6 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionName: toJane'sHouse
+  playerController: {fileID: 0}
 --- !u!114 &704719093697593742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5282,7 +5283,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3891997466317556883}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 7188699ee899f3047a6a7a495f562b07, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: d5f4e6c0be99a0847a0f1a919df72b58, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 371885254786659974}
@@ -5367,6 +5368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeScreen: {fileID: 8768709665062249767}
   fadeSpeed: 1
+  baseSingleton: {fileID: 0}
 --- !u!114 &5644236210979015308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5392,6 +5394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionName: janeHouseTP
+  playerController: {fileID: 0}
 --- !u!114 &6780890894516048430
 MonoBehaviour:
   m_ObjectHideFlags: 0
