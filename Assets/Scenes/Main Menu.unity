@@ -3739,7 +3739,7 @@ MonoBehaviour:
   emailInput: {fileID: 330564511}
   passwordInput: {fileID: 1900458441}
   responseText: {fileID: 1332880443}
-  responseBox: {fileID: 1332880440}
+  responseBox: {fileID: 1360582627}
   accountManage: {fileID: 708563239}
   main_menu: {fileID: 1435190141}
 --- !u!4 &554148469
