@@ -37,10 +37,17 @@ Pssst. Jane over here! #Speaker: Christopher #Layout: Right
 -> DONE
 
 === JaneSeated ===
-~ JaneIsSeated = true
 Did something happen? It seems that something’s wrong in the air. #Speaker: Jane #Layout: Left
 Apparently, sir isn’t really in the mood. He wasn’t too happy with the performance of our latest laboratory. #Speaker: Pipes #Layout: Right
-Yeah, and he’s really pissed. #Speaker: Christopher #Layout: Right
+
+
+* [Why do you think that is?]
+    I don't know but I feel like we messed up big time. #Speaker: Pipes #Layout: Right
+* [Did we mess up again?]
+    Guessing from the overall mood, I think so. 
+
+- Yeah, and he’s really pissed. #Speaker: Christopher #Layout: Right
+~ JaneIsSeated = true
 -> DONE
 
 

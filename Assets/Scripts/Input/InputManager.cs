@@ -32,7 +32,6 @@ public class InputManager : Singleton<InputManager>
     {
         if(context.started)
         {
-            Debug.Log("HI");
             GamesEventManager.Instance.inputEvents.InteractPressed();
         }
     }

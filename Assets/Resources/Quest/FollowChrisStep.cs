@@ -4,17 +4,7 @@ using UnityEngine;
 
 public class FollowChrisStep : QuestStep
 {
-    [Header("Requirement")]
-    [SerializeField]
-    private ItemSO item;
-    [SerializeField]
-    private int requiredAmount = 1;
-
-    private bool hasInteractedWithPipes = false; 
-
-    private int currentAmount = 0;
-
-
+    private bool hasInteractedWithChris = false; 
 
     private void Start()
     {
@@ -23,61 +13,37 @@ public class FollowChrisStep : QuestStep
 
     private void OnEnable()
     {
-        GamesEventManager.Instance.inventoryModelEvents.OnItemAddDetected += GetItemAdded;
         GamesEventManager.Instance.questEvents.OnInteractInCollision += CheckCollision;
     }
 
     private void OnDisable()
     {
-        GamesEventManager.Instance.inventoryModelEvents.OnItemAddDetected -= GetItemAdded;
         GamesEventManager.Instance.questEvents.OnInteractInCollision -= CheckCollision;
     }
 
     private void CheckCollision(string tag)
     {
-        if(tag.Equals("Pipes") && !hasInteractedWithPipes)
+        if(tag.Equals("Chris") && !hasInteractedWithChris)
         {
-            hasInteractedWithPipes = true; // Set the flag to true after interacting with the pipes
+            hasInteractedWithChris = true; // Set the flag to true after interacting with the pipes
             UpdateState(); // Update the quest step state
-            Debug.Log("Pipes Interacted with");
             CheckFinalCondition(); // Check if the quest step is complete
         }
     }
 
     private void CheckFinalCondition()
     {
-        if (currentAmount >= requiredAmount && hasInteractedWithPipes)
+        if (hasInteractedWithChris)
         {
             FinishQuestStep();
-        }
-    }
-
-    private void GetItemAdded(ItemSO item, int quantity)
-    {
-        if (item.ID.Equals(this.item.ID))
-        {
-            if (currentAmount < requiredAmount)
-            {
-                currentAmount += quantity;
-                UpdateState();
-            }
-
-            Debug.Log("Item Added: " + item.name + " x" + quantity);
-            CheckFinalCondition(); // Check if the quest step is complete
         }
     }
     
 
     private void UpdateState()
     {
-        /*
-        string state = currentAmount.ToString();
-        string status = "Collected " + currentAmount + "/" + requiredAmount + " " + item.name + ".";
-        ChangeState(state, status);
-        */
-
-        string state = currentAmount.ToString() + "," + hasInteractedWithPipes.ToString();
-        string status = "Collected " + currentAmount + "/" + requiredAmount + " " + item.name + ".\nInteract With Pipes.";
+        string state = hasInteractedWithChris.ToString();
+        string status = "Follow Chris and see what he's rushing about.";
         ChangeState(state, status);
     }
 
@@ -89,10 +55,9 @@ public class FollowChrisStep : QuestStep
         UpdateState();
         */
         string[] parts = state.Split(',');
-        if (parts.Length == 2)
+        if (parts.Length == 1)
         {
-            this.currentAmount = int.Parse(parts[0]);
-            this.hasInteractedWithPipes = bool.Parse(parts[1]);
+            this.hasInteractedWithChris = bool.Parse(parts[0]);
         }
         UpdateState();
     }

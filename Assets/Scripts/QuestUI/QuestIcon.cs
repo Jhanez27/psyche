@@ -19,7 +19,9 @@ public class QuestIcon : MonoBehaviour
     [SerializeField]
     private Sprite questionEmote;
     [SerializeField]
-    private Sprite sideEyeEmote;
+    private Sprite sideEyeEmote; 
+    [SerializeField]
+    private Sprite exclamationEmote;
 
     [Header("Icon Configuration")]
     [SerializeField]
@@ -80,6 +82,10 @@ public class QuestIcon : MonoBehaviour
     public void ShowRBFIcon()
     {
         questIconRenderer.sprite = sideEyeEmote;
+    }
+    public void ShowExclamationIcon()
+    {
+        questIconRenderer.sprite = exclamationEmote;
     }
     public void ClearQuestIconByVariableBasis(string variableBasis, Ink.Runtime.Object state)
     {

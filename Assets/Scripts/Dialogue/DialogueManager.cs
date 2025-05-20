@@ -141,6 +141,7 @@ public class DialogueManager : Singleton<DialogueManager>
             }
             else
             {
+                Debug.Log("Current Choices: " + story.currentChoices.Count);
                 GamesEventManager.Instance.dialogueEvents.DisplayDialogue(dialogueLine, story.currentChoices);
             }
         }
@@ -164,7 +165,7 @@ public class DialogueManager : Singleton<DialogueManager>
         }
         else
         {
-            GamesEventManager.Instance.timelineEvents.StartTimeline(); //Finish the timeline
+            GamesEventManager.Instance.timelineEvents.ResumeTimeline(); //Finish the timeline
 
         }
         GamesEventManager.Instance.inputEvents.ChangeInputEventContext(InputEventContext.DEFAULT); //Change the input event context back to default

@@ -29,8 +29,6 @@ public class AreaExitWhite : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log(sceneTransitionName + " and" + SceneManagement.Instance.SceneTransitionName);
-
         SceneManager.LoadScene(sceneToLoad);
     }
 }

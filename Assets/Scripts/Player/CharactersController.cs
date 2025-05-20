@@ -28,12 +28,10 @@ namespace Characters
 
         private void OnDisable()
         {
-            GamesEventManager.Instance.playerEvents.OnMovementEnabled += EnableMovement;
-            GamesEventManager.Instance.playerEvents.OnMovementDisabled += DisableMovement;
+            GamesEventManager.Instance.playerEvents.OnMovementEnabled -= EnableMovement;
+            GamesEventManager.Instance.playerEvents.OnMovementDisabled -= DisableMovement;
             GamesEventManager.Instance.inputEvents.OnDashPressed -= movementHandler.DashPressed;
             GamesEventManager.Instance.inputEvents.OnMovePressed -= movementHandler.SetMovement;
-
-            Debug.Log("Disabled and Unsubscribed");
         }
 
         private void Update()
@@ -43,6 +41,7 @@ namespace Characters
         private void FixedUpdate()
         {
             UpdateMovement();
+
         }
 
         private void UpdateMovement() // Responsible for Player Movement
@@ -51,8 +50,9 @@ namespace Characters
             if (!MovementEnabled || !ActiveUIManager.Instance.ActiveUIType.Equals(ActiveUIType.None))
             {
                 movementHandler.SetMovement(Vector2.zero);
+                return;
             }
-            
+
             movementHandler.Move();
         }
         private void UpdateAnimations() // Responsible for Player Animations
@@ -71,6 +71,7 @@ namespace Characters
         public void EnableMovement()
         {
             MovementEnabled = true;
+            Debug.Log("Move Enabled");
         }
         public void DisableMovement()
         {
