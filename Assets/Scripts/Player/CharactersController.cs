@@ -2,10 +2,11 @@ using Characters.Handlers;
 using Inventory;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 namespace Characters
 {
-    public class CharactersController : MonoBehaviour
+    public class CharactersController : MonoBehaviour, IDataPersistence
     {
         private CharactersMovementHandler movementHandler;
         private CharactersAnimationHandler animationHandler;
@@ -28,12 +29,10 @@ namespace Characters
 
         private void OnDisable()
         {
-            GamesEventManager.Instance.playerEvents.OnMovementEnabled += EnableMovement;
-            GamesEventManager.Instance.playerEvents.OnMovementDisabled += DisableMovement;
+            GamesEventManager.Instance.playerEvents.OnMovementEnabled -= EnableMovement;
+            GamesEventManager.Instance.playerEvents.OnMovementDisabled -= DisableMovement;
             GamesEventManager.Instance.inputEvents.OnDashPressed -= movementHandler.DashPressed;
             GamesEventManager.Instance.inputEvents.OnMovePressed -= movementHandler.SetMovement;
-
-            Debug.Log("Disabled and Unsubscribed");
         }
 
         private void Update()
@@ -43,6 +42,7 @@ namespace Characters
         private void FixedUpdate()
         {
             UpdateMovement();
+
         }
 
         private void UpdateMovement() // Responsible for Player Movement
@@ -51,8 +51,9 @@ namespace Characters
             if (!MovementEnabled || !ActiveUIManager.Instance.ActiveUIType.Equals(ActiveUIType.None))
             {
                 movementHandler.SetMovement(Vector2.zero);
+                return;
             }
-            
+
             movementHandler.Move();
         }
         private void UpdateAnimations() // Responsible for Player Animations
@@ -71,11 +72,26 @@ namespace Characters
         public void EnableMovement()
         {
             MovementEnabled = true;
+            Debug.Log("Move Enabled");
         }
         public void DisableMovement()
         {
             MovementEnabled = false;
             movementHandler.SetMovement(Vector2.zero);
+        }
+
+        public void LoadData(GameData gameData)
+        {
+            if (gameData.janeWorldData.hasBeenLoadedBefore)
+            {
+                this.gameObject.transform.position = gameData.janeWorldData.worldPosition;
+            }
+        }
+
+        public void SaveData(ref GameData gameData)
+        {
+            gameData.janeWorldData.InitialiszeJaneWorldPositionData(this.gameObject.transform.position);
+            gameData.janeWorldData.hasBeenLoadedBefore = true; 
         }
     }
 }

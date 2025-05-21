@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abcc2dc362283cf4b80390aead6d5b9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 1587054524033544136}
   happyEmote: {fileID: 4004057595850752387, guid: 91b316f89b002b048bd48e2d316f9e31, type: 3}
   sadEmote: {fileID: 5414946944802666015, guid: ee94ab9f2f26c85488c310d3b6d10a36, type: 3}
   dialogueEmote: {fileID: 8147004107710021074, guid: 6f5d0dc205343a24da6a3b9bca6be5f0, type: 3}
@@ -53,6 +52,7 @@ MonoBehaviour:
   shockEmote: {fileID: -2944816543742499412, guid: 2b6e8e2203c132248b91af103fdee85a, type: 3}
   questionEmote: {fileID: 7186400137079736901, guid: eebb56373b51bd244a98c846e4b2f190, type: 3}
   sideEyeEmote: {fileID: -6405861392467210627, guid: 3d771468ddd7aee478d4dd6be9eae847, type: 3}
+  exclamationEmote: {fileID: -5419310489963565622, guid: 0d0392057b1e6d348b77b1565b2e339d, type: 3}
   hasShowSpriteVariableBasis: 1
   inkVariableNameBasis: 
 --- !u!212 &1587054524033544136

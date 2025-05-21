@@ -87,6 +87,7 @@ namespace Inventory.UI
 
         public void OnDrag(PointerEventData eventData)
         {
+            return;
             // No implementation here, only Begin and Drop PointerEvents are needed
             // The function is needed for the IDragHandler interface
         }
