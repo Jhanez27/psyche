@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd71e169e9768a4b9a7af17d0ad69ff, type: 3}
   m_Name: Four-Leaf Clover
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: four_leaf_clover
   <IsStackable>k__BackingField: 1
   <MaxStackSize>k__BackingField: 99
   <Name>k__BackingField: Four-Leaf Clover
-  <Description>k__BackingField: Fresh From Maniego Farms
+  <Description>k__BackingField: A little reminder that life can get better even if
+    things aren't clear at the present time.
   <Image>k__BackingField: {fileID: -353201567, guid: 67ef29027061cf14ca0ee9929fb8bfae, type: 3}
   modifiers: []
   <ActionSFX>k__BackingField: {fileID: 8300000, guid: 0f88028a1b2320840a03500b56a486d5, type: 3}

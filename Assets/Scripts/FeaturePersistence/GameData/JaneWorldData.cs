@@ -5,12 +5,13 @@ public class JaneWorldData
 {
     public Vector2 worldPosition;
     public string sceneName;
+    public string sceneTransitionName;
     public bool hasBeenLoadedBefore;
 
     public JaneWorldData()
     {
         worldPosition = Vector2.zero;
-        sceneName = string.Empty;
+        sceneName = sceneTransitionName = string.Empty;
         hasBeenLoadedBefore = false;
     }
 
@@ -22,5 +23,10 @@ public class JaneWorldData
     public void InitializeJaneWorldSceneData(string name)
     {
         this.sceneName = name;
+    }
+
+    public void InitializeJaneWorldSceneTransitionData(string name)
+    {
+        this.sceneTransitionName = name;
     }
 }

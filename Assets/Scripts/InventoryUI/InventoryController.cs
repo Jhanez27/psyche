@@ -2,15 +2,16 @@ using Characters.Handlers;
 using Inventory.Model;
 using Inventory.UI;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Inventory
 {
-    public class InventoryController : MonoBehaviour
+    public class InventoryController : MonoBehaviour, IDataPersistence
     {
         [SerializeField]
         private InventoryUIPage inventoryPage; // Reference to the inventory page UI
-        public InventorySO inventoryData { get; private set; } // Reference to the inventory data
+        public Model.Inventory inventoryData { get; private set; } // Reference to the inventory data
 
         public List<InventoryItem> initialItems = new List<InventoryItem>();
         public bool InventoryIsActive => inventoryPage.isActiveAndEnabled; // Property to check if the inventory is active
@@ -21,7 +22,7 @@ namespace Inventory
         [SerializeField]
         private AudioSource audioSource;
 
-        private void Awake()
+        private void Start()
         {
             PrepareInventoryData();
             PrepareUI();
@@ -46,7 +47,6 @@ namespace Inventory
         // Inventory Preparations
         private void PrepareInventoryData()
         {
-            inventoryData = new InventorySO(); // Initialize the inventory data
             GamesEventManager.Instance.inventoryModelEvents.OnInventoryUpdated += GetUpdateInventoryUI;
             foreach (InventoryItem item in initialItems)
             {
@@ -181,6 +181,7 @@ namespace Inventory
                 else
                 {
                     inventoryPage.ResetSelection(); // Clears the Inventory Description if item is empty
+                    Debug.Log($"Total non-empty items: {inventoryData.GetCurrentInventoryState().Count}");
                     return;
                 }
             }
@@ -191,7 +192,7 @@ namespace Inventory
                 ActiveUIManager.Instance.CloseUI(ActiveUIType.Inventory); // Set the active UI type to none
             }
 
-            Debug.Log(ActiveUIManager.Instance.ActiveUIType);
+            Debug.Log($"Total non-empty items: {inventoryData.GetCurrentInventoryState().Count}");
         }
 
         // Inventory Boolean Toggle
@@ -202,6 +203,52 @@ namespace Inventory
         private void DisableInventory()
         {
             canOpenInventory = false; // Disable the inventory
+        }
+
+        public void LoadData(GameData data)
+        {
+            inventoryData = new Model.Inventory();
+            // Re-subscribe the same way as in PrepareInventoryData
+
+
+            Debug.Log($"InventoryController: LoadData() called with {data.inventoryDataList.Count} items");
+
+            foreach (var savedItem in data.inventoryDataList)
+            {
+                ItemSO item = ItemDatabase.GetItemByID(savedItem.itemID);
+                Debug.Log($"Item is {savedItem.quantity} {item.ID}(s).");
+                if (item != null)
+                {
+                    inventoryData.AddItem(item, savedItem.quantity);
+                }
+                else
+                {
+                    Debug.LogWarning($"Item with ID '{savedItem.itemID}' not found in ItemDatabase.");
+                }
+            }
+
+            Debug.Log($"Total non-empty items: {inventoryData.GetCurrentInventoryState().Count}");
+
+            GetUpdateInventoryUI(inventoryData.GetCurrentInventoryState());
+
+        }
+
+        public void SaveData(ref GameData data)
+        {
+            data.inventoryDataList = new List<InventoryData>();
+
+            foreach (var itemEntry in inventoryData.GetCurrentInventoryState())
+            {
+                var inventoryItem = itemEntry.Value;
+                if (!inventoryItem.IsEmpty)
+                {
+                    data.inventoryDataList.Add(new InventoryData
+                    {
+                        itemID = inventoryItem.item.ID,
+                        quantity = inventoryItem.quantity
+                    });
+                }
+            }
         }
     }
 }

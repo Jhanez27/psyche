@@ -5,6 +5,7 @@ public class ApocalypticWorldData
 {
     public Vector2 worldPosition;
     public string sceneName;
+    public string sceneTransitionName;
     public bool hasBeenLoadedBefore;
     public ApocalypticWorldData()
     {
@@ -21,5 +22,9 @@ public class ApocalypticWorldData
     public void InitializeApocalypticWorldSceneData(string name)
     {
         this.sceneName = name;
+    }
+    public void InitializeApocalypticWorldSceneTransitionData(string name)
+    {
+        this.sceneTransitionName = name;
     }
 }

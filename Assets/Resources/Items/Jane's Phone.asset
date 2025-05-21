@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8d02d8ede4f7bb48b349b5c029a3085, type: 3}
   m_Name: Jane's Phone
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: jane_phone
   <IsStackable>k__BackingField: 0
   <MaxStackSize>k__BackingField: 1
   <Name>k__BackingField: My Phone
-  <Description>k__BackingField: My Main Medium for Watching Pornhub
+  <Description>k__BackingField: A small gift from mom. It's quite remarkable that
+    it remained in this state despite having it for 5 years.
   <Image>k__BackingField: {fileID: 21300000, guid: 30febe75dd068ff4dbe28f708456f783, type: 3}
   <ActionSFX>k__BackingField: {fileID: 8300000, guid: 8e76133ac2d40604b959da3f9e30a96f, type: 3}
