@@ -10,8 +10,7 @@ namespace Inventory
     {
         [SerializeField]
         private InventoryUIPage inventoryPage; // Reference to the inventory page UI
-        [SerializeField]
-        private InventorySO inventoryData; // Reference to the inventory data
+        public InventorySO inventoryData { get; private set; } // Reference to the inventory data
 
         public List<InventoryItem> initialItems = new List<InventoryItem>();
         public bool InventoryIsActive => inventoryPage.isActiveAndEnabled; // Property to check if the inventory is active
@@ -24,8 +23,8 @@ namespace Inventory
 
         private void Awake()
         {
-            PrepareUI();
             PrepareInventoryData();
+            PrepareUI();
         }
         private void OnEnable()
         {
@@ -47,7 +46,7 @@ namespace Inventory
         // Inventory Preparations
         private void PrepareInventoryData()
         {
-            inventoryData.Initialize(); // Initialize the inventory data
+            inventoryData = new InventorySO(); // Initialize the inventory data
             GamesEventManager.Instance.inventoryModelEvents.OnInventoryUpdated += GetUpdateInventoryUI;
             foreach (InventoryItem item in initialItems)
             {
@@ -81,7 +80,9 @@ namespace Inventory
         // InventoryUI Updates
         private void HandleDescriptionRequested(int itemIndex)
         {
+            Debug.Log("Descripton Requested at index " + itemIndex);
             InventoryItem inventoryItem = inventoryData.GetItemAt(itemIndex); // Get the item at the specified index
+
             if (!inventoryItem.IsEmpty)
             {
                 ItemSO item = inventoryItem.item; // Get the item scriptable object
@@ -89,6 +90,7 @@ namespace Inventory
             }
             else
             {
+                Debug.Log("Inventory Item is empty.");
                 inventoryPage.ResetSelection(); // Clears the Inventory Description if item is empty
                 return;
             }

@@ -5,8 +5,7 @@ using UnityEngine;
 
 namespace Inventory.Model
 {
-    [CreateAssetMenu(fileName = "InventorySO", menuName = "Scriptable Objects/InventorySO")]
-    public class InventorySO : ScriptableObject
+    public class InventorySO
     {
         [SerializeField]
         private List<InventoryItem> inventoryItems;
@@ -14,7 +13,7 @@ namespace Inventory.Model
         [field: SerializeField]
         public int Size { get; private set; } = 18; // Default inventory size
 
-        public void Initialize()
+        public InventorySO() 
         {
             inventoryItems = new List<InventoryItem>(Size); // Initthisialize the inventory items list with the specified size
             for (int i = 0; i < Size; i++)

@@ -1,73 +1,142 @@
+using Ink.Parsed;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
-public class TimelineManager : MonoBehaviour
+public class TimelineManager : MonoBehaviour, IDataPersistence
 {
+    [System.Serializable]
+    public class TimelineEntry
+    {
+        public string timelineID;
+        public TimelineAsset timelineAsset;
+        public bool playOnSceneEnter;
+    }
+
     [Header("Timeline Elements")]
-    [SerializeField] private PlayableDirector timeline; //Panel for displaying the timeline
+    [SerializeField] 
+    private PlayableDirector timeline; //Panel for displaying the timeline
+    [SerializeField]
+    private List<TimelineEntry> timelines = new();
+
+    private HashSet<string> playedTimelines = new HashSet<string>();
 
     public bool TimelineIsActive => (timeline != null) && (timeline.time < timeline.duration && timeline.state.Equals(PlayState.Paused));
 
+    private void Awake()
+    {
+    }
     private void OnEnable()
     {
-        GamesEventManager.Instance.timelineEvents.OnTimelineStarted += PlayTimeline;
+        GamesEventManager.Instance.timelineEvents.OnTimelineStartedByID += TryPlayTimelineByID;
+        GamesEventManager.Instance.timelineEvents.OnTimelineStartedOnEntrance += PlayOnSceneEnter;
+        GamesEventManager.Instance.timelineEvents.OnTimelineResumed += ResumeTimeline;
         GamesEventManager.Instance.timelineEvents.OnTimelinePaused += PauseTimeline;
         GamesEventManager.Instance.timelineEvents.OnTimelineFinished += FinishTimeline; //Subscribes to the timeline finished event
-        GamesEventManager.Instance.timelineEvents.OnTimelineChanged += ChangeTimeline;
     }
     private void OnDisable()
     {
-        GamesEventManager.Instance.timelineEvents.OnTimelineStarted -= PlayTimeline;
+        GamesEventManager.Instance.timelineEvents.OnTimelineStartedByID -= TryPlayTimelineByID;
+        GamesEventManager.Instance.timelineEvents.OnTimelineStartedOnEntrance -= PlayOnSceneEnter;
+        GamesEventManager.Instance.timelineEvents.OnTimelineResumed -= ResumeTimeline;
         GamesEventManager.Instance.timelineEvents.OnTimelinePaused -= PauseTimeline;
         GamesEventManager.Instance.timelineEvents.OnTimelineFinished -= FinishTimeline; //Unsubscribes from the timeline finished event
-        GamesEventManager.Instance.timelineEvents.OnTimelineChanged -= ChangeTimeline;
     }
 
     // Functions for Timeline Progression
-    private void PlayTimeline()
+    public void TryPlayTimelineByID(string id)
     {
-        if (timeline != null && !timeline.state.Equals(PlayState.Playing)) //Checks if the timeline is not already playing
+        TimelineEntry entry = timelines.Find(t => t.timelineID == id);
+        if (entry == null)
         {
-            if(timeline.time == 0) //Checks if the timeline is at the beginning
-            {
-                timeline.Play(); //Plays the timeline from the beginning
-            }
-            else
-            {
-                timeline.Resume(); //Resumes the timeline from the current time
-            }
+            Debug.LogWarning($"Timeline '{id}' is not found.");
+            return;
         }
 
-        GamesEventManager.Instance.playerEvents.MovementDisabled(); //Disables player movement
-        GamesEventManager.Instance.dialogueEvents.DisableNext(); //Disables the next button.
-        GamesEventManager.Instance.inventoryUIEvents.DisableInventory(); //Disables the inventory UI
-        GamesEventManager.Instance.questEvents.DisableInteract(); //Disables the quest log UI
-        Debug.Log("Movement, Next, Inventory, and Interact Disabled");
+        if(playedTimelines.Contains(id))
+        {
+            Debug.Log($"Timeline '{id}' has already been played.");
+            return;
+        }
+
+        if(timeline.playableAsset != entry.timelineAsset)
+            timeline.playableAsset = entry.timelineAsset;
+
+        DisableFeaturesDuringTimelinePlay();
+        timeline.Play();
+
+    }
+    public void PlayOnSceneEnter()
+    {
+        foreach (TimelineEntry entry in timelines)
+        {
+            if(entry.playOnSceneEnter)
+            {
+                TryPlayTimelineByID((string)entry.timelineID);
+                break;
+            }
+        }
+    }
+    private void ResumeTimeline()
+    {
+        timeline.Resume();
+        DisableFeaturesDuringTimelinePlay();
     }
     private void PauseTimeline()
     {
         if (timeline != null && timeline.state.Equals(PlayState.Playing)) //Checks if the timeline is playing
         {
             timeline.Pause(); //Pauses the timeline
-            GamesEventManager.Instance.dialogueEvents.EnableNext(); //Enables the next button
-            GamesEventManager.Instance.questEvents.EnableInteract(); //Enables the quest log UI
-            timeline.Evaluate(); //Evaluates the timeline to the current time
+            EnableFeaturesDuringTimelinePause();
+            timeline.Evaluate();
         }
     }
     private void FinishTimeline()
+    {
+        EnableFeaturesAfterTimelineFinish();
+
+        var currentTimeline = timelines.Find(t => t.timelineAsset == timeline.playableAsset);
+        playedTimelines.Add(currentTimeline.timelineID);
+    }
+
+    // Function for DIsabling and Enabling Features during Timeline
+    private void DisableFeaturesDuringTimelinePlay()
+    {
+        GamesEventManager.Instance.playerEvents.MovementDisabled(); //Disables player movement
+        GamesEventManager.Instance.dialogueEvents.DisableNext(); //Disables the next button.
+        GamesEventManager.Instance.inventoryUIEvents.DisableInventory(); //Disables the inventory UI
+        GamesEventManager.Instance.questEvents.DisableInteract(); //Disables the quest log UI
+    }
+    private void EnableFeaturesDuringTimelinePause()
+    {
+        GamesEventManager.Instance.dialogueEvents.EnableNext(); //Enables the next button
+        GamesEventManager.Instance.questEvents.EnableInteract(); //Enables the quest log UI
+    }
+    private void EnableFeaturesAfterTimelineFinish()
     {
         GamesEventManager.Instance.playerEvents.MovementEnabled(); //Enables player movement
         GamesEventManager.Instance.dialogueEvents.EnableNext(); //Enables the next button
         GamesEventManager.Instance.inventoryUIEvents.EnableInventory(); //Enables the inventory UI
         GamesEventManager.Instance.questEvents.EnableInteract(); //Enables the quest log UI
-
-        Debug.Log("Movement, Next, Inventory, and Interact Enabled");
-        Debug.Log("Active UI Type: " + ActiveUIManager.Instance.ActiveUIType); //Logs the active UI type
     }
 
-    // Function for Changing Timeline
-    private void ChangeTimeline(PlayableDirector newTimeline)
+    // Function for Data Persistence
+    public void LoadData(GameData gameData)
     {
-        timeline = newTimeline; //Changes the timeline to the new timeline
+        playedTimelines.Clear();
+        foreach (var entry in gameData.timelineData.timelineStates)
+        {
+            if (gameData.timelineData.HasTimelinePlayed(entry.timelineID))
+                playedTimelines.Add(entry.timelineID);
+        }
+    }
+
+    public void SaveData(ref GameData gameData)
+    {
+        foreach (string id in playedTimelines)
+        {
+            gameData.timelineData.SetTimelinePlayed(id);
+        }
     }
 }

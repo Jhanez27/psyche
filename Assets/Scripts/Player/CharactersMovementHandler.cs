@@ -38,7 +38,6 @@ namespace Characters.Handlers
 
         public void Move()
         {
-            Debug.Log("Moving!");
             rb.MovePosition(rb.position + Movement * (moveSpeed * Time.fixedDeltaTime));
         }
 

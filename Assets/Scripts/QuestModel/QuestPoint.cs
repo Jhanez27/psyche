@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor.VersionControl;
 using UnityEngine;
@@ -30,21 +31,38 @@ public class QuestPoint : MonoBehaviour
     {
         questID = questInfoForPoint.ID;
     }
-
+    private void Start()
+    {
+    }
     private void OnEnable()
     {
         GamesEventManager.Instance.questEvents.OnChangeQuestState += QuestStateChange;
         GamesEventManager.Instance.inputEvents.OnInteractPressed += InteractPressed;
         GamesEventManager.Instance.questEvents.OnInteractEnabled += EnableQuestInteract;
         GamesEventManager.Instance.questEvents.OnInteractDisabled += DisableQuestInteract;
+        GamesEventManager.Instance.questEvents.OnChangeDialogueKnotName += ChangeDialogueKnotName;
     }
-
     private void OnDisable()
     {
         GamesEventManager.Instance.questEvents.OnChangeQuestState -= QuestStateChange;
         GamesEventManager.Instance.inputEvents.OnInteractPressed -= InteractPressed;
         GamesEventManager.Instance.questEvents.OnInteractEnabled -= EnableQuestInteract;
         GamesEventManager.Instance.questEvents.OnInteractDisabled -= DisableQuestInteract;
+        GamesEventManager.Instance.questEvents.OnChangeDialogueKnotName -= ChangeDialogueKnotName;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            playerIsNear = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            playerIsNear = false;
+        }
     }
 
     private void QuestStateChange(Quest quest)
@@ -61,13 +79,10 @@ public class QuestPoint : MonoBehaviour
         {
             return; // If the dialogue is active, do not allow interaction
         }
-        Debug.Log("HI2");
         if (playerIsNear && context.Equals(InputEventContext.DEFAULT) && questInteractEnabled)
         {
-            Debug.Log("HI3");
             if (!dialogueKnotName.Equals(string.Empty))
             {
-                Debug.Log("HI4");
                 ActiveUIManager.Instance.OpenUI(ActiveUIType.Dialogue); // Open the dialogue UI
                 GamesEventManager.Instance.dialogueEvents.EnterDialogue(dialogueKnotName, DialogueSource.GAMEPLAY);
             }
@@ -83,24 +98,7 @@ public class QuestPoint : MonoBehaviour
                 }
             }
 
-            Debug.Log("Interacted with " + tag);
             GamesEventManager.Instance.questEvents.InteractInCollision(this.gameObject.tag); // Pass the tag for Collision
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.CompareTag("Player"))
-        {
-            playerIsNear = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if(collision.CompareTag("Player"))
-        {
-            playerIsNear = false;
         }
     }
 
@@ -111,5 +109,13 @@ public class QuestPoint : MonoBehaviour
     private void DisableQuestInteract()
     {
         questInteractEnabled = false;
+    }
+
+    private void ChangeDialogueKnotName(string npcTag, string knotName)
+    {
+        if (this.gameObject.CompareTag(npcTag))
+        {
+            this.dialogueKnotName = knotName;
+        }
     }
 }

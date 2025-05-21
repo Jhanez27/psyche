@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 //using Cinemachine;
 using Unity.Cinemachine;
+using Characters;
 
 public class CameraController : Singleton<CameraController>
 {
@@ -11,7 +12,15 @@ public class CameraController : Singleton<CameraController>
     public void SetPlayerCameraFollow()
     {
         cinemachineVirtualCamera = Object.FindFirstObjectByType<CinemachineCamera>();
-        cinemachineVirtualCamera.Follow = PlayerController.Instance.transform;
+        if (PlayerController.Instance == null)
+        {
+            cinemachineVirtualCamera.Follow = Object.FindFirstObjectByType<CharactersController>().transform;
+            Debug.Log("Characters COntroller Follow");
+        }
+        else
+        {
+            cinemachineVirtualCamera.Follow = PlayerController.Instance.transform;
+        }
     }
 
     private void OnDestroy()
