@@ -2,10 +2,11 @@ using Characters.Handlers;
 using Inventory;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 namespace Characters
 {
-    public class CharactersController : MonoBehaviour
+    public class CharactersController : MonoBehaviour, IDataPersistence
     {
         private CharactersMovementHandler movementHandler;
         private CharactersAnimationHandler animationHandler;
@@ -77,6 +78,20 @@ namespace Characters
         {
             MovementEnabled = false;
             movementHandler.SetMovement(Vector2.zero);
+        }
+
+        public void LoadData(GameData gameData)
+        {
+            if (gameData.janeWorldData.hasBeenLoadedBefore)
+            {
+                this.gameObject.transform.position = gameData.janeWorldData.worldPosition;
+            }
+        }
+
+        public void SaveData(ref GameData gameData)
+        {
+            gameData.janeWorldData.InitialiszeJaneWorldPositionData(this.gameObject.transform.position);
+            gameData.janeWorldData.hasBeenLoadedBefore = true; 
         }
     }
 }

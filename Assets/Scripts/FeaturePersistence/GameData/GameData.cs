@@ -4,6 +4,8 @@ using UnityEngine;
 [System.Serializable]
 public class GameData
 {
+    public ApocalypticWorldData apocalypticWorldData;
+    public JaneWorldData janeWorldData = new JaneWorldData();
     public TimelineData timelineData = new TimelineData();
     public List<QuestDataEntry> questDataList = new List<QuestDataEntry>();
 
