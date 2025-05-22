@@ -10,7 +10,7 @@ public class AreaEntrance : MonoBehaviour
     //Additional Code
     [SerializeField] private CharactersController playerController;
     [SerializeField] private TimelineManager timelineManager;
-    [SerializeField] private bool playTimelineOnEntrance = true;
+    [SerializeField] private bool playTimelineOnEntrance = false;
 
     private void Awake()
     {

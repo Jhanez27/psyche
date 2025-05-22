@@ -24,9 +24,8 @@ Pssst. Jane over here! #Speaker: Christopher #Layout: Right
 
 === NoelleExtraDialogue ===
 { JaneIsSeated == false:
-    Rigen was a girl in the Maybog doing alright, but she became a princess in Gabas.  #Speaker: Noelle #Layout: Left
-    Now she's gotta figure out howto do it right, so much to fuck and see  #Speaker: Noelle #Layout: Left
-    Up the DCST with my family, in a store that's just for honesty.  #Speaker: Noelle #Layout: Left
+    I honestly don't know if I cna pass this subject anymore.  #Speaker: Noelle #Layout: Left
+    My guardian angel has been very weak lately.  #Speaker: Noelle #Layout: Left
 }
 -> DONE
 

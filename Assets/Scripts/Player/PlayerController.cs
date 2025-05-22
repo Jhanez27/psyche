@@ -34,18 +34,22 @@ public class PlayerController : Singleton<PlayerController>
 
     private void Start()
     {
-        playerControls.Player.Dash.performed += _ => Dash();
         startingMoveSpeed = moveSpeed;
     }
 
     private void OnEnable()
     {
         playerControls.Enable();
+        playerControls.Player.Dash.performed += OnDashPerformed;
     }
 
-    private void Onsable()
+    private void OnDisable()
     {
-        playerControls.Disable();
+        if (playerControls != null)
+        {
+            playerControls.Player.Dash.performed -= OnDashPerformed;
+        }
+
     }
 
     private void Update()
@@ -60,6 +64,11 @@ public class PlayerController : Singleton<PlayerController>
         Move();
     }
 
+    private void OnDashPerformed(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            Dash();
+    }
     private void PlayerInput()
     {
         movement = playerControls.Player.Move.ReadValue<Vector2>();
