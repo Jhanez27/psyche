@@ -978,11 +978,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5703819302894526008, guid: 311d7ff15529a9b46a84df911eceea06, type: 3}
   m_PrefabInstance: {fileID: 235492674}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &235492676 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2294310025550291196, guid: 311d7ff15529a9b46a84df911eceea06, type: 3}
-  m_PrefabInstance: {fileID: 235492674}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &244649230
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1247,7 +1242,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &302456327
 Transform:
   m_ObjectHideFlags: 0
@@ -1835,8 +1830,6 @@ PlayableDirector:
     value: {fileID: 799586884}
   - key: {fileID: 4666075509374171494, guid: 6c895c986b5c5414b97e02201029ffd1, type: 2}
     value: {fileID: 393545726}
-  - key: {fileID: 8553408896706247733, guid: 6c895c986b5c5414b97e02201029ffd1, type: 2}
-    value: {fileID: 235492676}
   - key: {fileID: -1603390768378060435, guid: 6c895c986b5c5414b97e02201029ffd1, type: 2}
     value: {fileID: 1517770913}
   - key: {fileID: 3638717226321429438, guid: 6c895c986b5c5414b97e02201029ffd1, type: 2}
@@ -1847,8 +1840,6 @@ PlayableDirector:
     value: {fileID: 446018539}
   - key: {fileID: 0}
     value: {fileID: 0}
-  - key: {fileID: -8770428911857795042, guid: 6c895c986b5c5414b97e02201029ffd1, type: 2}
-    value: {fileID: 551935061}
   - key: {fileID: 9132815973688744258, guid: 6c895c986b5c5414b97e02201029ffd1, type: 2}
     value: {fileID: 42479729}
   - key: {fileID: -4829032647755746554, guid: 6c895c986b5c5414b97e02201029ffd1, type: 2}
@@ -1857,6 +1848,8 @@ PlayableDirector:
     value: {fileID: 903991538}
   - key: {fileID: -7203190850444858839, guid: 90f24ee9702aba540b3e36d470282af1, type: 2}
     value: {fileID: 551935061}
+  - key: {fileID: 1063975102494751036, guid: 6c895c986b5c5414b97e02201029ffd1, type: 2}
+    value: {fileID: 551935059}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &384153499
@@ -1907,9 +1900,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1626140507}
     - target: {fileID: 3696842903028127901, guid: 311d7ff15529a9b46a84df911eceea06, type: 3}
+      propertyPath: knotNameBasis
+      value: TalkedToChristopherBeforeFallingInLine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3696842903028127901, guid: 311d7ff15529a9b46a84df911eceea06, type: 3}
       propertyPath: questIconRenderer
       value: 
       objectReference: {fileID: 393545724}
+    - target: {fileID: 3696842903028127901, guid: 311d7ff15529a9b46a84df911eceea06, type: 3}
+      propertyPath: inkVariableNameBasis
+      value: ClaimedPaper
+      objectReference: {fileID: 0}
     - target: {fileID: 3696842903028127901, guid: 311d7ff15529a9b46a84df911eceea06, type: 3}
       propertyPath: hasShowSpriteVariableBasis
       value: 0
@@ -2636,8 +2637,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 446018538}
     - target: {fileID: 3696842903028127901, guid: 311d7ff15529a9b46a84df911eceea06, type: 3}
+      propertyPath: knotNameBasis
+      value: ChristopherBeforeGoingInLine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3696842903028127901, guid: 311d7ff15529a9b46a84df911eceea06, type: 3}
       propertyPath: inkVariableNameBasis
-      value: JaneIsSeated
+      value: TalkedToChristopherBeforeFallingInLine
       objectReference: {fileID: 0}
     - target: {fileID: 3696842903028127901, guid: 311d7ff15529a9b46a84df911eceea06, type: 3}
       propertyPath: hasShowSpriteVariableBasis
@@ -9910,7 +9915,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 400, y: -148.08002}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 400, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &774736810
 MonoBehaviour:

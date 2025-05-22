@@ -11,6 +11,7 @@ public class GameData
     public TimelineData timelineData = new TimelineData();
     public List<QuestDataEntry> questDataList = new List<QuestDataEntry>();
     public List<InventoryData> inventoryDataList = new List<InventoryData>();
+    public List<DialogueData> dialogueVariableData = new List<DialogueData>();
 
     public override string ToString()
     {

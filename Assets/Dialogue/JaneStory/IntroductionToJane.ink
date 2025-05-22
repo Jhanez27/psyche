@@ -111,7 +111,6 @@ Don’t forget to submit your attendance slips at the table in front. Please for
 
 === ChristopherBeforeGoingInLine ===
 { HeinrichIntroduced == true:
-    ~ TalkedToChristopherBeforeFallingInLine = true
     Guys, I think I’m gonna cry. I really feel like I failed the exercise. #Speaker: Jane #Layout: Left
     Jane, trust me. There’s only one way to find out~ #Speaker: Pipes #Layout: Right
     Pipes, the girl is about to cry! Don’t make it worse. #Speaker: Christopher #Layout: Right
@@ -120,17 +119,18 @@ Don’t forget to submit your attendance slips at the table in front. Please for
     Hey, hey. I’m sorry. What matters is that you tried your best, and if things comes to worse, which I hope things wont, we still have the final term exam. #Speaker: Pipes #Layout: Right
     Yeah, we can still pass this horrid subject. Let’s fall in line and meet our inevitable fate. I wanna get out of this room as quickly as possible. #Speaker: Christopher #Layout: Right
     I agree. Let's get outta here! #Speaker: Pipes #Layout: Right
+    ~ TalkedToChristopherBeforeFallingInLine = true
 }
 -> DONE
 
 === RetrievedPaper ===
 { TalkedToChristopherBeforeFallingInLine == true && ClaimedPaper == false:
+    ~ ClaimedPaper = true
     ... #Speaker: Heinrich #Layout: Right
     Jane... #Speaker: Heinrich #Layout: Right
     Yes, sir? #Speaker: Jane #Layout: Left
     Hmmm... #Speaker: Heinrich #Layout: Right
     Disappointed, but not surprised... Claim your paper. #Speaker: Heinrich #Layout: Right
     Yes, sir. #Speaker: Jane #Layout: Left
-    ~ ClaimedPaper = true
 }
 -> DONE

@@ -1,6 +1,7 @@
 using Ink.Runtime;
 using NUnit.Framework.Constraints;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class QuestIcon : MonoBehaviour
@@ -92,16 +93,23 @@ public class QuestIcon : MonoBehaviour
     }
     public void ShowQuestIconByVariableBasis(string variableBasis, Ink.Runtime.Object state)
     {
-        if (state is BoolValue boolValue)
+        Debug.Log($"{variableBasis} and {inkVariableNameBasis}");
+        if (variableBasis.Equals(this.inkVariableNameBasis))
         {
-            if (boolValue)
+            Debug.Log($"{variableBasis} and {inkVariableNameBasis}");
+            if (state is BoolValue boolValue)
             {
-                ShowDialogueIcon();
+                Debug.Log(boolValue.value); // This is the actual C# bool
+                if (boolValue.value)
+                {
+                    ShowDialogueIcon();
+                }
             }
         }
     }
     private void ClearIconOnDialogueEntered(string knotName, DialogueSource source)
     {
+        Debug.Log(knotName);
         if(knotName.Equals(knotNameBasis))
         {
             ClearQuestIcon();
