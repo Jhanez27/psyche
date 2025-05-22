@@ -6,15 +6,17 @@ using UnityEngine.UIElements;
 
 namespace Characters
 {
-    public class CharactersController : MonoBehaviour, IDataPersistence
+    public class CharactersController : Singleton<CharactersController>, IDataPersistence
     {
         private CharactersMovementHandler movementHandler;
         private CharactersAnimationHandler animationHandler;
 
         private bool MovementEnabled = true;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             movementHandler = GetComponent<CharactersMovementHandler>();
             animationHandler = GetComponent<CharactersAnimationHandler>();
         }
@@ -29,11 +31,14 @@ namespace Characters
 
         private void OnDisable()
         {
+            if (movementHandler == null || GamesEventManager.Instance == null) return;
+
             GamesEventManager.Instance.playerEvents.OnMovementEnabled -= EnableMovement;
             GamesEventManager.Instance.playerEvents.OnMovementDisabled -= DisableMovement;
             GamesEventManager.Instance.inputEvents.OnDashPressed -= movementHandler.DashPressed;
             GamesEventManager.Instance.inputEvents.OnMovePressed -= movementHandler.SetMovement;
         }
+
 
         private void Update()
         {
