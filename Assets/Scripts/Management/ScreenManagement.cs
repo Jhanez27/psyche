@@ -8,9 +8,15 @@ public class SceneManagement : Singleton<SceneManagement>, IDataPersistence
     public string SceneTransitionName { get; private set; }
     public bool IsInApocalytpicWorld { get; private set; }
 
+    protected override void Awake()
+    {
+        base.Awake();
+        Debug.Log($"Transition Name: {SceneTransitionName}");
+
+    }
     public void LoadData(GameData data)
     {
-
+        Debug.Log("Krazy Load Data from Scene");
         if (IsInApocalytpicWorld)
         {
             SceneTransitionName = data.apocalypticWorldData.sceneTransitionName;
@@ -38,6 +44,7 @@ public class SceneManagement : Singleton<SceneManagement>, IDataPersistence
     public void SetTransitionName(string sceneTransitionName)
     {
         this.SceneTransitionName = sceneTransitionName;
+        Debug.Log($"Transition Name: {sceneTransitionName}");
     }
 
     public void SetIsInApocalypticWorld(bool isInApocalypticWorld)

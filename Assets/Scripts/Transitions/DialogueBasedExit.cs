@@ -56,6 +56,7 @@ public class DialogueBasedExit : MonoBehaviour
             yield return null;
         }
 
+        DataPersistenceManager.Instance.SaveGame();
         SceneManager.LoadScene(sceneToLoad);
     }
 
