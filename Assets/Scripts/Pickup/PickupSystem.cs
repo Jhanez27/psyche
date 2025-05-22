@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PickupSystem : MonoBehaviour
 {
-    private InventorySO inventory; // Reference to the player's inventory
+    private Inventory.Model.Inventory inventory; // Reference to the player's inventory
 
     private void Start()
     {
