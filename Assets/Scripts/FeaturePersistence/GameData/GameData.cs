@@ -1,13 +1,16 @@
 using System.Collections.Generic;
+using UnityEditor.Build;
 using UnityEngine;
 
 [System.Serializable]
 public class GameData
 {
+    public bool isOnApocalypticWorld = true;
     public ApocalypticWorldData apocalypticWorldData;
     public JaneWorldData janeWorldData = new JaneWorldData();
     public TimelineData timelineData = new TimelineData();
     public List<QuestDataEntry> questDataList = new List<QuestDataEntry>();
+    public List<InventoryData> inventoryDataList = new List<InventoryData>();
 
     public override string ToString()
     {

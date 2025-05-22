@@ -20,8 +20,6 @@ namespace Inventory.UI
 
         public void ResetDescription()
         {
-            Debug.Log("Item Image is null: " + (itemImage == null).ToString());                   // could be false
-            Debug.Log("Item Image Game Object is null: " + (itemImage.gameObject == null).ToString());        // true if destroyed
             itemImage.gameObject.SetActive(false);
             itemName.text = string.Empty;
             itemDescription.text = string.Empty;
