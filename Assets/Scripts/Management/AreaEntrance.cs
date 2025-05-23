@@ -43,8 +43,10 @@ public class AreaEntrance : MonoBehaviour
                 UIFade.Instance.FadeToClear();
             }
             if (timelineManager == null) return;
+            Debug.Log($"Timeline Enabled: {timelineManager == null} and {playTimelineOnEntrance}");
             if (playTimelineOnEntrance)
             {
+                Debug.Log($"Playing timeline {timelineManager.name}");
                 timelineManager.PlayOnSceneEnter();
             }
         }
