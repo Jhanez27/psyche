@@ -42,7 +42,7 @@ public class AreaEntrance : MonoBehaviour
                 CameraController.Instance.SetPlayerCameraFollow();
                 UIFade.Instance.FadeToClear();
             }
-
+            if (timelineManager == null) return;
             if (playTimelineOnEntrance)
             {
                 timelineManager.PlayOnSceneEnter();
