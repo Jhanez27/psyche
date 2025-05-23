@@ -1,5 +1,7 @@
 using Ink.Runtime;
 using NUnit.Framework.Constraints;
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class QuestIcon : MonoBehaviour
@@ -25,9 +27,9 @@ public class QuestIcon : MonoBehaviour
 
     [Header("Icon Configuration")]
     [SerializeField]
-    private bool hasShowSpriteVariableBasis = true;
-    [SerializeField]
     private string inkVariableNameBasis = string.Empty;
+    [SerializeField]
+    private string knotNameBasis = string.Empty;
 
 
     private void Awake()
@@ -36,18 +38,20 @@ public class QuestIcon : MonoBehaviour
     }
     private void Start()
     {
-        if (!hasShowSpriteVariableBasis)
+        if (string.IsNullOrEmpty(inkVariableNameBasis))
         {
             ClearQuestIcon();
         }
     }
     private void OnEnable()
     {
-        GamesEventManager.Instance.dialogueEvents.OnInkVariableChanged += ClearQuestIconByVariableBasis;
+        GamesEventManager.Instance.dialogueEvents.OnInkVariableChanged += ShowQuestIconByVariableBasis;
+        GamesEventManager.Instance.dialogueEvents.OnDialogueEntered += ClearIconOnDialogueEntered;
     }
     private void OnDisable()
     {
-        GamesEventManager.Instance.dialogueEvents.OnInkVariableChanged -= ClearQuestIconByVariableBasis;
+        GamesEventManager.Instance.dialogueEvents.OnInkVariableChanged -= ShowQuestIconByVariableBasis;
+        GamesEventManager.Instance.dialogueEvents.OnDialogueEntered -= ClearIconOnDialogueEntered;
     }
 
     //Quest Icon Display
@@ -87,19 +91,37 @@ public class QuestIcon : MonoBehaviour
     {
         questIconRenderer.sprite = exclamationEmote;
     }
-    public void ClearQuestIconByVariableBasis(string variableBasis, Ink.Runtime.Object state)
+    public void ShowQuestIconByVariableBasis(string variableBasis, Ink.Runtime.Object state)
     {
-        if (variableBasis != inkVariableNameBasis)
+        Debug.Log($"{variableBasis} and {inkVariableNameBasis}");
+        if (variableBasis.Equals(this.inkVariableNameBasis))
         {
-            return;
-        }
-
-        if (state is BoolValue boolValue)
-        {
-            if (boolValue)
+            Debug.Log($"{variableBasis} and {inkVariableNameBasis}");
+            if (state is BoolValue boolValue)
             {
-                ClearQuestIcon();
+                Debug.Log(boolValue.value); // This is the actual C# bool
+                if (boolValue.value)
+                {
+                    ShowDialogueIcon();
+                }
             }
         }
+    }
+    private void ClearIconOnDialogueEntered(string knotName, DialogueSource source)
+    {
+        Debug.Log(knotName);
+        if(knotName.Equals(knotNameBasis))
+        {
+            ClearQuestIcon();
+        }
+    }
+
+    public void SetIconActive()
+    {
+        this.questIconRenderer.enabled = true;
+    }    
+    public void SetIconInactive()
+    {
+        this.questIconRenderer.enabled = false;
     }
 }

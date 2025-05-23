@@ -18,21 +18,31 @@ public class AreaEntrance : MonoBehaviour
     }
     private void Start()
     {
+        Debug.Log("Area Entrancce Start");
         if (transitionName == SceneManagement.Instance.SceneTransitionName)
         {
+
+            Debug.Log("Right Scene");
             if (playerController != null)
             {
+
+                Debug.Log("CharactersController Found!");
                 playerController.transform.position = this.transform.position;
+
+                Debug.Log($"Position at {transform.position.ToString()}");
                 CameraController.Instance.SetPlayerCameraFollow();
+                Debug.Log("CameraController Found!");
                 UIFade.Instance.FadeToClear();
+
             }
             else
             {
+                Debug.Log("PlayerController Found!");
                 PlayerController.Instance.transform.position = this.transform.position; // Original Code
                 CameraController.Instance.SetPlayerCameraFollow();
                 UIFade.Instance.FadeToClear();
             }
-
+            if (timelineManager == null) return;
             if (playTimelineOnEntrance)
             {
                 timelineManager.PlayOnSceneEnter();

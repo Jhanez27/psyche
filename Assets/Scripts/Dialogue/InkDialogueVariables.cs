@@ -4,7 +4,7 @@ using Ink.Runtime;
 
 public class InkDialogueVariables
 {
-    private Dictionary<string, Ink.Runtime.Object> variables;
+    public Dictionary<string, Ink.Runtime.Object> variables;
 
     public InkDialogueVariables(Story story)
     {

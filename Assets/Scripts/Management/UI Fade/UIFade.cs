@@ -24,6 +24,7 @@ public class UIFade : Singleton<UIFade>
 
     public void FadeToClear()
     {
+        Debug.Log("Fade to CLear active");
         if (fadeRoutine != null)
         {
             StopCoroutine(fadeRoutine);

@@ -1,16 +1,9 @@
 using UnityEngine;
 
-public class DialogueData : MonoBehaviour
+[System.Serializable]
+public class DialogueData
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public string name;
+    public string type;
+    public string value;
 }
