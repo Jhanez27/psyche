@@ -27,7 +27,7 @@ public class AreaExit : MonoBehaviour
             waitToLoadTime -= Time.deltaTime;
             yield return null;
         }
-
+        DataPersistenceManager.Instance.SaveGame();
         SceneManager.LoadScene(sceneToLoad);
     }
 }
