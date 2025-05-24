@@ -3600,7 +3600,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cceb371fd6273be419f41771b1bcb78e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileName: RekindleSaveFile
+  fileName: savefile
 --- !u!4 &544927040
 Transform:
   m_ObjectHideFlags: 0
