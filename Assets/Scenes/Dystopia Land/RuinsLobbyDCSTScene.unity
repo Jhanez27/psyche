@@ -25371,7 +25371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d5275a1d65411b4f9199783174c49b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: StartingScene
+  sceneToLoad: bruteForceScsene
   sceneTransitionName: 
   turnOnObject: {fileID: 674706005}
 --- !u!4 &1207014004
@@ -25487,6 +25487,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionName: ToDCSTstairs
   playerController: {fileID: 0}
+  timelineManager: {fileID: 0}
+  playTimelineOnEntrance: 0
 --- !u!1 &1314123329
 GameObject:
   m_ObjectHideFlags: 0
@@ -38464,6 +38466,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionName: toDCSTLobbyRuins
   playerController: {fileID: 0}
+  timelineManager: {fileID: 0}
+  playTimelineOnEntrance: 0
 --- !u!114 &4086354517631335902
 MonoBehaviour:
   m_ObjectHideFlags: 0

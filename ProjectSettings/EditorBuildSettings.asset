@@ -48,6 +48,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Jane's Story/HeinrichIntroductionClass.unity
     guid: fd70601db63eb7943994b762ac6ee37a
   - enabled: 1
+    path: Assets/Scenes/Jane's Story/bruteForceScsene.unity
+    guid: b34280310a5f8bf4e96dd2c27f06dd8b
+  - enabled: 1
     path: Assets/Scenes/Jane's Story/StartingScene.unity
     guid: 706fec490aabc9b4e8c63bc1d8f04fb8
   - enabled: 1
