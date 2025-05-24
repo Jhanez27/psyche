@@ -4,56 +4,79 @@ using System.IO;
 
 public class FileDataHandler
 {
-    public GameData LoadGameData(GameData gameData, string dataFileName)
-    {
-        string fullPath = Path.Combine(Application.persistentDataPath, dataFileName);
-        GameData loadedData = null;
-        if (File.Exists(fullPath))
-        {
-            try
-            {
-                string dataToLoad = "";
-                using (FileStream stream = new FileStream(fullPath, FileMode.Open))
-                {
-                    using (StreamReader reader = new StreamReader(stream))
-                    {
-                        dataToLoad = reader.ReadToEnd();
-                    }
-                }
 
-                loadedData = JsonUtility.FromJson<GameData>(dataToLoad);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogException(ex);
-            }
-        }
-        return loadedData;
-    }
-    public void SaveGameData(GameData gameData, string dataFileName)
+    public GameData LoadGameData(GameData gameData, string dataFileName)
+{
+    string fullPath = Path.Combine(Application.persistentDataPath, dataFileName);
+    GameData loadedData = null;
+
+    try
     {
-        string fullPath = Path.Combine(Application.persistentDataPath,dataFileName);
+        if (SupabaseDownloader.Instance == null)
+        {
+        new GameObject("SupabaseDownloader").AddComponent<SupabaseDownloader>();
+        }
+
+        string downloadedJson = SupabaseDownloader.Instance.DownloadJSONSync(dataFileName);
+
+        if (!string.IsNullOrEmpty(downloadedJson))
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+            File.WriteAllText(fullPath, downloadedJson);
+        }
+        else
+        {
+            Debug.LogWarning("Downloaded JSON is empty or null, falling back to local file if exists.");
+        }
+    }
+    catch (Exception ex)
+    {
+        Debug.LogException(ex);
+        Debug.LogWarning("Failed to download from Supabase, will attempt to load local save file.");
+    }
+
+    if (File.Exists(fullPath))
+    {
         try
         {
-            // Create Directory if it does not exist
-            Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
-
-            // Serialize the C# game data object into JSON
-            string jsonGameData = JsonUtility.ToJson(gameData, true);
-
-            // Write the serialized data to the directory
-            using (FileStream stream = new FileStream(fullPath, FileMode.Create))
-            {
-                using (StreamWriter writer = new StreamWriter(stream))
-                {
-                    writer.Write(jsonGameData);
-                }
-            }
+            string dataToLoad = File.ReadAllText(fullPath);
+            loadedData = JsonUtility.FromJson<GameData>(dataToLoad);
         }
         catch (Exception ex)
         {
             Debug.LogException(ex);
         }
-        
     }
+    else
+    {
+        Debug.LogWarning($"Save file not found at path: {fullPath}");
+    }
+
+    return loadedData;
+}
+    public void SaveGameData(GameData gameData, string dataFileName)
+{
+    string fullPath = Path.Combine(Application.persistentDataPath, dataFileName);
+
+    try
+    {
+        Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+
+        string jsonGameData = JsonUtility.ToJson(gameData, true);
+
+        File.WriteAllText(fullPath, jsonGameData); // Save locally first
+
+        // Ensure SupabaseUploader exists
+        if (SupabaseUploader.Instance == null)
+        {
+            new GameObject("SupabaseUploader").AddComponent<SupabaseUploader>();
+        }
+        SupabaseUploader.Instance.UploadJSON(jsonGameData, dataFileName);
+    }
+    catch (Exception ex)
+    {
+        Debug.LogException(ex);
+    }
+}
+
 }
