@@ -60,11 +60,15 @@ public class PlayStoryScript : MonoBehaviour
 
     private IEnumerator LoadSceneRoutine()
     {
+        waitToLoadTime = 1f; // Reset wait time
+
         while (waitToLoadTime >= 0)
         {
             waitToLoadTime -= Time.deltaTime;
             yield return null;
         }
+
+        Debug.Log($"Setting transition name to: {sceneTransitionName}");
 
         SceneManager.LoadScene(sceneToLoad);
     }

@@ -59,7 +59,7 @@ public class SupabaseDownloader : MonoBehaviour
             }
             else
             {
-                Debug.LogError($"SupabaseDownloader: Failed to download {fileName}: {request.error}");
+                Debug.LogWarning($"SupabaseDownloader: Failed to download {fileName}: {request.error}");
             }
         }
 

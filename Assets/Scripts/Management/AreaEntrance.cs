@@ -11,6 +11,8 @@ public class AreaEntrance : MonoBehaviour
     [SerializeField] private CharactersController playerController;
     [SerializeField] private TimelineManager timelineManager;
     [SerializeField] private bool playTimelineOnEntrance = false;
+    [SerializeField]
+    private bool makeTransistionConsistent = false; // This is not used in the original code, but added for consistency
 
     private void Awake()
     {
@@ -18,37 +20,44 @@ public class AreaEntrance : MonoBehaviour
     }
     private void Start()
     {
-        Debug.Log("Area Entrancce Start");
-        if (transitionName == SceneManagement.Instance.SceneTransitionName)
+        Debug.Log($"Last Load Type at Area Entrance: {SceneManagement.Instance.LastLoadType.ToString()}");
+        if (SceneManagement.Instance.LastLoadType == LoadType.LoadGame)
         {
-
+            //Player position declaration is already done in the PlayerController and CharactersController classes
+        }
+        else if (transitionName == SceneManagement.Instance.SceneTransitionName)
+        {
             Debug.Log("Right Scene");
+
+            //Start happens after Awake, so we can safely assume the playerController and PlayerController.Instance is initialized and replace its position
             if (playerController != null)
             {
-
-                Debug.Log("CharactersController Found!");
                 playerController.transform.position = this.transform.position;
-
-                Debug.Log($"Position at {transform.position.ToString()}");
-                CameraController.Instance.SetPlayerCameraFollow();
-                Debug.Log("CameraController Found!");
-                UIFade.Instance.FadeToClear();
-
             }
             else
             {
-                Debug.Log("PlayerController Found!");
                 PlayerController.Instance.transform.position = this.transform.position; // Original Code
-                CameraController.Instance.SetPlayerCameraFollow();
-                UIFade.Instance.FadeToClear();
-            }
-            if (timelineManager == null) return;
-            Debug.Log($"Timeline Enabled: {timelineManager == null} and {playTimelineOnEntrance}");
-            if (playTimelineOnEntrance)
-            {
-                Debug.Log($"Playing timeline {timelineManager.name}");
-                timelineManager.PlayOnSceneEnter();
             }
         }
+
+        UIFade.Instance.FadeToClear();
+        CameraController.Instance.SetPlayerCameraFollow();
+
+        Debug.Log($"Timeline is Null: {(timelineManager == null).ToString()}");
+
+        if (timelineManager == null)
+        {
+            timelineManager = FindObjectOfType<TimelineManager>();
+        }
+
+        Debug.Log($"Play Timeline on Entrance: {playTimelineOnEntrance}");
+
+        if (playTimelineOnEntrance && timelineManager != null)
+        {
+            Debug.Log($"Playing timeline {timelineManager.name}");
+            timelineManager.PlayOnSceneEnter();
+        }
+
+        SceneManagement.Instance.SetLastLoadType(LoadType.NewGame);
     }
 }

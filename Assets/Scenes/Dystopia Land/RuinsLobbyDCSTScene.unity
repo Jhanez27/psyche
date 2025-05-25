@@ -23111,6 +23111,68 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &690226114
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 690226115}
+  - component: {fileID: 690226116}
+  m_Layer: 0
+  m_Name: DataPersistenceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &690226115
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690226114}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 39.559746, y: 3.2455463, z: 7.8261814}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8762968959173240277}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &690226116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690226114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cceb371fd6273be419f41771b1bcb78e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: savefile.json
+  gameData:
+    isOnApocalypticWorld: 1
+    apocalypticWorldData:
+      worldPosition: {x: 0, y: 0}
+      sceneName: 
+      sceneTransitionName: 
+      hasBeenLoadedBefore: 0
+    janeWorldData:
+      worldPosition: {x: 0, y: 0}
+      sceneName: 
+      sceneTransitionName: 
+      hasBeenLoadedBefore: 0
+    timelineData:
+      timelineStates: []
+    questDataList: []
+    inventoryDataList: []
+    dialogueVariableData: []
 --- !u!1 &718250928
 GameObject:
   m_ObjectHideFlags: 0
@@ -25487,6 +25549,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionName: ToDCSTstairs
   playerController: {fileID: 0}
+  timelineManager: {fileID: 0}
+  playTimelineOnEntrance: 0
+  makeTransistionConsistent: 0
 --- !u!1 &1314123329
 GameObject:
   m_ObjectHideFlags: 0
@@ -38464,6 +38529,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionName: toDCSTLobbyRuins
   playerController: {fileID: 0}
+  timelineManager: {fileID: 0}
+  playTimelineOnEntrance: 0
+  makeTransistionConsistent: 0
 --- !u!114 &4086354517631335902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39524,6 +39592,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 690226115}
   - {fileID: 8056905698490556312}
   - {fileID: 7343440782775685731}
   m_Father: {fileID: 0}

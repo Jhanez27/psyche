@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 using UnityEngine;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class DataPersistenceManager : Singleton<DataPersistenceManager>
 {
@@ -11,7 +13,7 @@ public class DataPersistenceManager : Singleton<DataPersistenceManager>
     [SerializeField]
     private string fileName;
 
-    private GameData gameData;
+    public GameData gameData;
     private List<IDataPersistence> dataPersistenceList;
     private FileDataHandler fileHandler;
 
@@ -19,8 +21,11 @@ public class DataPersistenceManager : Singleton<DataPersistenceManager>
     {
         base.Awake();
 
-        this.dataPersistenceList = FindAllDataPersistenceObjects();
         fileHandler = new FileDataHandler();
+    }
+    private void Start()
+    {
+        // Load the game data when the game starts
         LoadGame();
     }
     private void OnApplicationQuit()
@@ -48,7 +53,9 @@ public class DataPersistenceManager : Singleton<DataPersistenceManager>
             NewGame();
         }
 
-            // push the loaded data to scripts that use the data
+        this.dataPersistenceList = FindAllDataPersistenceObjects();
+
+        // push the loaded data to scripts that use the data
 
         foreach (IDataPersistence dataPersistenceObj in this.dataPersistenceList)
         {
@@ -57,16 +64,18 @@ public class DataPersistenceManager : Singleton<DataPersistenceManager>
     }
     public void SaveGame()
     {
+
+        this.dataPersistenceList = FindAllDataPersistenceObjects();
+
         //pass the data to other scripts so they can update it
         foreach (IDataPersistence dataPersistenceObj in this.dataPersistenceList)
         {
+            Debug.Log($"Saving data from {dataPersistenceObj.GetType().Name}");
             dataPersistenceObj.SaveData(ref gameData);
         }
 
         // Save the data to a file using the data handler
         fileHandler.SaveGameData(gameData, fileName);
-
-        print(gameData);
     }
 
     // Functions for Referencing Persisting Data
@@ -75,5 +84,20 @@ public class DataPersistenceManager : Singleton<DataPersistenceManager>
         IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IDataPersistence>();
 
         return new List<IDataPersistence>(dataPersistenceObjects);
+    }
+    public string GetSceneName()
+    {
+        return (gameData.isOnApocalypticWorld) ? gameData.apocalypticWorldData.sceneName : gameData.janeWorldData.sceneName;
+    }
+    public void SwitchWorld()
+    {
+        if (gameData.isOnApocalypticWorld)
+        {
+            gameData.isOnApocalypticWorld = false;
+        }
+        else
+        {
+            gameData.isOnApocalypticWorld = true;
+        }
     }
 }
