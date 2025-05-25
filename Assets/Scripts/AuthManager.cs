@@ -87,7 +87,7 @@ public class AuthManager : MonoBehaviour
             passwordInput.text = "";
 
             accountManage.SetActive(false);
-            main_menu.SetActive(true);
+            main_menu.SetActive(false);
         }
         else
         {
