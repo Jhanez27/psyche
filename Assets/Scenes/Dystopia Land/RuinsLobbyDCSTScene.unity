@@ -25433,7 +25433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d5275a1d65411b4f9199783174c49b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: StartingScene
+  sceneToLoad: bruteforce
   sceneTransitionName: 
   turnOnObject: {fileID: 674706005}
 --- !u!4 &1207014004
