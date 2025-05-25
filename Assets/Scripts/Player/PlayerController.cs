@@ -36,7 +36,7 @@ public class PlayerController : Singleton<PlayerController>, IDataPersistence
     {
         startingMoveSpeed = moveSpeed;
     }
-    
+
     private void OnEnable()
     {
         playerControls.Enable();
@@ -120,16 +120,22 @@ public class PlayerController : Singleton<PlayerController>, IDataPersistence
 
     public void LoadData(GameData gameData)
     {
-        if (gameData.apocalypticWorldData.hasBeenLoadedBefore)
+        if (SceneManagement.Instance.LastLoadType == LoadType.LoadGame)
         {
-            this.gameObject.transform.position = gameData.apocalypticWorldData.worldPosition;
+            transform.position = gameData.apocalypticWorldData.worldPosition;
+            Debug.Log("Player position restored from save.");
+        }
+        else
+        {
+            Debug.Log("Skipped restoring player position due to SceneTransition.");
         }
     }
 
     public void SaveData(ref GameData gameData)
     {
         Debug.Log($"Saving Player Location: {this.gameObject.transform.position}");
-    gameData.apocalypticWorldData.InitialiszeApocalypticWorldPositionData(this.gameObject.transform.position);
+       gameData.apocalypticWorldData.InitialiszeApocalypticWorldPositionData(this.gameObject.transform.position);
         gameData.apocalypticWorldData.hasBeenLoadedBefore = true;
     }
+
 }

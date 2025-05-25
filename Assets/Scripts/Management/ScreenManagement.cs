@@ -18,7 +18,6 @@ public class SceneManagement : Singleton<SceneManagement>, IDataPersistence
     // IDataPersistence interface implementation
     public void LoadData(GameData data)
     {
-        Debug.Log("Krazy Load Data from Scene");
         if (IsInApocalytpicWorld)
         {
             SceneTransitionName = data.apocalypticWorldData.sceneTransitionName;

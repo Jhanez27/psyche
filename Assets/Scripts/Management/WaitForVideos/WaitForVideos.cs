@@ -9,6 +9,7 @@ public class WaitForVideo : MonoBehaviour
 
     void Start()
     {
+        SceneManagement.Instance.SetLastLoadType(LoadType.NewGame);
         StartCoroutine(Example());
     }
 

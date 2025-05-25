@@ -3,9 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AreaEntrance : MonoBehaviour
 {
+    private static int totalEntrances;
+    private static int completedEntrances;
+    private static bool sceneProcessed;
+
+
     [SerializeField] private string transitionName;
     //Additional Code
     [SerializeField] private CharactersController playerController;
@@ -14,50 +20,87 @@ public class AreaEntrance : MonoBehaviour
     [SerializeField]
     private bool makeTransistionConsistent = false; // This is not used in the original code, but added for consistency
 
+    [SerializeField] private AreaEntrance areaEntrance; // This is not used in the original code, but added for consistency
+
     private void Awake()
     {
         playerController = Object.FindFirstObjectByType<CharactersController>();
     }
     private void Start()
     {
-        Debug.Log($"Last Load Type at Area Entrance: {SceneManagement.Instance.LastLoadType.ToString()}");
-        if (SceneManagement.Instance.LastLoadType == LoadType.LoadGame)
+        if (!sceneProcessed)
         {
-            //Player position declaration is already done in the PlayerController and CharactersController classes
-        }
-        else if (transitionName == SceneManagement.Instance.SceneTransitionName)
-        {
-            Debug.Log("Right Scene");
+            totalEntrances = FindObjectsOfType<AreaEntrance>().Length;
+            completedEntrances = 0;
+            sceneProcessed = true;
 
-            //Start happens after Awake, so we can safely assume the playerController and PlayerController.Instance is initialized and replace its position
+            DataPersistenceManager.Instance.LoadGame();
+        }
+
+        // Your usual entrance logic here
+        HandleEntrance();
+
+        completedEntrances++;
+
+        // Run this ONCE when all AreaEntrances have finished
+        if (completedEntrances >= totalEntrances)
+        {
+            Debug.Log("All AreaEntrances finished. Setting LastLoadType to NewGame.");
+            SceneManagement.Instance.SetLastLoadType(LoadType.NewGame);
+        }
+    }
+
+    private void HandleEntrance()
+    {
+        Debug.Log($"Area Entrance LastLoadType: {SceneManagement.Instance.LastLoadType} in {SceneManager.GetActiveScene().name}");
+
+        Debug.Log($"Transform Position in {SceneManager.GetActiveScene().name} is {(playerController != null ? playerController.transform.position.ToString() : PlayerController.Instance.transform.position.ToString())} by {transform.name}");
+
+        if (areaEntrance != null)
+        {
+            Debug.Log($"Area Entrance: {areaEntrance.name} in {SceneManager.GetActiveScene().name}");
             if (playerController != null)
-            {
-                playerController.transform.position = this.transform.position;
-            }
+                playerController.transform.position = areaEntrance.transform.position;
             else
             {
-                PlayerController.Instance.transform.position = this.transform.position; // Original Code
+                PlayerController.Instance.transform.position = areaEntrance.transform.position;
+            }
+
+            SceneManagement.Instance.SetTransitionName("");
+            areaEntrance = null;
+        }
+        else
+        {
+            if (SceneManagement.Instance.LastLoadType == LoadType.LoadGame)
+            {
+                // Skip positioning
+            }
+            else if (transitionName == SceneManagement.Instance.SceneTransitionName)
+            {
+                if (playerController != null)
+                    playerController.transform.position = transform.position;
+                else
+                {
+                    PlayerController.Instance.transform.position = transform.position;
+                }
+
+                SceneManagement.Instance.SetTransitionName("");
             }
         }
 
         UIFade.Instance.FadeToClear();
         CameraController.Instance.SetPlayerCameraFollow();
 
-        Debug.Log($"Timeline is Null: {(timelineManager == null).ToString()}");
-
         if (timelineManager == null)
-        {
             timelineManager = FindObjectOfType<TimelineManager>();
-        }
-
-        Debug.Log($"Play Timeline on Entrance: {playTimelineOnEntrance}");
 
         if (playTimelineOnEntrance && timelineManager != null)
-        {
-            Debug.Log($"Playing timeline {timelineManager.name}");
             timelineManager.PlayOnSceneEnter();
-        }
+    }
 
-        SceneManagement.Instance.SetLastLoadType(LoadType.NewGame);
+    private void OnDestroy()
+    {
+        completedEntrances = 0;
+        sceneProcessed = false;
     }
 }

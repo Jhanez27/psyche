@@ -17,6 +17,13 @@ public class QuestManager : Singleton<QuestManager>, IDataPersistence
     private Dictionary<string, Quest> questMap;
     private bool canInteract = true;
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        DataPersistenceManager.Instance.LoadGame();
+        //questMap = CreateQuestMap();
+    }
     private void Start()
     {
         foreach (Quest quest in questMap.Values)
@@ -29,13 +36,7 @@ public class QuestManager : Singleton<QuestManager>, IDataPersistence
             GamesEventManager.Instance.questEvents.ChangeQuestState(quest);
         }
     }
-    protected override void Awake()
-    {
-        base.Awake();
-
-        //DataPersistenceManager.Instance.LoadGame();
-        //questMap = CreateQuestMap();
-    }
+    
     private void OnEnable()
     {
         GamesEventManager.Instance.questEvents.OnStartQuest += StartQuest;

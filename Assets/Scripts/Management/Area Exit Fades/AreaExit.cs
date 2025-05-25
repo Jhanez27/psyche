@@ -29,6 +29,7 @@ public class AreaExit : MonoBehaviour
             yield return null;
         }
 
+        DataPersistenceManager.Instance.SaveGame();
         SceneManager.LoadScene(sceneToLoad);
     }
 }

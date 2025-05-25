@@ -45,7 +45,7 @@ public class DataPersistenceManager : Singleton<DataPersistenceManager>
         if (this.gameData != null) {
             Debug.Log(gameData.ToString());
         }
-
+        
         // if no data is found, initialize to a new game
         if (this.gameData == null)
         {
@@ -59,12 +59,12 @@ public class DataPersistenceManager : Singleton<DataPersistenceManager>
 
         foreach (IDataPersistence dataPersistenceObj in this.dataPersistenceList)
         {
+            Debug.Log($"Loading data from {dataPersistenceObj.GetType().Name}");
             dataPersistenceObj.LoadData(gameData);
         }
     }
     public void SaveGame()
     {
-
         this.dataPersistenceList = FindAllDataPersistenceObjects();
 
         //pass the data to other scripts so they can update it
