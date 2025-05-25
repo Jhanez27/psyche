@@ -69,6 +69,9 @@ public class PlayStoryScript : MonoBehaviour
         }
 
         Debug.Log($"Setting transition name to: {sceneTransitionName}");
+        SceneManagement.Instance.SetIsInApocalypticWorld(false);
+        DataPersistenceManager.Instance.SwitchWorld();
+        DataPersistenceManager.Instance.SaveGame();
 
         SceneManager.LoadScene(sceneToLoad);
     }

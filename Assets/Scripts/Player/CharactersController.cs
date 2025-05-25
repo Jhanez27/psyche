@@ -95,6 +95,8 @@ namespace Characters
 
         public void SaveData(ref GameData gameData)
         {
+            Debug.Log($"Saving Player Location: {this.gameObject.transform.position}");
+            
             gameData.janeWorldData.InitialiszeJaneWorldPositionData(this.gameObject.transform.position);
             gameData.janeWorldData.hasBeenLoadedBefore = true; 
         }

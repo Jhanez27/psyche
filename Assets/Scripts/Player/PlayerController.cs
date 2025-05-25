@@ -129,7 +129,8 @@ public class PlayerController : Singleton<PlayerController>, IDataPersistence
     public void SaveData(ref GameData gameData)
     {
         Debug.Log($"Saving Player Location: {this.gameObject.transform.position}");
-    gameData.apocalypticWorldData.InitialiszeApocalypticWorldPositionData(this.gameObject.transform.position);
+        
+        gameData.apocalypticWorldData.InitialiszeApocalypticWorldPositionData(this.gameObject.transform.position);
         gameData.apocalypticWorldData.hasBeenLoadedBefore = true;
     }
 }

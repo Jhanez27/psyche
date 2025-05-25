@@ -19,15 +19,7 @@ public class QuestManager : Singleton<QuestManager>, IDataPersistence
 
     private void Start()
     {
-        foreach (Quest quest in questMap.Values)
-        {
-            if (quest.state == QuestState.IN_PROGRESS)
-            {
-                quest.InstantiateCurrentQuestStep(this.transform);
-            }
-
-            GamesEventManager.Instance.questEvents.ChangeQuestState(quest);
-        }
+        
     }
     protected override void Awake()
     {
@@ -359,5 +351,15 @@ public class QuestManager : Singleton<QuestManager>, IDataPersistence
         // Step 3: Update the UI
         List<Quest> quests = questMap.Values.ToList();
         PrepareUI(quests);
+
+        foreach (Quest quest in questMap.Values)
+        {
+            if (quest.state == QuestState.IN_PROGRESS)
+            {
+                quest.InstantiateCurrentQuestStep(this.transform);
+            }
+
+            GamesEventManager.Instance.questEvents.ChangeQuestState(quest);
+        }
     }
 }
