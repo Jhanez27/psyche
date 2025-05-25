@@ -18430,6 +18430,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 0406523de63f8004db7ecc83440795c3, type: 2}
     - {fileID: 11400000, guid: a859f2ba680f735418f4d19d32eeb5a8, type: 2}
     - {fileID: 11400000, guid: 91808e70a83abd8489d7d978024d1465, type: 2}
+    - {fileID: 11400000, guid: ed593630a48b1dd4a8cdc524f29e4c9d, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -18485,6 +18486,20 @@ MonoBehaviour:
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1003156172}
+          m_TargetAssemblyTypeName: GamesEventManagerProxy, Assembly-CSharp
+          m_MethodName: TriggerStartQuest
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: IntroductionToJane
             m_BoolArgument: 0
           m_CallState: 2
 --- !u!114 &1003156172
@@ -21135,7 +21150,7 @@ Transform:
   m_GameObject: {fileID: 1424691787}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.1, y: -2.62, z: 0}
+  m_LocalPosition: {x: 12.67, y: -10.44, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21155,8 +21170,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionName: ToStartingScene
   playerController: {fileID: 0}
-  timelineManager: {fileID: 569515097}
-  playTimelineOnEntrance: 1
+  timelineManager: {fileID: 0}
+  playTimelineOnEntrance: 0
+  makeTransistionConsistent: 1
 --- !u!1 &1457924843 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3698071732008720206, guid: 6c897b7344a36fd499164e26d2c3005e, type: 3}
@@ -22324,7 +22340,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeScreen: {fileID: 1690781983}
   fadeSpeed: 1
-  baseSingleton: {fileID: 1378376012}
+  baseSingleton: {fileID: 0}
 --- !u!114 &1695600703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25159,19 +25175,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2545972365486925010, guid: 52bbb6216e0de864590b8247cc028678, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2545972365486925010, guid: 52bbb6216e0de864590b8247cc028678, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2545972365486925010, guid: 52bbb6216e0de864590b8247cc028678, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1142.8801
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2545972365486925010, guid: 52bbb6216e0de864590b8247cc028678, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 640
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2545972365486925010, guid: 52bbb6216e0de864590b8247cc028678, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -25391,27 +25407,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8066089786447738284, guid: 52bbb6216e0de864590b8247cc028678, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8066089786447738284, guid: 52bbb6216e0de864590b8247cc028678, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8066089786447738284, guid: 52bbb6216e0de864590b8247cc028678, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 135
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8066089786447738284, guid: 52bbb6216e0de864590b8247cc028678, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 135
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8066089786447738284, guid: 52bbb6216e0de864590b8247cc028678, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 87.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8066089786447738284, guid: 52bbb6216e0de864590b8247cc028678, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -87.5
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

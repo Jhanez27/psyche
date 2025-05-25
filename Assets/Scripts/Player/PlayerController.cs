@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : Singleton<PlayerController>
+public class PlayerController : Singleton<PlayerController>, IDataPersistence
 {
     public bool FacingLeft { get { return facingLeft; } }
 
@@ -36,7 +36,7 @@ public class PlayerController : Singleton<PlayerController>
     {
         startingMoveSpeed = moveSpeed;
     }
-
+    
     private void OnEnable()
     {
         playerControls.Enable();
@@ -118,5 +118,18 @@ public class PlayerController : Singleton<PlayerController>
         isDashing = false;
     }
 
+    public void LoadData(GameData gameData)
+    {
+        if (gameData.apocalypticWorldData.hasBeenLoadedBefore)
+        {
+            this.gameObject.transform.position = gameData.apocalypticWorldData.worldPosition;
+        }
+    }
 
+    public void SaveData(ref GameData gameData)
+    {
+        Debug.Log($"Saving Player Location: {this.gameObject.transform.position}");
+    gameData.apocalypticWorldData.InitialiszeApocalypticWorldPositionData(this.gameObject.transform.position);
+        gameData.apocalypticWorldData.hasBeenLoadedBefore = true;
+    }
 }

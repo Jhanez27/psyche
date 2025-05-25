@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameData
 {
     public bool isOnApocalypticWorld = true;
-    public ApocalypticWorldData apocalypticWorldData;
+    public ApocalypticWorldData apocalypticWorldData = new ApocalypticWorldData();
     public JaneWorldData janeWorldData = new JaneWorldData();
     public TimelineData timelineData = new TimelineData();
     public List<QuestDataEntry> questDataList = new List<QuestDataEntry>();

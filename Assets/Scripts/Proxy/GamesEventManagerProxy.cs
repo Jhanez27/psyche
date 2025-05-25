@@ -39,4 +39,8 @@ public class GamesEventManagerProxy : MonoBehaviour
     {
         GamesEventManager.Instance.questEvents.ChangeDialogueName(npcTag, dialogueName);
     }
+    public void TriggerStartQuest(string questID)
+    {
+        GamesEventManager.Instance.questEvents.StartQuest(questID);
+    }
 }

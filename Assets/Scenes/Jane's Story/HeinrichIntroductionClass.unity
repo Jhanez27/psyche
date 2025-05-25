@@ -10449,6 +10449,7 @@ GameObject:
   - component: {fileID: 568536590}
   - component: {fileID: 568536589}
   - component: {fileID: 568536588}
+  - component: {fileID: 568536592}
   m_Layer: 5
   m_Name: SceneInventory
   m_TagString: Untagged
@@ -10541,6 +10542,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &568536592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 568536586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7ae9eef62710434da859d7ba72e353d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &591859564 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5703819302894526008, guid: 311d7ff15529a9b46a84df911eceea06, type: 3}
@@ -10995,6 +11008,7 @@ MonoBehaviour:
   playerController: {fileID: 0}
   timelineManager: {fileID: 949605694}
   playTimelineOnEntrance: 1
+  makeTransistionConsistent: 0
 --- !u!1 &773904426
 GameObject:
   m_ObjectHideFlags: 0

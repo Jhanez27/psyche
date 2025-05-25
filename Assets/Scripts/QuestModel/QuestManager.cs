@@ -108,6 +108,12 @@ public class QuestManager : Singleton<QuestManager>, IDataPersistence
     public void StartQuest(string id)
     {
         Quest quest = GetQuestByID(id);
+        if(quest.state != QuestState.CAN_START)
+        {
+            Debug.Log($"Quest with ID {id} cannot be started. Current state: {quest.state}");
+            return;
+        }
+
         quest.InstantiateCurrentQuestStep(this.transform);
         ChangeQuestState(quest.questInfo.ID, QuestState.IN_PROGRESS);
 
@@ -322,7 +328,7 @@ public class QuestManager : Singleton<QuestManager>, IDataPersistence
 
         foreach (var questInfo in allQuests)
         {
-            if(!questMap.ContainsKey(questInfo.ID))
+            if (!questMap.ContainsKey(questInfo.ID))
                 questMap[questInfo.ID] = new Quest(questInfo);
         }
 
