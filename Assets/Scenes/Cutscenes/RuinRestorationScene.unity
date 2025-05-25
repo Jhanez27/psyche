@@ -226,6 +226,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionName: toJane'sHouse
   playerController: {fileID: 0}
+  timelineManager: {fileID: 0}
+  playTimelineOnEntrance: 0
+  makeTransistionConsistent: 0
 --- !u!114 &704719093697593742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5157,7 +5160,7 @@ GameObject:
   - component: {fileID: 4553641883325423171}
   - component: {fileID: 704719093697593742}
   - component: {fileID: 4553641883325423173}
-  - component: {fileID: 4553641883325423172}
+  - component: {fileID: 4553641883325423174}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5262,19 +5265,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!114 &4553641883325423172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3891997466317556883}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05da21b9db866544d9507100e0dd2209, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scenename: MainGateFirstScene
 --- !u!328 &4553641883325423173
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -5283,7 +5273,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3891997466317556883}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: d5f4e6c0be99a0847a0f1a919df72b58, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: d1e681e7b3caa3d4685365bd9fef48c5, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 371885254786659974}
@@ -5311,6 +5301,19 @@ VideoPlayer:
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
+--- !u!114 &4553641883325423174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3891997466317556883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b292fd9881f761d4bbb0af7813b22d48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scenename: Main Menu
 --- !u!114 &4718193427584253290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5395,6 +5398,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionName: janeHouseTP
   playerController: {fileID: 0}
+  timelineManager: {fileID: 0}
+  playTimelineOnEntrance: 0
+  makeTransistionConsistent: 0
 --- !u!114 &6780890894516048430
 MonoBehaviour:
   m_ObjectHideFlags: 0
