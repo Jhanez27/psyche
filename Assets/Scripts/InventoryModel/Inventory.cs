@@ -5,16 +5,14 @@ using UnityEngine;
 
 namespace Inventory.Model
 {
-    [CreateAssetMenu(fileName = "InventorySO", menuName = "Scriptable Objects/InventorySO")]
-    public class InventorySO : ScriptableObject
+    public class Inventory
     {
-        [SerializeField]
-        private List<InventoryItem> inventoryItems;
+        public List<InventoryItem> inventoryItems;
 
         [field: SerializeField]
         public int Size { get; private set; } = 18; // Default inventory size
 
-        public void Initialize()
+        public Inventory() 
         {
             inventoryItems = new List<InventoryItem>(Size); // Initthisialize the inventory items list with the specified size
             for (int i = 0; i < Size; i++)
@@ -25,15 +23,18 @@ namespace Inventory.Model
 
         public int AddItem(ItemSO item, int quantity)
         {
+            Debug.Log($"Adding {quantity} {item.ID} to inventory.");
             if(!item.IsStackable)
             {
                 while (quantity > 0 && !IsInventoryFull())
                 {
                     quantity -= AddNonStackableItem(item, 1);
                 }
+                Debug.Log("HI");
                 UpdateInventory();
                 return quantity;
             }
+            Debug.Log("HO");
             quantity = AddStackableItem(item, quantity); // Try to add to an existing stackable item
             UpdateInventory();
             return quantity;

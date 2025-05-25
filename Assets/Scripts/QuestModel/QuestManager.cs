@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class QuestManager : Singleton<QuestManager>
+public class QuestManager : Singleton<QuestManager>, IDataPersistence
 {
     [Header("Data Persistence Config")]
     [SerializeField] private bool loadQuestState = true;
@@ -17,6 +17,13 @@ public class QuestManager : Singleton<QuestManager>
     private Dictionary<string, Quest> questMap;
     private bool canInteract = true;
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        DataPersistenceManager.Instance.LoadGame();
+        //questMap = CreateQuestMap();
+    }
     private void Start()
     {
         foreach (Quest quest in questMap.Values)
@@ -29,15 +36,7 @@ public class QuestManager : Singleton<QuestManager>
             GamesEventManager.Instance.questEvents.ChangeQuestState(quest);
         }
     }
-    protected override void Awake()
-    {
-        base.Awake();
-        Debug.Log("Creating Quesr Manager with " + (logPage != null).ToString());
-        questMap = CreateQuestMap();
-
-        List<Quest> quests = questMap.Values.ToList<Quest>();
-        PrepareUI(quests);
-    }
+    
     private void OnEnable()
     {
         GamesEventManager.Instance.questEvents.OnStartQuest += StartQuest;
@@ -72,10 +71,7 @@ public class QuestManager : Singleton<QuestManager>
     }
     private void OnApplicationQuit() // Saves quests whenever the game is exited
     {
-        foreach (Quest quest in questMap.Values)
-        {
-            SaveQuest(quest);
-        }
+        DataPersistenceManager.Instance.SaveGame();
     }
     private void OnDestroy()
     {
@@ -87,6 +83,7 @@ public class QuestManager : Singleton<QuestManager>
     {
         logPage.InitializeQuestLogPage(quests);
     }
+    /*
     private Dictionary<string, Quest> CreateQuestMap()
     {
         //Load all QuestInfoSO from the Resources folder
@@ -106,11 +103,18 @@ public class QuestManager : Singleton<QuestManager>
 
         return returnQuestMap;
     }
+    */
 
     // Quest Progression
     public void StartQuest(string id)
     {
         Quest quest = GetQuestByID(id);
+        if(quest.state != QuestState.CAN_START)
+        {
+            Debug.Log($"Quest with ID {id} cannot be started. Current state: {quest.state}");
+            return;
+        }
+
         quest.InstantiateCurrentQuestStep(this.transform);
         ChangeQuestState(quest.questInfo.ID, QuestState.IN_PROGRESS);
 
@@ -169,7 +173,7 @@ public class QuestManager : Singleton<QuestManager>
     // Quest Display
     private void HandleLogDescriptionRequest(string id)
     {
-        if(!questMap.ContainsKey(id))
+        if (!questMap.ContainsKey(id))
         {
             Debug.LogError($"Quest with ID {id} not found in the quest map.");
             return;
@@ -258,6 +262,8 @@ public class QuestManager : Singleton<QuestManager>
     }
 
     // Quest Data Persistence
+
+    /*
     private void SaveQuest(Quest quest)
     {
         try
@@ -296,5 +302,63 @@ public class QuestManager : Singleton<QuestManager>
         }
 
         return quest;
+    }
+    */
+
+    public void SaveData(ref GameData gameData)
+    {
+        gameData.questDataList.Clear();
+
+        foreach (KeyValuePair<string, Quest> kvp in questMap)
+        {
+            string questID = kvp.Key;
+            Quest quest = kvp.Value;
+            QuestData questData = quest.GetQuestData();
+
+            gameData.questDataList.Add(new QuestDataEntry(questID, questData));
+        }
+    }
+
+    public void LoadData(GameData gameData)
+    {
+        // Step 1: Initialize the quest map with all available QuestInfoSO
+        questMap = new Dictionary<string, Quest>();
+
+        QuestInfoSO[] allQuests = Resources.LoadAll<QuestInfoSO>("Quest");
+        Debug.Log("Loaded QuestInfoSOs: " + allQuests.Length);
+
+        foreach (var questInfo in allQuests)
+        {
+            if (!questMap.ContainsKey(questInfo.ID))
+                questMap[questInfo.ID] = new Quest(questInfo);
+        }
+
+        // Step 2: Overwrite quest state with saved data, if available
+        foreach (var entry in gameData.questDataList)
+        {
+            if (questMap.TryGetValue(entry.questID, out Quest existingQuest))
+            {
+                QuestInfoSO questInfo = existingQuest.questInfo;
+
+                Quest loadedQuest = new Quest(
+                    questInfo,
+                    entry.questData.state,
+                    entry.questData.stepIndex,
+                    entry.questData.stepStates
+                );
+
+                questMap[entry.questID] = loadedQuest;
+            }
+            else
+            {
+                Debug.LogWarning($"Saved quest ID '{entry.questID}' not found in loaded QuestInfoSOs.");
+            }
+        }
+
+        Debug.Log("Final questMap count: " + questMap.Count);
+
+        // Step 3: Update the UI
+        List<Quest> quests = questMap.Values.ToList();
+        PrepareUI(quests);
     }
 }

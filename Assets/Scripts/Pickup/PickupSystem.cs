@@ -1,12 +1,16 @@
+using Inventory;
 using Inventory.Model;
 using System;
 using UnityEngine;
 
 public class PickupSystem : MonoBehaviour
 {
-    [SerializeField]
-    private InventorySO inventory; // Reference to the player's inventory
+    private Inventory.Model.Inventory inventory; // Reference to the player's inventory
 
+    private void Start()
+    {
+        this.inventory = this.gameObject.GetComponent<InventoryController>().inventoryData;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         PickupItem item = collision.GetComponent<PickupItem>(); // Get the PickupItem component from the collided object

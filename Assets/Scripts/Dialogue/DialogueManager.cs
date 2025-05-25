@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DialogueManager : Singleton<DialogueManager>
+public class DialogueManager : Singleton<DialogueManager>, IDataPersistence
 {
     [Header("Story Configuration")]
     [SerializeField] private TextAsset inkJSON; //Ink JSON file to be used for the dialogue
@@ -141,6 +141,7 @@ public class DialogueManager : Singleton<DialogueManager>
             }
             else
             {
+                Debug.Log("Current Choices: " + story.currentChoices.Count);
                 GamesEventManager.Instance.dialogueEvents.DisplayDialogue(dialogueLine, story.currentChoices);
             }
         }
@@ -164,7 +165,7 @@ public class DialogueManager : Singleton<DialogueManager>
         }
         else
         {
-            GamesEventManager.Instance.timelineEvents.StartTimeline(); //Finish the timeline
+            GamesEventManager.Instance.timelineEvents.ResumeTimeline(); //Finish the timeline
 
         }
         GamesEventManager.Instance.inputEvents.ChangeInputEventContext(InputEventContext.DEFAULT); //Change the input event context back to default
@@ -264,5 +265,54 @@ public class DialogueManager : Singleton<DialogueManager>
             quest.questInfo.ID + "State",
             new StringValue(quest.state.ToString())
             );
+    }
+
+    public void LoadData(GameData data)
+    {
+        foreach(var variable in data.dialogueVariableData)
+        {
+            if (variable.type.Equals("bool"))
+            {
+                inkDialogueVariables.variables[variable.name] = new BoolValue(bool.Parse(variable.value));
+            }
+            else if (variable.type.Equals("string"))
+            {
+                inkDialogueVariables.variables[variable.name] = new StringValue(variable.value);
+            }
+            else if (variable.type.Equals("float"))
+            {
+                inkDialogueVariables.variables[variable.name] = new FloatValue(float.Parse(variable.value));
+            }
+            else if (variable.type.Equals("int"))
+            {
+                inkDialogueVariables.variables[variable.name] = new IntValue(int.Parse(variable.value));
+            }
+        }
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.dialogueVariableData.Clear();
+
+        foreach (var kvp in inkDialogueVariables.variables)
+        {
+            var inkObject = kvp.Value;
+            if (inkObject is BoolValue b)
+            {
+                data.dialogueVariableData.Add(new DialogueData { name = kvp.Key, type = "bool", value = b.value.ToString() });
+            }
+            else if (inkObject is StringValue s)
+            {
+                data.dialogueVariableData.Add(new DialogueData { name = kvp.Key, type = "string", value = s.value.ToString() });
+            }
+            else if (inkObject is FloatValue f)
+            {
+                data.dialogueVariableData.Add(new DialogueData { name = kvp.Key, type = "float", value = f.value.ToString() });
+            }
+            else if (inkObject is IntValue i)
+            {
+                data.dialogueVariableData.Add(new DialogueData { name = kvp.Key, type = "int", value = i.value.ToString() });
+            }
+        }
     }
 }

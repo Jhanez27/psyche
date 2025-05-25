@@ -15,9 +15,21 @@ public class GamesEventManagerProxy : MonoBehaviour
     {
         GamesEventManager.Instance.timelineEvents.StartTimeline();
     }
+    public void TriggerStartTimelineByID(string id)
+    {
+        GamesEventManager.Instance.timelineEvents.StartTimelineByID(id);
+    }
+    public void TriggerStartTimelineOnEntrance()
+    {
+        GamesEventManager.Instance.timelineEvents.StartTimelineOnEntrance();
+    }
     public void TriggerPauseTimeline()
     {
         GamesEventManager.Instance.timelineEvents.PauseTimeline();
+    }
+    public void TriggerResumeTimeline()
+    {
+        GamesEventManager.Instance.timelineEvents.ResumeTimeline();
     }
     public void TriggerFinishTimeline()
     {
@@ -26,5 +38,9 @@ public class GamesEventManagerProxy : MonoBehaviour
     public void TriggerChangeDialogueKnotName()
     {
         GamesEventManager.Instance.questEvents.ChangeDialogueName(npcTag, dialogueName);
+    }
+    public void TriggerStartQuest(string questID)
+    {
+        GamesEventManager.Instance.questEvents.StartQuest(questID);
     }
 }

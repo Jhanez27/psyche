@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : Singleton<PlayerController>
+public class PlayerController : Singleton<PlayerController>, IDataPersistence
 {
     public bool FacingLeft { get { return facingLeft; } }
 
@@ -34,18 +34,22 @@ public class PlayerController : Singleton<PlayerController>
 
     private void Start()
     {
-        playerControls.Player.Dash.performed += _ => Dash();
         startingMoveSpeed = moveSpeed;
     }
 
     private void OnEnable()
     {
         playerControls.Enable();
+        playerControls.Player.Dash.performed += OnDashPerformed;
     }
 
-    private void Onsable()
+    private void OnDisable()
     {
-        playerControls.Disable();
+        if (playerControls != null)
+        {
+            playerControls.Player.Dash.performed -= OnDashPerformed;
+        }
+
     }
 
     private void Update()
@@ -60,6 +64,11 @@ public class PlayerController : Singleton<PlayerController>
         Move();
     }
 
+    private void OnDashPerformed(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            Dash();
+    }
     private void PlayerInput()
     {
         movement = playerControls.Player.Move.ReadValue<Vector2>();
@@ -109,5 +118,24 @@ public class PlayerController : Singleton<PlayerController>
         isDashing = false;
     }
 
+    public void LoadData(GameData gameData)
+    {
+        if (SceneManagement.Instance.LastLoadType == LoadType.LoadGame)
+        {
+            transform.position = gameData.apocalypticWorldData.worldPosition;
+            Debug.Log("Player position restored from save.");
+        }
+        else
+        {
+            Debug.Log("Skipped restoring player position due to SceneTransition.");
+        }
+    }
+
+    public void SaveData(ref GameData gameData)
+    {
+        Debug.Log($"Saving Player Location: {this.gameObject.transform.position}");
+       gameData.apocalypticWorldData.InitialiszeApocalypticWorldPositionData(this.gameObject.transform.position);
+        gameData.apocalypticWorldData.hasBeenLoadedBefore = true;
+    }
 
 }

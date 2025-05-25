@@ -79,13 +79,10 @@ public class QuestPoint : MonoBehaviour
         {
             return; // If the dialogue is active, do not allow interaction
         }
-        Debug.Log("HI2");
         if (playerIsNear && context.Equals(InputEventContext.DEFAULT) && questInteractEnabled)
         {
-            Debug.Log("HI3");
             if (!dialogueKnotName.Equals(string.Empty))
             {
-                Debug.Log("HI4");
                 ActiveUIManager.Instance.OpenUI(ActiveUIType.Dialogue); // Open the dialogue UI
                 GamesEventManager.Instance.dialogueEvents.EnterDialogue(dialogueKnotName, DialogueSource.GAMEPLAY);
             }
@@ -116,7 +113,7 @@ public class QuestPoint : MonoBehaviour
 
     private void ChangeDialogueKnotName(string npcTag, string knotName)
     {
-        if (this.gameObject.tag == npcTag)
+        if (this.gameObject.CompareTag(npcTag))
         {
             this.dialogueKnotName = knotName;
         }

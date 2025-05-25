@@ -50,6 +50,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Jane's Story/StartingScene.unity
     guid: 706fec490aabc9b4e8c63bc1d8f04fb8
+  - enabled: 1
+    path: Assets/Scenes/Jane's Story/HeinrichKasaba.unity
+    guid: 757f8668c1421824ba8a800299e0bef2
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

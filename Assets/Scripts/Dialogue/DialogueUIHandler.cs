@@ -24,7 +24,7 @@ public class DialogueUIHandler : MonoBehaviour
     [Header("Panel Elements")]
     [SerializeField] private Color textColor; //Color of the text
     [SerializeField] private TMP_FontAsset textFont; //Font of the text
-    [SerializeField] private float typingSpeed = 1.0f; //Speed of typing effect
+    [SerializeField] private float typingSpeed = 30.0f; //Speed of typing effect
     [SerializeField] private float typingDelay = 0.05f; //Delay before typing starts
 
     [Header("Choice Elements")]
@@ -92,13 +92,11 @@ public class DialogueUIHandler : MonoBehaviour
 
         if (typingCoroutine != null)
         {
-            Debug.Log("Stopping Coroutine"); //Logs the stopping of the coroutine
             StopCoroutine(typingCoroutine); //Stops the previous typing coroutine if it exists
             typingCoroutine = null;
         }
 
         typingCoroutine = StartCoroutine(TypeText(dialogueLine)); //Starts the typing coroutine with the new text
-        Debug.Log("Typing Coroutine Started"); //Logs the start of the typing coroutine
     }
     private IEnumerator TypeText(string text)
     {
