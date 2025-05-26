@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayStoryScript : MonoBehaviour
+public class ComingSoonPrompt : MonoBehaviour
 {
     [SerializeField] private string sceneToLoad;
     [SerializeField] private string sceneTransitionName;
     public GameObject turnOnObject;
-
-
-
-    
 
     private float waitToLoadTime = 1f;
 
@@ -69,6 +65,9 @@ public class PlayStoryScript : MonoBehaviour
         }
 
         Debug.Log($"Setting transition name to: {sceneTransitionName}");
+        SceneManagement.Instance.SetIsInApocalypticWorld(false);
+        DataPersistenceManager.Instance.SwitchWorld();
+        DataPersistenceManager.Instance.SaveGame();
 
         SceneManager.LoadScene(sceneToLoad);
     }

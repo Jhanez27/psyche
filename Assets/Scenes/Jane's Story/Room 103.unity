@@ -12745,6 +12745,7 @@ MonoBehaviour:
   playerController: {fileID: 0}
   timelineManager: {fileID: 0}
   playTimelineOnEntrance: 0
+  makeTransistionConsistent: 0
 --- !u!114 &704719093697593742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17528,6 +17529,7 @@ GameObject:
   - component: {fileID: 1080954809084683684}
   - component: {fileID: 9040789015378861296}
   - component: {fileID: 7344841980418509773}
+  - component: {fileID: 9040789015378861297}
   m_Layer: 0
   m_Name: AreaExitWhiteFade
   m_TagString: Untagged
@@ -18076,6 +18078,7 @@ MonoBehaviour:
   playerController: {fileID: 0}
   timelineManager: {fileID: 0}
   playTimelineOnEntrance: 0
+  makeTransistionConsistent: 0
 --- !u!114 &6162334159275570039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18171,7 +18174,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1814371990959878909}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 24577dfb8485561409e5e7eda2cc1bfa, type: 3}
   m_Name: 
@@ -18448,6 +18451,20 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 3.863615, y: 1.83813}
   m_EdgeRadius: 0
+--- !u!114 &9040789015378861297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814371990959878909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0e4ee67348928a4291fc931d6ff0ce9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: DCST Lobby
+  sceneTransitionName: toDCSTLobby103
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
