@@ -74,6 +74,7 @@ public class DataPersistenceManager : Singleton<DataPersistenceManager>
             dataPersistenceObj.SaveData(ref gameData);
         }
 
+        fileHandler = new FileDataHandler();
         // Save the data to a file using the data handler
         fileHandler.SaveGameData(gameData, fileName);
     }

@@ -25,7 +25,6 @@ namespace Inventory
         private void Start()
         {
             PrepareInventoryData();
-            PrepareUI();
         }
         private void OnEnable()
         {
@@ -230,7 +229,7 @@ namespace Inventory
             Debug.Log($"Total non-empty items: {inventoryData.GetCurrentInventoryState().Count}");
 
             GetUpdateInventoryUI(inventoryData.GetCurrentInventoryState());
-
+            PrepareUI();
         }
 
         public void SaveData(ref GameData data)

@@ -34,7 +34,7 @@ public class SupabaseUploader : MonoBehaviour
     {
         if (string.IsNullOrEmpty(AuthManager.jwtToken) || string.IsNullOrEmpty(AuthManager.userId))
         {
-            Debug.LogError("❌ Upload aborted: User not authenticated.");
+            Debug.LogWarning("❌ Upload aborted: User not authenticated.");
             yield break;
         }
 
@@ -62,7 +62,7 @@ public class SupabaseUploader : MonoBehaviour
             if (deleteRequest.result != UnityWebRequest.Result.Success)
             {
                 string errorText = deleteRequest.downloadHandler != null ? deleteRequest.downloadHandler.text : "No response data";
-                Debug.LogError($"❌ File deletion failed: {deleteRequest.error}\n{errorText}");
+                Debug.LogWarning($"❌ File deletion failed: {deleteRequest.error}\n{errorText}");
                 yield break;
             }
 
@@ -94,7 +94,7 @@ public class SupabaseUploader : MonoBehaviour
         else
         {
             string errorText = uploadRequest.downloadHandler != null ? uploadRequest.downloadHandler.text : "No response data";
-            Debug.LogError($"❌ Upload failed: {uploadRequest.error}\n{errorText}");
+            Debug.LogWarning($"❌ Upload failed: {uploadRequest.error}\n{errorText}");
         }
     }
 }

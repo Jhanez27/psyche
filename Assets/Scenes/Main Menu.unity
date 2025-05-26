@@ -245,6 +245,7 @@ MonoBehaviour:
     questDataList: []
     inventoryDataList: []
     dialogueVariableData: []
+    softGateDataList: []
 --- !u!4 &16453695
 Transform:
   m_ObjectHideFlags: 0

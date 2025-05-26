@@ -35,7 +35,11 @@ public class QuestLogPage : MonoBehaviour
 
     public void InitializeQuestLogPage(List<Quest> questList)
     {
-        foreach(Quest quest in questList)
+        DestroyLogItems();
+        availableQuests.Clear();
+
+        
+        foreach (Quest quest in questList)
         {
             LoadLogItems(quest);
         }

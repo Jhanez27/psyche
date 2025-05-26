@@ -12,6 +12,7 @@ public class GameData
     public List<QuestDataEntry> questDataList = new List<QuestDataEntry>();
     public List<InventoryData> inventoryDataList = new List<InventoryData>();
     public List<DialogueData> dialogueVariableData = new List<DialogueData>();
+    public List<SoftGateData> softGateDataList = new List<SoftGateData>();
 
     public override string ToString()
     {
