@@ -57,7 +57,7 @@ public class SoftGatwithKnotBasis : MonoBehaviour, IDataPersistence
         bool found = false;
         foreach (SoftGateData softGateData in data.softGateDataList)
         {
-            if (softGateData.softGateName.Equals(gameObject.name))
+            if (softGateData.softGateName == gameObject.name)
             {
                 softGateData.isActive = boxCollider.isTrigger;
                 found = true;
