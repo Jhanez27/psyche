@@ -7011,7 +7011,7 @@ MonoBehaviour:
   typingSound: {fileID: 8300000, guid: ea3e10b6a94908349be9d2506fc51a26, type: 3}
   textColor: {r: 0, g: 0, b: 0, a: 1}
   textFont: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
-  typingSpeed: 5
+  typingSpeed: 30
   typingDelay: 0.005
   choiceButtonPrefab: {fileID: 5863964523675299724, guid: 5db18fe14ffae14479d78dbf832f1cfe, type: 3}
   choiceButtonContainer: {fileID: 2116019493}
@@ -21722,6 +21722,7 @@ MonoBehaviour:
     questDataList: []
     inventoryDataList: []
     dialogueVariableData: []
+    softGateDataList: []
 --- !u!1 &1414711348
 GameObject:
   m_ObjectHideFlags: 0
