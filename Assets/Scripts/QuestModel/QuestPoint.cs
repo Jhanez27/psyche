@@ -1,7 +1,3 @@
-using System;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D))]
