@@ -24,14 +24,14 @@ Pssst. Jane over here! #Speaker: Christopher #Layout: Right
 
 === NoelleExtraDialogue ===
 { JaneIsSeated == false:
-    I honestly don't know if I cna pass this subject anymore.  #Speaker: Noelle #Layout: Left
+    I honestly don't know if I can pass this subject anymore.  #Speaker: Noelle #Layout: Left
     My guardian angel has been very weak lately.  #Speaker: Noelle #Layout: Left
 }
 -> DONE
 
 === NoellesExtraDialogue ===
 { JaneIsSeated == false:
-    I hope things turn out for the better. This really isn't a good sign... Rigen love Maniego  #Speaker: Noelle #Layout: Left
+    I hope things turn out for the better. This really isn't a good sign.  #Speaker: Noelle #Layout: Left
 }
 -> DONE
 
